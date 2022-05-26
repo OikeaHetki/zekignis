@@ -90,7 +90,7 @@ function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_FZONE)
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0xd2) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(0xd2) and c:IsAbleToHand() and not c:IsOriginalCode(id)
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil) end
