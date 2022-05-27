@@ -1,8 +1,7 @@
 --デッキロック
 --Deck Lockdown
 --zek errata
-local s=c1149109
-local id=1149109
+local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
