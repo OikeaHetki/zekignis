@@ -1,7 +1,6 @@
 --Mariamne, the True Dracophoenix
 --Zek
-local s=c94160895
-local id=94160895
+local s,id=GetID()
 function s.initial_effect(c)
 	--summon success
 	local e1=Effect.CreateEffect(c)
