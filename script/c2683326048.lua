@@ -77,7 +77,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e6:SetTarget(s.distg)
 	e6:SetLabel(ct)
 	e6:SetValue(aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ,SUMMON_TYPE_LINK))
-	Duel:RegisterEffect(e6,tp)
+	Duel.RegisterEffect(e6,tp)
 end
 function s.distg(e,c)
 	return c:IsType(e:GetLabel())
