@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,97567736,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xc3),aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9))
 	--pos change
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_POSITION)
