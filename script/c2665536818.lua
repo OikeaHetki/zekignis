@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	--synchro summon
-	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--search
 	local e1=Effect.CreateEffect(c)

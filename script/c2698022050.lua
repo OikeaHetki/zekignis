@@ -66,7 +66,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,0x41)==0x41
 end
 function s.filter(c,e,tp)
-	return c:IsRace(RACE_DINOSAUR) and c:IsLevelBelow(6) and not c:IsAttribute(ATTRIBUTE_WATER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_DINOSAUR) and c:IsLevelBelow(6) 
+		and not c:IsAttribute(ATTRIBUTE_WATER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
