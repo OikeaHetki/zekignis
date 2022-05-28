@@ -35,12 +35,14 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCode(EFFECT_IMMUNE_EFFECT)
-	e4:SetCondition(s.tgcon)
 	e4:SetValue(s.efilter)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0xc3,0xa9,0xad}
 s.material_setcode={0xa9,0xc3}
+function s.efilter(e,te)
+	return te:IsActiveType(TYPE_TRAP)
+end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
@@ -66,12 +68,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
-end
-function s.tgcon(e)
-	return Duel.GetCurrentPhase()~=PHASE_BATTLE
-end
-function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP)
 end
 function s.rdcon(e)
 	local c=e:GetHandler()
