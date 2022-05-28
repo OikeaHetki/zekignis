@@ -77,7 +77,6 @@ function s.fextra(e,tp,mg)
 end
 function s.stage2(e,tc,tp,mg,chk)
 	if chk==1 then
-		Duel.DiscardDeck(tp,1,REASON_EFFECT)
 		--Cannot attack directly this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3207)
