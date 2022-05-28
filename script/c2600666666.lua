@@ -17,13 +17,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--Fusion summon "Frightfur" fusion monster
-	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x1047),aux.FALSE,s.fextra,Fusion.ShuffleMaterial,nil,s.stage2}
+	local params = {aux.FilterBoolFunction(Card.IsSetCard,0xad),aux.FALSE,s.fextra,Fusion.ShuffleMaterial,nil,s.stage2}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetProperty(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetProperty(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1,id)
 	e2:SetCost(s.spcost)
 	e2:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.BreakEffect()
-		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xa9,0xc3) then
+		if tc:IsType(TYPE_MONSTER) and (tc:IsSetCard(0xa9) or tc:IsSetCard(0xc3) or tc:IsSetCard(0xad)) then
 			if tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 				and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 				and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
