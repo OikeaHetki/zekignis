@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.sop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xf}
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(aux.NecroValleyFilter(Fusion.IsMonsterFilter(Card.IsFaceup,Card.IsAbleToDeck)),tp,LOCATION_GRAVE+LOCATION_EXTRA,0,nil)
 end
