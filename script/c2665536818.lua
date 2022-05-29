@@ -46,8 +46,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.attop)
 	c:RegisterEffect(e4)
 end
-function s.thfilter(c,tp)
-	return c:IsRace(RACE_WYRM) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+function s.thfilter(c)
+	return c:IsRace(RACE_WYRM) and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,c:GetAttribute()),tp,LOCATION_MZONE,0,1,nil,c:GetAttribute())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
