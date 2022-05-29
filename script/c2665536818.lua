@@ -46,12 +46,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.attop)
 	c:RegisterEffect(e4)
 end
-function s.ffilter(c,att)
-	return c:IsFaceup() and c:IsAttribute(att)
-end
 function s.thfilter(c,tp)
 	return c:IsRace(RACE_WYRM) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
-		and not Duel.IsExistingMatchingCard(s.ffilter,tp,LOCATION_MZONE,0,1,nil,c:GetAttribute())
+		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,c:GetAttribute()),tp,LOCATION_MZONE,0,1,nil,c:GetAttribute())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -59,7 +56,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(0,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
@@ -68,26 +65,6 @@ end
 function s.costfilter(c,lv)
 	local clv=c:GetLevel()
 	return clv>0 and clv~=lv and c:IsRace(RACE_WYRM) and c:IsAbleToGraveAsCost()
-end
-function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local lv=e:GetHandler():GetLevel()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_DECK,0,1,nil,lv) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_DECK,0,1,1,nil,lv)
-	Duel.SendtoGrave(g,REASON_COST)
-	e:SetLabel(g:GetFirst():GetLevel())
-end
-function s.lvop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local lv=e:GetLabel()
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CHANGE_LEVEL)
-		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+0x1ff0000)
-		c:RegisterEffect(e1)
-	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -110,6 +87,28 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+---lv
+function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local lv=e:GetHandler():GetLevel()
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_DECK,0,1,nil,lv) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_DECK,0,1,1,nil,lv)
+	Duel.SendtoGrave(g,REASON_COST)
+	e:SetLabel(g:GetFirst():GetLevel())
+end
+function s.lvop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local lv=e:GetLabel()
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CHANGE_LEVEL)
+		e1:SetValue(lv)
+		e1:SetReset(RESET_EVENT+0x1ff0000)
+		c:RegisterEffect(e1)
+	end
+end
+---attribute
 function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
