@@ -37,14 +37,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	--Activate
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,3))
-	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCountLimit(1)
-	e4:SetOperation(s.attop)
-	c:RegisterEffect(e4)
 end
 function s.thfilter(c,tp)
 	return c:IsRace(RACE_WYRM) and c:IsAbleToHand()
@@ -101,25 +93,16 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CHANGE_LEVEL)
-		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+0x1ff0000)
-		c:RegisterEffect(e1)
-	end
-end
----attribute
-function s.attop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		Duel.Hint(HINT_SELECTMSG,tp,562)
-		local catt=c:GetAttribute()
-		local att=Duel.AnnounceAttribute(tp,1,0xffff - catt)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
-		e1:SetValue(att)
+		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		e1:SetValue(tc:GetAttribute())
 		e1:SetReset(RESET_EVENT+0x1ff0000)
 		c:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_CHANGE_LEVEL)
+		e2:SetValue(lv)
+		e2:SetReset(RESET_EVENT+0x1ff0000)
+		c:RegisterEffect(e2)
 	end
 end
