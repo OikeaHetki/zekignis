@@ -27,7 +27,7 @@ function s.filter1(c)
 	return c:IsSetCard(0xf) and c:IsAbleToGrave()
 end
 function s.filter2(c)
-	return c:IsSetCard(0xf) and c:IsAbleToGrave() and c:IsType(TYPE_NORMAL) and c:IsType(TYPE_MONSTER)
+	return c:IsAbleToGrave() and c:IsRace(RACE_BEAST) and c:IsType(TYPE_MONSTER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil) end
