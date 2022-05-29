@@ -13,14 +13,12 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--indes
+	--remove material
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.indcon)
-	e3:SetValue(1)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode(EVENT_BATTLED)
+	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 	--Attach 1 Level 1 WIND Winged Beast monster from hand, GY, or field to this card
 	local e4=Effect.CreateEffect(c)
@@ -40,9 +38,7 @@ function s.atkval(e,c)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)
-end
-function s.indcon(e)
-	return e:GetHandler():GetOverlayCount()>0
+	Duel.Damage(500,1-tp,REASON_EFFECT)
 end
 function s.matfilter(c)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsType(TYPE_TOKEN) and c:IsLevel(1) and c:IsRace(RACE_WINGEDBEAST)
