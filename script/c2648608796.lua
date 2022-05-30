@@ -45,6 +45,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0xf7}
+function s.indcon(e)
+	return e:GetHandler():GetOverlayCount()>0
+end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*500
 end
