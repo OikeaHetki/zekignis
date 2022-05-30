@@ -90,7 +90,7 @@ function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local lv,att=e:GetLabelObject():e:GetLevel(),e:GetLabelObject():e:GetAttribute()
+	local lv,att=e:GetLabelObject():GetLevel(),e:GetLabelObject():GetAttribute()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
