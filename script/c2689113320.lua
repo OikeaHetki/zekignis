@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	Pendulum.AddProcedure(c)
+	Pendulum.AddProcedure(c,false)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(1160)
