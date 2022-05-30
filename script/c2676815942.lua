@@ -18,11 +18,13 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_BATTLED)
+	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 	--Attach 1 Level 1 WIND Winged Beast monster from hand, GY, or field to this card
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
+	e4:SetCategory(CATEGORY_DAMAGE)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -36,9 +38,16 @@ end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*500
 end
+function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetParam(500)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
+end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)
-	Duel.Damage(500,1-tp,REASON_EFFECT)
+	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.matfilter(c)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsType(TYPE_TOKEN) and c:IsLevel(1) and c:IsRace(RACE_WINGEDBEAST)

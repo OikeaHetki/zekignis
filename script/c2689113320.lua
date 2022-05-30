@@ -4,6 +4,14 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
 	Pendulum.AddProcedure(c)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(1160)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetCost(s.reg)
+	c:RegisterEffect(e1)
 	--destroy after battle
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
@@ -27,6 +35,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0x9f,0x99}
+function s.reg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
+end
 ---search level 1 pepe
 function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:GetLevel()==1 and not c:IsPublic()
