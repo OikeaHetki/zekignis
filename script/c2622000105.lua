@@ -1,6 +1,6 @@
 --Karthaxus, Child of Ruling Dragons
 --scripted by zek
-local s,id=
+local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
