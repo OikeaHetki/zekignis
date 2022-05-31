@@ -33,6 +33,14 @@ function s.initial_effect(c)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
+	--atkup
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCode(EFFECT_UPDATE_ATTACK)
+	e4:SetValue(s.atkup)
+	c:RegisterEffect(e4)
 end
 s.listed_series={0x28}
 function s.spfilter(c)
@@ -90,3 +98,10 @@ function s.desop(e)
 	local dg=g:Filter(Card.IsRelateToEffect,nil,e)
 	Duel.Destroy(dg,REASON_EFFECT)
 end
+function s.atkfilter(c)
+	return c:IsFaceup() and c:IsRace(RACE_THUNDER)
+end
+function s.atkup(e,c)
+	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_REMOVED,0,nil)*200
+end
+
