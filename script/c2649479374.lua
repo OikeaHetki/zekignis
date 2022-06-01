@@ -49,7 +49,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsAttribute(0x6f)
 end
 function s.filter(e,c,tp)
-	return c:IsSetCard(0x28) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+    return c:IsSetCard(0x28) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
