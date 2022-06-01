@@ -48,7 +48,7 @@ end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsAttribute(0x6f)
 end
-function s.filter(c)
+function s.filter(c,e,tp)
 	return c:IsSetCard(0x28) and c:IsCanBeSpecialSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
