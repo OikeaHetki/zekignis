@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,s.matfilter,3,3,s.check)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),2,nil,s.matcheck)
 	--cannot link material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -29,9 +29,6 @@ function s.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
-function s.matfilter(g,lc,sumtype,tp)
-	return c:IsRace(RACE_DRAGON,g,lc,sumtype,tp) and c:IsType(TYPE_EFFECT,g,lc,sumtype,tp)
-end
-function s.check(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsLevelAbove,7)
+function s.matcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsType,1,nil,TYPE_EFFECT,lc,sumtype,tp)
 end
