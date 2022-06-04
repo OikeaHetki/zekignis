@@ -29,12 +29,12 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,e:GetHandler())
+	local rg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,e:GetHandler())
 	return aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),0,c)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,e:GetHandler())
+	local rg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,e:GetHandler())
 	local g=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()
@@ -44,8 +44,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,3,3,c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	local sum=0
 	local tc=g:GetFirst()

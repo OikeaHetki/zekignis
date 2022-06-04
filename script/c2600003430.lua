@@ -49,7 +49,7 @@ function s.initial_effect(c)
 end
 --hsp
 function s.rfilter(c)
-	return (c:IsRace(RACE_DRAGON) or c:IsAttribute(ATTRIBUTE_WATER)) and c:IsAbleToRemoveAsCost() 
+	return (c:IsRace(RACE_DRAGON) or c:IsAttribute(ATTRIBUTE_DARK)) and c:IsAbleToRemoveAsCost() 
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -108,7 +108,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 ---banishe ffect
 function s.thfilter(c)
-	return c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToHand()
+	return c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
