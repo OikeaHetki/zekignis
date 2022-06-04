@@ -29,6 +29,6 @@ function s.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
-function s.matfilter(c,scard,sumtype,tp)
-	return c:IsRace(RACE_DRAGON,scard,sumtype,tp) and c:IsType(TYPE_EFFECT,scard,sumtype,tp) and c:IsLevelAbove(7)
+function s.matfilter(c,lc,sumtype,tp)
+	return c:IsRace(RACE_DRAGON,lc,sumtype,tp) and c:IsType(TYPE_EFFECT,lc,sumtype,tp) and c:IsLevelAbove(7)
 end
