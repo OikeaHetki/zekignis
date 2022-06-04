@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spcon)
+	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--summon with no tribute
 	local e2=Effect.CreateEffect(c)
@@ -20,12 +21,6 @@ function s.initial_effect(c)
 	e2:SetCondition(s.ntcon)
 	e2:SetOperation(s.ntop)
 	c:RegisterEffect(e2)
-	--change atkdef on sp
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_SPSUMMON_COST)
-	e3:SetOperation(s.lvop)
-	c:RegisterEffect(e3)
 end
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE)
@@ -36,12 +31,8 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE,0,1,nil)
 end
-function s.ntcon(e,c,minc)
-	if c==nil then return true end
-	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-end
-function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
-	--change base attack/def
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_BASE_DEFENSE)
@@ -59,8 +50,12 @@ function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 	c:RegisterEffect(e2)
 end
-function s.atk(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
+function s.ntcon(e,c,minc)
+	if c==nil then return true end
+	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+end
+function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
+	--change base attack/def
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_BASE_DEFENSE)
