@@ -44,6 +44,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	local sum=0
 	local tc=g:GetFirst()
