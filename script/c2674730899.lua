@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetTarget(s.tg)
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	--defup
@@ -27,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetTarget(s.tg)
 	e3:SetValue(500)
 	c:RegisterEffect(e3)
 	--Self-destruction if a monster is normal summoned to your field
@@ -52,6 +54,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.listed_series={0x28}
+function s.tg(e,c)
+	return c:IsRace(RACE_WARRIOR)
+end
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x28)
 end
