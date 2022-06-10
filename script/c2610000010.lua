@@ -87,6 +87,9 @@ function s.initial_effect(c)
 	e12:SetOperation(s.desop)
 	c:RegisterEffect(e12)
 end
+function s.relval(e,c)
+	return c==e:GetHandler()
+end
 function s.genchainlm(c)
 	return function (e,rp,tp)
 				return e:GetHandler()==c

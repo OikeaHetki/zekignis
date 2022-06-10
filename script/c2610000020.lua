@@ -92,6 +92,9 @@ function s.initial_effect(c)
 	e14:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e14)
 end
+function s.relval(e,c)
+	return c==e:GetHandler()
+end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(aux.FALSE)
 end
