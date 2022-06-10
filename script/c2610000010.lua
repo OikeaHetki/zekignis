@@ -87,6 +87,19 @@ function s.initial_effect(c)
 	e12:SetOperation(s.desop)
 	c:RegisterEffect(e12)
 end
+function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+end
+function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,0,0)
+end
+function s.tgop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		Duel.SendtoGrave(c,REASON_EFFECT)
+	end
+end
 function s.relval(e,c)
 	return c==e:GetHandler()
 end
