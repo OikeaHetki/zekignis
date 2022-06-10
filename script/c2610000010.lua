@@ -124,7 +124,8 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		t[i]=i*100
 	end
 	local val=Duel.AnnounceNumber(tp,table.unpack(t))
-	if c:IsFaceup() and c:IsRelateToEffect(e) and Duel.PayLPCost(tp,val) then
+	if c:IsFaceup() and c:IsRelateToEffect(e) then
+		Duel.PayLPCost(tp,val)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
