@@ -41,9 +41,9 @@ function s.mat_filter(c)
 end
 ---spfield
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,true,nil,nil) end
-    local sg=Duel.SelectReleaseGroupCost(tp,nil,1,1,true,nil,nil)
-    Duel.Release(sg,REASON_COST)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,true,nil,nil) end
+	local sg=Duel.SelectReleaseGroupCost(tp,nil,1,1,true,nil,nil)
+	Duel.Release(sg,REASON_COST)
 end
 function s.spfil(c,e,tp)
 	return c:IsSetCard(0xb4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsType(TYPE_RITUAL)
@@ -75,7 +75,7 @@ function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSummonableCard()
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end
