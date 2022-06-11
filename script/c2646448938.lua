@@ -67,7 +67,6 @@ function s.spfilter(c,e,tp)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
-	Debug.Message(ct)
 	if ct>=1 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_CARD,0,id)
