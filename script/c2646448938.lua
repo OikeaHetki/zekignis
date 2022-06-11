@@ -60,7 +60,7 @@ function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 end
 ---the sequence
 function s.sfilter(c)
-	return c:IsSetCard(0x106e) and c:GetCode()~=id and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x106e) and c:IsType(TYPE_NORMAL) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0x6e)
@@ -77,12 +77,12 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.Damage(1-tp,800,REASON_EFFECT)
 	end
-	if ct>=3 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then   
+	if ct>=3 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) and Duel.IsPlayerCanDiscardDeck(tp,2) then   
 		Duel.BreakEffect()
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.DiscardDeck(tp,2,REASON_EFFECT)
 	end
-	if ct>=4 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
+	if ct>=4 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -90,7 +90,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-	if ct>=5 and Duel.SelectYesNo(tp,aux.Stringid(id,5)) then
+	if ct>=5 and Duel.SelectYesNo(tp,aux.Stringid(id,5)) and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,1,nil,e,tp)  then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
