@@ -66,7 +66,7 @@ function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0x6e)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetLabel(tp,id)
+	local ct=e:GetLabelObject():GetLabel()
 	Debug.Message(ct)
 	if ct>=1 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
