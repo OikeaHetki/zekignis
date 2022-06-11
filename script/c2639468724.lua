@@ -96,11 +96,11 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
 	e1:SetReset(RESET_EVENT+0x57a0000)
-	tc:RegisterEffect(e1)
+	rc:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
 	e2:SetReset(RESET_EVENT+0x57a0000)
-	tc:RegisterEffect(e2)
+	rc:RegisterEffect(e2)
 	end
 end
