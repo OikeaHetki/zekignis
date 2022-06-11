@@ -81,7 +81,7 @@ function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=Duel.SelectReleaseGroupCost(tp,nil,1,1,true,nil,nil)
 	Duel.Release(sg,REASON_COST)
 end
-function s.negt(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
 	local relation=rc:IsRelateToEffect(re)
 	if chk==0 then return rc:IsAbleToRemove(tp)
