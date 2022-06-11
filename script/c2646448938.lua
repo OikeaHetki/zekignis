@@ -82,7 +82,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.DiscardDeck(tp,2,REASON_EFFECT)
 	end
-	if ct>=4 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) then
+	if ct>=4 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -90,7 +90,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-	if ct>=5 and Duel.SelectYesNo(tp,aux.Stringid(id,5)) and Duel.IsExistingTarget(s.sfilter,tp,LOCATION_DECK,0,1,nil,e,tp)  then
+	if ct>=5 and Duel.SelectYesNo(tp,aux.Stringid(id,5)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -100,7 +100,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if ct>=6 
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,6)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
