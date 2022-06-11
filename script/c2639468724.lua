@@ -72,7 +72,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 ---onfield effect
-function s.negcpn(e,tp,eg,ep,ev,re,r,rp)
+function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return (loc==LOCATION_HAND or loc==LOCATION_GRAVE) and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
