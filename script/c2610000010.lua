@@ -124,6 +124,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		t[i]=i*100
 	end
 	local val=Duel.AnnounceNumber(tp,table.unpack(t))
+	e:SetLabel(val)
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		Duel.PayLPCost(tp,val)
 		local e1=Effect.CreateEffect(c)
@@ -131,7 +132,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
-		e1:SetValue(val)
+		e1:SetValue(e:SetLabel)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
