@@ -60,7 +60,7 @@ function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 end
 ---the sequence
 function s.sfilter(c)
-	return c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL) and c:IsAbleToHand() and not c:IsCode(id) and not c:IsOriginalCode(id)
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0x6e)
