@@ -66,7 +66,7 @@ function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0x6e)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetFlagEffect(tp,id)
+	local ct=Duel.GetLabel(tp,id)
 	Debug.Message(ct)
 	if ct>=1 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
@@ -78,7 +78,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.Damage(1-tp,800,REASON_EFFECT)
 	end
-	if ct>=3 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then	
+	if ct>=3 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then   
 		Duel.BreakEffect()
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.DiscardDeck(tp,2,REASON_EFFECT)
