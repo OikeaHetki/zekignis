@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xf}
 function s.unfilter(c)
-	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)) or c:IsSetCard(0xf) or cIsSetCard(0x111)
+	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)) or c:IsSetCard(0xf) or c:IsSetCard(0x111)
 end
 function s.thfilter(c)
 	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_UNION)) or c:IsSetCard(0xf) or cIsSetCard(0x111)

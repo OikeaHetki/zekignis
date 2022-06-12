@@ -5,6 +5,7 @@ function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),10,4,s.ovfilter,aux.Stringid(id,0))
 	c:EnableReviveLimit()
+	---indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -27,12 +28,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.xyz_number=95
-s.listed_names={58820923}
+s.listed_names={88177324}
 function s.ovfilter(c)
 	return c:IsFaceup() and (c:GetRank()==9 or c:GetRank()==8) and Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function s.matcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,58820923)
+	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,88177324)
 end
 function s.ind1(e,re,rp,c)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)

@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e4:SetLabelObject(e1)
 	c:RegisterEffect(e4)
 end
+s.xyz_number=95
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if g:IsExists(Card.IsCode,1,nil,58820923) then
