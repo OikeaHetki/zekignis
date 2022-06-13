@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	--Increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
+	e2:SetCode(EFFECT_SET_BASE_ATTACK)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.atkcon)
@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_CONTROL)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(s.ctcon)
 	e3:SetTarget(s.cttg)
 	e3:SetOperation(s.ctop)
 	c:RegisterEffect(e3)
@@ -44,6 +45,9 @@ function s.contactop(g)
 end
 function s.atkcon(e)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()
+end
+function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsAbleToEnterBP()
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsControlerCanBeChanged() end
