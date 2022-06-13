@@ -29,7 +29,7 @@ function s.unfilter(c)
 	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)) or c:IsSetCard(0xf) or c:IsSetCard(0x111)
 end
 function s.filter(c)
-	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_UNION)) or c:IsSetCard(0xf) or cIsSetCard(0x111)
+	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_UNION)) or c:IsSetCard(0xf) or c:IsSetCard(0x111)
 		and c:GetCode()~=id and c:IsSummonable(true,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
