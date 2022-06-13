@@ -26,7 +26,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0xf}
 function s.unfilter(c)
-	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)) or c:IsSetCard(0xf) or c:IsSetCard(0x111)
+	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_UNION)) 
+	or (c:IsSetCard(0xf) and c:IsType(TYPE_MONSTER)) or (c:IsSetCard(0x111) and c:IsType(TYPE_MONSTER))
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -34,6 +35,7 @@ function s.spcon(e,c)
 		Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
-	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_UNION)) or c:IsSetCard(0xf) or cIsSetCard(0x111)
+	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_UNION)) 
+	or (c:IsSetCard(0xf) and c:IsType(TYPE_MONSTER)) or (c:IsSetCard(0x111) and c:IsType(TYPE_MONSTER))
 		and c:GetCode()~=id and c:IsSummonable(true,nil)
 end

@@ -26,11 +26,13 @@ function s.initial_effect(c)
 end
 s.listed_series={0xf}
 function s.unfilter(c)
-	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)) or c:IsSetCard(0xf) or c:IsSetCard(0x111)
+	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_UNION)) 
+	or (c:IsSetCard(0xf) and c:IsType(TYPE_MONSTER)) or (c:IsSetCard(0x111) and c:IsType(TYPE_MONSTER))
 end
 function s.filter(c)
-	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_UNION)) or c:IsSetCard(0xf) or c:IsSetCard(0x111)
-		and c:GetCode()~=id and c:IsSummonable(true,nil)
+	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_UNION)) 
+	or (c:IsSetCard(0xf) and c:IsType(TYPE_MONSTER)) or (c:IsSetCard(0x111) and c:IsType(TYPE_MONSTER))
+	and c:GetCode()~=id and c:IsSummonable(true,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
