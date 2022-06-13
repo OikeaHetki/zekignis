@@ -50,7 +50,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.spfilter(c)
-	return (c:IsFaceup() and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsAbleToGraveAsCost()) or (c:IsFacedown() and c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost())
+	return (c:IsFaceup() and c:GetType()==TYPE_SPELL and c:IsAbleToGraveAsCost()) or (c:IsFacedown() and c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost())
 end
 function s.exfilter(c)
 	return s.spfilter(c) or (c:IsFacedown() and c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost())
