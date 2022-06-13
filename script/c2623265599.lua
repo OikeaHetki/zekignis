@@ -29,7 +29,7 @@ function s.unfilter(c)
 	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)) or c:IsSetCard(0xf) or c:IsSetCard(0x111)
 end
 function s.thfilter(c)
-	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_UNION)) or c:IsSetCard(0xf) or cIsSetCard(0x111)
+	return (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_UNION)) or c:IsSetCard(0xf) or c:IsSetCard(0x111)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
