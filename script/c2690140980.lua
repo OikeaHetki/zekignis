@@ -37,7 +37,7 @@ function s.disop(e,tp)
 		local dis2=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,dis1)
 		dis1=(dis1|dis2)
 		if c>2 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-			local dis3=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,dis1)
+			local dis3=Duel.SelectDisableField(tp,1,0,LOCATION_SZONE,dis1)
 			dis1=(dis1|dis3)
 		end
 	end

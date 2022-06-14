@@ -63,7 +63,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		if Duel.NegateEffect(ev) then
 			Duel.BreakEffect()
