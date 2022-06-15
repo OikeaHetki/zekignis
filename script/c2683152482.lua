@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon/union
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,nil,2,nil,s.spcheck)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_UNION),1,1)
 	aux.AddUnionProcedure(c)
 	--cannot be used as link material
 	local e1=Effect.CreateEffect(c)
@@ -39,9 +39,6 @@ s.listed_series={0x36}
 function s.lkcon(e)
 	local c=e:GetHandler()
 	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
-end
-function s.spcheck(g,lc,sumtype,tp)
-	return g:CheckSameProperty(Card.GetRace,lc,sumtype,tp) and g:CheckSameProperty(Card.GetAttribute,lc,sumtype,tp)
 end
 --link
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
