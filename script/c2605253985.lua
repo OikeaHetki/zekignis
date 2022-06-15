@@ -19,8 +19,8 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0)==0 or 
-	((c:IsFacedown() and c:GetSequence()<5) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0)
+--	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0)==0 or 
+--	((c:IsFacedown() and c:GetSequence()<5) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0)
 end
 function s.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DIVINE) and not c:IsPublic()
