@@ -12,12 +12,6 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_DISABLE_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	c:RegisterEffect(e3)
-	--summon success
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_SUMMON_SUCCESS)
-	e4:SetOperation(s.sumsuc)
-	c:RegisterEffect(e4)
 	--cannot be target
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
@@ -83,10 +77,6 @@ function s.initial_effect(c)
 	e14:SetCode(id)
 	c:RegisterEffect(e14)
 end
---sumsuc
-function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetChainLimitTillChainEnd(aux.FALSE)
-end
 --cannot release
 function s.relval(e,c)
 	return c==e:GetHandler()
@@ -108,8 +98,9 @@ function s.adval(e,c)
 		return val+100
 	end
 end
----register cannot 
+---register cannot and sumsuc
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.SetChainLimitTillChainEnd(aux.FALSE)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
