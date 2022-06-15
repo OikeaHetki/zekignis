@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0)==0 or 
 	((c:IsFacedown() and c:GetSequence()<5) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0)
 end
