@@ -35,7 +35,6 @@ end
 function s.filter(c,e,ec)
 	if not c:IsRace(RACE_DIVINE) then return false end
 	local res=c:IsSummonable(true,nil,1) or c:IsMSetable(true,nil,1)
-	e1:Reset()
 	return res
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
