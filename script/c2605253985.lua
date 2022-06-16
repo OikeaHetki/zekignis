@@ -24,7 +24,6 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCondition(s.drcon1)
 	e3:SetOperation(s.drop1)
-	e3:SetReset(RESET_PHASE+PHASE_END)
 	c.RegisterEffect(e3)
 	--sp_summon effect
 	local e4=Effect.CreateEffect(c)
@@ -32,7 +31,6 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetCondition(s.regcon)
 	e4:SetOperation(s.regop)
-	e4:SetReset(RESET_PHASE+PHASE_END)
 	c.RegisterEffect(e4)
 	--sp2draw
 	local e5=Effect.CreateEffect(c)
@@ -40,7 +38,6 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_CHAIN_SOLVED)
 	e5:SetCondition(s.drcon2)
 	e5:SetOperation(s.drop2)
-	e5:SetReset(RESET_PHASE+PHASE_END)
 	c.RegisterEffect(e5)
 end
 s.listed_names={10000020}
