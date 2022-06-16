@@ -35,11 +35,16 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 ---each time, draw
+function s.cfilter1(c)
+	return c:IsFaceup() and c:IsCode(10000020)
+end
 function s.filter(c,sp)
 	return c:GetSummonPlayer()==sp
 end
 function s.drcon1(e,tp,eg,ep,ev,re,r,rp)
+	local tp=e:GetHandlerPlayer()
 	return eg:IsExists(s.filter,1,nil,1-tp) 
+	and Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_ONFIELD,0,
 end
 function s.drop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,1,REASON_EFFECT)
