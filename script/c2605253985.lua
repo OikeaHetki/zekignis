@@ -44,7 +44,7 @@ end
 function s.drcon1(e,tp,eg,ep,ev,re,r,rp)
 	local tp=e:GetHandlerPlayer()
 	return eg:IsExists(s.filter,1,nil,1-tp) 
-	and Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_ONFIELD,0,
+	and Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.drop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,1,REASON_EFFECT)
