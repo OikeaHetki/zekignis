@@ -79,5 +79,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g2>0 then
 		g2:AddCard(e:GetHandler())
 		Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP)
+		end
 	end
 end
