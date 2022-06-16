@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.drcon1)
 	e3:SetOperation(s.drop1)
 	e3:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e3)
+	c.RegisterEffect(e3)
 	--sp_summon effect
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.regcon)
 	e4:SetOperation(s.regop)
 	e4:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e4)
+	c.RegisterEffect(e4)
 	--sp2draw
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e5:SetCondition(s.drcon2)
 	e5:SetOperation(s.drop2)
 	e5:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e5)
+	c.RegisterEffect(e5)
 end
 s.listed_names={10000020}
 ---condition
