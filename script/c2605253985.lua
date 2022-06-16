@@ -1,65 +1,54 @@
 --交差する魂
 --Soul Crossing
---Scripted by zek, with great dismay
 --zekpro version
+--by Rundas, with tweaks from zek
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE+EFFECT_FLAG_CANNOT_INACTIVATE)
-	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
---	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0)==0 or 
---	((c:IsFacedown() and c:GetSequence()<5) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0)
-end
-function s.costfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DIVINE) and not c:IsPublic()
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.ConfirmCards(1-tp,g)
-	Duel.ShuffleHand(tp)
-end
-function s.filter(c,e,ec)
-	if not c:IsRace(RACE_DIVINE) then return false end
-	local res=c:IsSummonable(true,nil,1) or c:IsMSetable(true,nil,1)
-	return res
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
-end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,c):GetFirst()
-	if tc then
-		local s1=tc:IsSummonable(true,nil,1)
-		local s2=tc:IsMSetable(true,nil,1)
-		if (s1 and s2 and Duel.SelectPosition(tp,tc,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)==POS_FACEUP_ATTACK) or not s2 then
-			Duel.Summon(tp,tc,true,nil,1)
+	local g1,g2,g3,g4=Duel.GetMatchingGroup(Card.IsReleasable,tp,LOCATION_MZONE,0,nil),Duel.GetMatchingGroup(Card.IsReleasable,tp,0,LOCATION_MZONE,nil),Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_HAND+LOCATION_ONFIELD,0,e:GetHandler()),
+	Duel.GetMatchingGroup(Card.IsRace,tp,LOCATION_HAND,0,nil,RACE_DIVINE)
+	if chk==0 then
+		if #g4==1 then
+			return #g4>0 and (aux.SelectUnselectGroup(g1+g2,e,tp,3,3,s.rescon(g1,g2,g3-g4,g4),0) or #g1>=3)
 		else
-			Duel.MSet(tp,tc,true,nil,1)
+			return #g4>0 and (aux.SelectUnselectGroup(g1+g2,e,tp,3,3,s.rescon(g1,g2,g3,g4),0) or #g1>=3)
 		end
 	end
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	e1:SetTargetRange(1,0)
-	Duel.RegisterEffect(e1,tp)
+end
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local g1,g2,g3,g4=Duel.GetMatchingGroup(Card.IsReleasable,tp,LOCATION_MZONE,0,nil),Duel.GetMatchingGroup(Card.IsReleasable,tp,0,LOCATION_MZONE,nil),Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_HAND+LOCATION_ONFIELD,0,e:GetHandler()),
+	Duel.GetMatchingGroup(Card.IsRace,tp,LOCATION_HAND,0,nil,RACE_DIVINE)
+	if not (Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_HAND,0,1,nil,RACE_DIVINE) and (aux.SelectUnselectGroup(g1+g2,e,tp,3,3,s.rescon(g1,g2,g3,g4),0) or #g1>=3)) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+	local tc=Duel.SelectMatchingCard(tp,Card.IsRace,tp,LOCATION_HAND,0,1,1,nil,RACE_DIVINE):GetFirst()
+	Duel.ConfirmCards(1-tp,tc)
+	local choice=aux.SelectEffect(tp,{aux.SelectUnselectGroup(g1+g2,e,tp,3,3,s.rescon(g1,g2,g3,g4),0),aux.Stringid(id,1)},{#g1>=3,aux.Stringid(id,2)})
+	if choice==2 then
+		Duel.Summon(tp,tc,false,nil)
+	else
+		local g=aux.SelectUnselectGroup(g1+g2,e,tp,3,3,s.rescon(g1,g2,g3,g4),1,tp,HINTMSG_RELEASE,nil,nil)
+		Duel.HintSelection(g)
+		local g5=aux.SelectUnselectGroup(g3-g-Group.FromCards(tc),e,tp,#(g&g2),#(g&g2),aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE,nil,nil)
+		Duel.Release(g,REASON_EFFECT)
+		Duel.SendtoGrave(g5,REASON_EFFECT)
+		Duel.MoveToField(tc,tp,tp,LOCATION_MZONE,POS_FACEUP_ATTACK,true)
+	end
+end
+function s.rescon(g1,g2,g3,g4)
+	return function(sg,e,tp,mg)
+		if #g4>1 then
+			return #(sg&g2)<=#g3
+		else
+			return #(sg&g2)<=#g3-1
+		end
+	end
 end
