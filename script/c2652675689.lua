@@ -1,4 +1,6 @@
 --暗黒の眠りを誘うルシファー
+--Invitation to a Dark Sleep
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--atklimit
@@ -14,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 	local e3=e1:Clone()
-	e3:SetCode(EVENT_SPECIAL_SUMMON_SUCCESS)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -35,12 +37,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		--disable
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD)
-		e3:SetCode(EFFECT_DISABLE)
-		e3:SetCondition(s.rcon)
-		e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-		tc:RegisterEffect(e3)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_DISABLE)
+		e2:SetCondition(s.rcon)
+		e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+		tc:RegisterEffect(e2)
 		--cannot attack
 		local e4=e3:Clone()
 		e4:SetCode(EFFECT_CANNOT_ATTACK)
