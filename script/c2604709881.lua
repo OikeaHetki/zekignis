@@ -5,15 +5,6 @@ function s.initial_effect(c)
 	--link summon
 	Link.AddProcedure(c,s.matfilter,2,2)
 	c:EnableReviveLimit()
-	--extra mat
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_FIELD)
-	e0:SetRange(LOCATION_EXTRA)
-	e0:SetCode(EFFECT_EXTRA_MATERIAL)
-	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET|EFFECT_FLAG_CANNOT_DISABLE|EFFECT_FLAG_SET_AVAILABLE)
-	e0:SetTargetRange(1,0)
-	e0:SetValue(s.extraval)
-	c:RegisterEffect(e0)
 	--Special Summon a Normal Plant
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -42,16 +33,6 @@ s.listed_series={0x12}
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsType(TYPE_EFFECT,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_WATER,scard,sumtype,tp)
 	and c:IsRace(RACE_AQUA,scard,sumtype,tp)
-end
-function s.extraval(chk,summon_type,e,...)
-	if chk==0 then
-		local tp,sc=...
-		if summon_type~=SUMMON_TYPE_LINK or sc~=e:GetHandler() then
-			return Group.CreateGroup()
-		else
-			return Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_MZONE,0,68638985)
-		end
-	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
