@@ -38,19 +38,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		--disable
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE)
 		e2:SetCondition(s.rcon)
 		e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 		tc:RegisterEffect(e2)
-		--cannot attack
-		local e4=e2:Clone()
-		e4:SetCode(EFFECT_CANNOT_ATTACK)
-		tc:RegisterEffect(e4)
-		local e7=e2:Clone()
-		e7:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-		c:RegisterEffect(e7)
-		end
+		local e3=e2:Clone()
+		e3:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
+		tc:RegisterEffect(e3)
+	end
 end
 function s.rcon(e)
 	return e:GetOwner():IsHasCardTarget(e:GetHandler())
