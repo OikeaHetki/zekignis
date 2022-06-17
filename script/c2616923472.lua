@@ -13,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x58}
 function s.costfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x58) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(0x58) and c:GetCode()~=id and c:GetOriginalCode()~=id
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil) end
