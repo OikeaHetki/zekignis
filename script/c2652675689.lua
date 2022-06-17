@@ -44,10 +44,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 		tc:RegisterEffect(e2)
 		--cannot attack
-		local e4=e3:Clone()
+		local e4=e2:Clone()
 		e4:SetCode(EFFECT_CANNOT_ATTACK)
 		tc:RegisterEffect(e4)
-		local e7=e3:Clone()
+		local e7=e2:Clone()
 		e7:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 		c:RegisterEffect(e7)
 		end
