@@ -4,6 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
+	c:SetUniqueOnField(1,0,id)
 	Xyz.AddProcedure(c,nil,1,2,nil,nil,99)
 	--ATK Up
 	local e1=Effect.CreateEffect(c)
@@ -34,14 +35,14 @@ function s.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 	--Cannot be destroyed by battle while it has Xyz Material
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(s.indcon)
-	e4:SetValue(1)
-	c:RegisterEffect(e4)
+  --  local e4=Effect.CreateEffect(c)
+  --  e4:SetType(EFFECT_TYPE_SINGLE)
+  --  e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+  --  e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+  --  e4:SetRange(LOCATION_MZONE)
+  --  e4:SetCondition(s.indcon)
+  --  e4:SetValue(1)
+  --  c:RegisterEffect(e4)
 	--remove material
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,0))
@@ -58,7 +59,7 @@ function s.indcon(e)
 	return e:GetHandler():GetOverlayCount()>0
 end
 function s.atkval(e,c)
-	return c:GetOverlayCount()*500
+	return c:GetOverlayCount()*200
 end
 function s.raval(e,c)
 	local oc=e:GetHandler():GetOverlayCount()

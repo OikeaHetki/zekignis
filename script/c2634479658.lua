@@ -47,7 +47,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.filter(c,e,tp)
-	return c:IsRace(RACE_AQUA) and c:IsAttribute(ATTRIBUTE_WATER) and not c:IsCode(id) 
+	return c:IsRace(RACE_AQUA) and c:IsAttribute(ATTRIBUTE_WATER) and not c:IsCode(id) and not c:IsOriginalCode(id)
 	and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSummonableCard()
 end
 function s.hsfilter(c)
