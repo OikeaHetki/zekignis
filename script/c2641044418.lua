@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_MONSTER_REBORN,CARD_RA,10000000,10000020}
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsRace(RACE_DIVINE)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsRace(RACE_DIVINE) and (aux.IsCodeListed(c,CARD_RA) or aux.IsCodeListed(c,10000000) or aux.IsCodeListed(c,10000020))
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
