@@ -34,12 +34,11 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.roll_dice=true
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return not c:IsType(TYPE_NORMAL) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.filter(c)
-	return c:IsType(TYPE_PENDULUM) and (c:IsType(TYPE_NORMAL) or c:IsType(TYPE_GEMINI)) and c:IsAbleToHand()
+	return c:IsType(TYPE_PENDULUM) and c:IsType(TYPE_NORMAL) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDestructable()
@@ -59,7 +58,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_NORMAL) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
