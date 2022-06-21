@@ -24,77 +24,69 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e3:SetValue(1)
-  --  c:RegisterEffect(e3)
-	--Cannot be destroyed by card effects while it has Xyz Material
-  --  local e4=Effect.CreateEffect(c)
-  --  e4:SetType(EFFECT_TYPE_SINGLE)
-  --  e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-  --  e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-  --  e4:SetRange(LOCATION_MZONE)
-  --  e4:SetCondition(s.indcon)
-  --  e4:SetValue(1)
-  --  c:RegisterEffect(e4)
-	--Cannot be destroyed by battle while it has Xyz Material
-  --  local e5=Effect.CreateEffect(c)
-  --  e5:SetType(EFFECT_TYPE_SINGLE)
-  --  e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-  --  e5:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-  --  e5:SetRange(LOCATION_MZONE)
-  --  e5:SetCondition(s.indcon)
-  --  e5:SetValue(1)
-  --  c:RegisterEffect(e5)
+    c:RegisterEffect(e3)
+	--Cannot be destroyed by card effects
+    local e4=Effect.CreateEffect(c)
+    e4:SetType(EFFECT_TYPE_SINGLE)
+    e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+    e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+    e4:SetRange(LOCATION_MZONE)
+    e4:SetValue(1)
+    c:RegisterEffect(e4)
 	--remove material
-	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(id,0))
-	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e6:SetCode(EVENT_BATTLED)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetOperation(s.rmop)
-	c:RegisterEffect(e6)
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e5:SetCode(EVENT_BATTLED)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetOperation(s.rmop)
+	c:RegisterEffect(e5)
 	--destroy equip
-	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(id,1))
-	e7:SetCategory(CATEGORY_DESTROY)
-	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e7:SetCode(EVENT_EQUIP)
-	e7:SetTarget(s.destg)
-	e7:SetOperation(s.desop)
-	c:RegisterEffect(e7)
+	local e6=Effect.CreateEffect(c)
+	e6:SetDescription(aux.Stringid(id,1))
+	e6:SetCategory(CATEGORY_DESTROY)
+	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e6:SetCode(EVENT_EQUIP)
+	e6:SetTarget(s.destg)
+	e6:SetOperation(s.desop)
+	c:RegisterEffect(e6)
 	--direct atk
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_SINGLE)
+	e7:SetCode(EFFECT_DIRECT_ATTACK)
+	c:RegisterEffect(e7)
+	--based on material
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE)
-	e8:SetCode(EFFECT_DIRECT_ATTACK)
+	e8:SetCode(EFFECT_MATERIAL_CHECK)
+	e8:SetValue(s.valcheck)
+	e8:SetLabelObject(e2)
 	c:RegisterEffect(e8)
-	--based on material
-	local e10=Effect.CreateEffect(c)
-	e10:SetType(EFFECT_TYPE_SINGLE)
-	e10:SetCode(EFFECT_MATERIAL_CHECK)
-	e10:SetValue(s.valcheck)
-	e10:SetLabelObject(e2)
-	c:RegisterEffect(e10)
 end
 s.listed_series={0xf7}
-function s.indcon(e)
-	return e:GetHandler():GetOverlayCount()>0
-end
+---atk per mat
 function s.atkval(e,c)
 	return c:GetOverlayCount()*200
 end
+---check for how many materials on xyz summon
 function s.valcheck(e,c)
 	local hc=e:GetHandler()
 	local ct=hc:GetMaterial():GetCount(Card.GetCode,hc,SUMMON_TYPE_XYZ,hc:GetControler())
 	e:GetLabelObject():SetLabel(ct)
 end
+---number of atks
 function s.raval(e,c)
 	local ct=e:GetLabel()
 	return math.max(0,ct-1)
 end
+---remove mats after attacking
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetOverlayCount()>0 then
 		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
 	end
 end
+---eff for gearfried pop
 function s.filter(c,ec)
 	return c:GetEquipTarget()==ec
 end
