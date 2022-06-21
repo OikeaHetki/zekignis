@@ -30,7 +30,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE and rp~=tp
 end
 function s.thfilter(c,tp)
-	return c:IsSetCard(0xf9) and c:GetType()==0x20002
+	return c:IsSetCard(0xf9) and c:GetType()==TYPE_CONTINUOUS
 		and (c:IsAbleToHand() or c:GetActivateEffect():IsActivatable(tp))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

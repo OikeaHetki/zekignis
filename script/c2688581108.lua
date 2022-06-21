@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	--"True Draco" and "True King" opponent destruction flag
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(id)
+	e2:SetCode(88581108)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,0)
