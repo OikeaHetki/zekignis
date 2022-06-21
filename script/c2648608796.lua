@@ -66,13 +66,6 @@ function s.initial_effect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE)
 	e8:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e8)
-	--material check
-	local e9=Effect.CreateEffect(c)
-	e9:SetType(EFFECT_TYPE_SINGLE)
-	e9:SetCode(EFFECT_MATERIAL_CHECK)
-	e9:SetValue(s.valcheck)
-	e9:SetLabelObject(e2)
-	c:RegisterEffect(e9)
 end
 s.listed_series={0xf7}
 function s.indcon(e)
@@ -81,13 +74,8 @@ end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*200
 end
-function s.valcheck(e,c)
-	local hc=e:GetHandler()
-	local ct=hc:GetMaterial():GetCount(Card.GetCode,hc,SUMMON_TYPE_XYZ,hc:GetControler())
-	e:GetLabelObject():SetLabel(ct)
-end
 function s.raval(e,c)
-	local oc=e:GetHandler():GetLabel()
+	local oc=e:GetHandler():GetMaterialCount()
 	return math.max(0,oc-1)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
