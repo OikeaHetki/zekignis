@@ -87,7 +87,7 @@ function s.valcheck(e,c)
 	e:GetLabelObject():SetLabel(ct)
 end
 function s.raval(e,c)
-	local oc=e:GetHandler():GetLabelObject()
+	local oc=e:GetHandler():GetLabel()
 	return math.max(0,oc-1)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
