@@ -49,12 +49,11 @@ function s.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e6:SetCode(EVENT_BATTLED)
 	e6:SetRange(LOCATION_MZONE)
-	e6:SetCountLimit(1)
 	e6:SetOperation(s.rmop)
 	c:RegisterEffect(e6)
 	--destroy equip
 	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(id,0))
+	e7:SetDescription(aux.Stringid(id,1))
 	e7:SetCategory(CATEGORY_DESTROY)
 	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e7:SetCode(EVENT_EQUIP)
@@ -66,6 +65,13 @@ function s.initial_effect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE)
 	e8:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e8)
+	--based on material
+	local e10=Effect.CreateEffect(c)
+	e10:SetType(EFFECT_TYPE_SINGLE)
+	e10:SetCode(EFFECT_MATERIAL_CHECK)
+	e10:SetValue(s.valcheck)
+	e10:SetLabelObject(e2)
+	c:RegisterEffect(e10)
 end
 s.listed_series={0xf7}
 function s.indcon(e)
@@ -74,9 +80,14 @@ end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*200
 end
+function s.valcheck(e,c)
+	local hc=e:GetHandler()
+	local ct=hc:GetMaterial():GetCount(Card.GetCode,hc,SUMMON_TYPE_XYZ,hc:GetControler())
+	e:GetLabelObject():SetLabel(ct)
+end
 function s.raval(e,c)
-	local oc=e:GetHandler():GetMaterialCount()
-	return math.max(0,oc-1)
+	local ct=e:GetLabel()
+	return math.max(0,ct-1)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
