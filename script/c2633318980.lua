@@ -42,7 +42,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x10cf,0xbd}
+s.listed_series={0x10cf}
+s.listed_series={0xbd}
 function s.rfilter(c,ft,tp)
 	return c:IsRace(RACE_WARRIOR) and c:IsLevelAbove(7)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
