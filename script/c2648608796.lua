@@ -24,15 +24,15 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e3:SetValue(1)
-    c:RegisterEffect(e3)
+	c:RegisterEffect(e3)
 	--Cannot be destroyed by card effects
-    local e4=Effect.CreateEffect(c)
-    e4:SetType(EFFECT_TYPE_SINGLE)
-    e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-    e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-    e4:SetRange(LOCATION_MZONE)
-    e4:SetValue(1)
-    c:RegisterEffect(e4)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetValue(1)
+	c:RegisterEffect(e4)
 	--remove material
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
@@ -80,10 +80,7 @@ function s.raval(e,c)
 end
 ---remove mats after attacking
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:GetOverlayCount()>0 then
-		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
-	end
+	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)
 end
 ---eff for gearfried pop
 function s.filter(c,ec)
