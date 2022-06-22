@@ -17,10 +17,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLP(tp)>100 end
-	local lp=Duel.GetLP(tp)
-	e:SetLabel(lp-100)
-	Duel.PayLPCost(tp,lp-100)
+	if chk==0 then return Duel.GetLP(tp)>=1000 end
+	Duel.PayLPCost(tp,1000)
 end
 function s.cfilter(c)
 	return (c:IsFaceup() and c:GetLevel()==8 and not c:IsSummonableCard() and c:GetBaseAttack()==3000 and c:GetBaseDefense()==2500) and

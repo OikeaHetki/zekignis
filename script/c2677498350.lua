@@ -82,13 +82,13 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
 		if #g>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-		Duel.Recover(tp,g*300,REASON_EFFECT)
+		Duel.Recover(tp,#g*300,REASON_EFFECT)
 		end
 	else
 		local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
 		if #g>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-		Duel.Damage(1-tp,g*200,REASON_EFFECT)
+		Duel.Damage(1-tp,#g*200,REASON_EFFECT)
 		end
 	end
 end
