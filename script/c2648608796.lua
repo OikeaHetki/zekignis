@@ -38,7 +38,6 @@ function s.initial_effect(c)
 	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_BATTLED)
-	e5:SetRange(LOCATION_MZONE)
 	e5:SetOperation(s.rmop)
 	c:RegisterEffect(e5)
 	--destroy equip
