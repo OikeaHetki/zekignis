@@ -30,8 +30,18 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e4:SetRange(LOCATION_MZONE)
+	e4:SetCondition(s.indcon)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
+	--Cannot be destroyed by battle
+	local e9=Effect.CreateEffect(c)
+	e9:SetType(EFFECT_TYPE_SINGLE)
+	e9:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e9:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e9:SetRange(LOCATION_MZONE)
+	e9:SetCondition(s.indcon)
+	e9:SetValue(1)
+	c:RegisterEffect(e9)
 	--remove material
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
@@ -63,9 +73,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e8)
 end
 s.listed_series={0xf7}
+---indes
+function s.indcon(e)
+	return e:GetHandler():GetOverlayCount()>0
+end
 ---atk per mat
 function s.atkval(e,c)
-	return c:GetOverlayCount()*300
+	return c:GetOverlayCount()*200
 end
 ---check for how many materials on xyz summon
 function s.valcheck(e,c)
