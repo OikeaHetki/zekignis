@@ -4,7 +4,6 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	c:SetUniqueOnField(1,0,id)
 	Xyz.AddProcedure(c,nil,1,2,nil,nil,99)
 	--ATK Up
 	local e1=Effect.CreateEffect(c)
@@ -36,9 +35,8 @@ function s.initial_effect(c)
 	--remove material
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e5:SetCode(EVENT_BATTLED)
-	e5:SetRange(LOCATION_MZONE)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e5:SetCode(EVENT_DAMAGE_STEP_END)
 	e5:SetCondition(s.rmcon)
 	e5:SetOperation(s.rmop)
 	c:RegisterEffect(e5)
@@ -82,7 +80,8 @@ function s.raval(e,c)
 end
 ---remove mats after attacking
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetBattledGroupCount()>0
+	if chk==0 then return true end
+	if not e:GetHandler():IsCanRemoveOverlayCard(tp,1,1,REASON_EFFECT) then return false end
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)
