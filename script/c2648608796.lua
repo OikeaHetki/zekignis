@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_BATTLED)
 	e5:SetRange(LOCATION_MZONE)
+	e5:SetCondition(s.rmcon)
 	e5:SetOperation(s.rmop)
 	c:RegisterEffect(e5)
 	--destroy equip
@@ -80,6 +81,9 @@ function s.raval(e,c)
 	return math.max(0,ct-1)
 end
 ---remove mats after attacking
+function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetBattledGroupCount()>0
+end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)
 end
