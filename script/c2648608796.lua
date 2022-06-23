@@ -81,7 +81,7 @@ end
 ---remove mats after attacking
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	if chk==0 then return true end
-	if not e:GetHandler():IsCanRemoveOverlayCard(tp,1,1,REASON_EFFECT) then return false end
+	return e:GetHandler():GetOverlayCount()>0
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)
