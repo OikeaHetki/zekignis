@@ -46,9 +46,9 @@ function s.tdcfilter(c)
 	return c:IsSetCard(0xbe) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost()
 end
 function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tdcfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tdcfilter,tp,LOCATION_HAND+LOCATION_DECK,0,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tdcfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.tdcfilter,tp,LOCATION_HAND+LOCATION_DECK,0,2,2,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
