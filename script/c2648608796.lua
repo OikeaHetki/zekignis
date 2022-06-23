@@ -67,7 +67,7 @@ end
 s.listed_series={0xf7}
 ---atk per mat
 function s.atkval(e,c)
-	return c:GetOverlayCount()*200
+	return c:GetOverlayCount()*300
 end
 ---check for how many materials on xyz summon
 function s.valcheck(e,c)
