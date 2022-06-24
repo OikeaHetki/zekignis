@@ -48,7 +48,7 @@ function s.matfilter(c,fc,sumtype,tp)
 end
 ---true draco effect
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and rp~=tp
+	return rp~=tp
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end

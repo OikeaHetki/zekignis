@@ -17,7 +17,7 @@ function s.filter(c,e,tp)
 	return c:IsSetCard(0x47) and not c:IsSetCard(0x1047) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.thfilter(c,e,tp)
-	return c:IsSetCard(0x47) and c:IsAbleToHand()
+	return c:IsSetCard(0x47) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
