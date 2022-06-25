@@ -23,7 +23,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetAttacker():IsCanBeEffectTarget(e) end
+	if chk==0 then return Duel.GetAttacker():IsCanBeEffectTarget(e) and Duel.GetAttacker():IsOnField() end
 	Duel.SetTargetCard(Duel.GetAttacker())
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

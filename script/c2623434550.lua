@@ -57,7 +57,7 @@ function s.drcon1(e,tp,eg,ep,ev,re,r,rp)
 		and (not re:IsHasType(EFFECT_TYPE_ACTIONS) or re:IsHasType(EFFECT_TYPE_CONTINUOUS))
 end
 function s.drop1(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Damage(1-tp,500,REASON_EFFECT)
+	Duel.Damage(1-tp,600,REASON_EFFECT)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,1-tp) 
@@ -72,5 +72,5 @@ end
 function s.drop2(e,tp,eg,ep,ev,re,r,rp)
 	local n=Duel.GetFlagEffect(tp,id)
 	Duel.ResetFlagEffect(tp,id)
-	Duel.Damage(1-tp,n*500,REASON_EFFECT)
+	Duel.Damage(1-tp,n*600,REASON_EFFECT)
 end
