@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.filter(c)
-	return (c:IsCode() or c:IsCode() or c:IsCode() or c:IsCode())
+	return (c:IsCode(48202661) or c:IsCode(60246171) or c:IsCode(69456283) or c:IsCode(57062206))
 	and c:IsMonster() and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
