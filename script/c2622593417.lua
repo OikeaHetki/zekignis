@@ -67,7 +67,7 @@ function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,g1,REASON_EFFECT+REASON_DISCARD)
 end
 function s.hdcon2(e)
-	return e:GetHandler():IsExtraLinked() and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)<=1
+	return e:GetHandler():IsExtraLinked() and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)<=3
 	and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)==0
 end
 function s.hdtg2(e,tp,eg,ep,ev,re,r,rp,chk)
