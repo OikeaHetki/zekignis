@@ -31,11 +31,11 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>=2 and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.IsPlayerCanSpecialSummonCount(tp,2)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_FIEND,ATTRIBUTE_DARK)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,75732623+1,0,TYPES_TOKEN,0,0,1,RACE_FIEND,ATTRIBUTE_DARK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	for i=1,2 do
-		local token=Duel.CreateToken(tp,id+1)
+		local token=Duel.CreateToken(tp,75732623+1)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3312)
