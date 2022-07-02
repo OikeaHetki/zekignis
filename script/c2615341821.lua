@@ -24,7 +24,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCount(tp,LOCATION_MZONE)<2 
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,15341822,0,TYPES_TOKEN,0,0,1,RACE_PLANT,ATTRIBUTE_WIND) then return end
 	for i=1,2 do
-		local token=Duel.CreateToken(tp,id+i)
+		local token=Duel.CreateToken(tp,15341822)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		--Cannot be tributed for a tribute summon
 		local e1=Effect.CreateEffect(e:GetHandler())

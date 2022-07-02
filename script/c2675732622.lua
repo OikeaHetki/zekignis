@@ -28,8 +28,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	for i=1,2 do
 		local token=Duel.CreateToken(tp,75732623)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+		--Cannot be tributed for a tribute summon
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3304)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		token:RegisterEffect(e1)
 	end
-	Duel.SpecialSummonComplete()
 	Duel.SpecialSummonComplete()
 	local ge1=Effect.CreateEffect(e:GetHandler())
 	ge1:SetType(EFFECT_TYPE_FIELD)
