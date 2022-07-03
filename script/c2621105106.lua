@@ -42,21 +42,16 @@ function s.mat_filter(c)
 	return c:GetLevel()~=10
 end
 ---gain card advantage lol
-function s.condition(e,tp,eg,ep,ev,re,r,rp) ---if all the monsters are ritual on your field (min. 1)
-	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return #g>0 and g:FilterCount(aux.FilterFaceupFunction(Card.IsType,TYPE_RITUAL),nil)==#g
+function s.cfilter(c)
+	return c:IsDiscardable()
 end
-function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable()
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
 	g:AddCard(e:GetHandler())
 	Duel.SendtoGrave(g,REASON_DISCARD+REASON_COST)
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0xb4) and not c:IsCode(id) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
