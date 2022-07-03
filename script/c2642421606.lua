@@ -50,8 +50,8 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	elseif dc==2 then
 		Duel.Draw(tp,2,REASON_EFFECT)
 	elseif dc==3 then
-		if Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 then
-			Duel.DiscardHand(1-tp,nil,2,2,REASON_EFFECT+REASON_DISCARD)
+		Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0
+		Duel.DiscardHand(1-tp,nil,2,2,REASON_EFFECT+REASON_DISCARD)
 		end
 	elseif dc==4 then
 	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
