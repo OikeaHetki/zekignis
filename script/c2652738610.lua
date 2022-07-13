@@ -36,7 +36,8 @@ function s.initial_effect(c)
 	e4:SetCategory(CATEGORY_TOGRAVE)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_REMOVE)
-	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e4:SetCountLimit(1,{id,1})
 	e4:SetTarget(s.rtgtg)
 	e4:SetOperation(s.rtgop)
 	c:RegisterEffect(e4)
@@ -63,7 +64,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xb4) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_RITUAL) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0xb4) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_RITUAL) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -80,7 +81,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rtgfilter(c)
-	return c:IsFaceup() and ((c:IsSetCard(0xb4) and c:IsType(TYPE_MONSTER) and not c:IsCode(id) and c:IsType(TYPE_RITUAL)))
+	return c:IsFaceup() and ((c:IsSetCard(0xb4) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_RITUAL))) and not (c:IsCode(id) or c:IsOriginalCode(id))
 end
 function s.rtgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.rtgfilter(chkc) end

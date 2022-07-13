@@ -92,7 +92,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsSetCard(0xb4) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_RITUAL) and c:IsAbleToHand()
+	return c:IsSetCard(0xb4) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_RITUAL) and c:IsAbleToHand() and not (c:IsOriginalCode(id) or c:IsCode(id))
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
