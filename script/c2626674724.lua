@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	--anti-discard
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_DRAW)
+	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_HAND)
@@ -35,7 +35,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_series={0xb4}
 s.listed_names={id}
@@ -77,15 +76,9 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
-		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)~=0 then
-		Duel.BreakEffect()
-		Duel.Draw(tp,1,REASON_EFFECT)
-	end
-end
+	   Duel.Draw(tp,3,REASON_EFFECT)
+ end
