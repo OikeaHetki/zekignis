@@ -103,7 +103,7 @@ end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.Remove(eg,POS_FACEUP,REASON_EFFECT) and re:GetHandler():IsRelateToEffect(re) then return end
 	local rg=Group.CreateGroup()
-	for tc in sg:Iter() do
+	for tc in eg:Iter() do
 		if tc:IsLocation(LOCATION_REMOVED) then
 			local tpe=tc:GetType()
 			if (tpe&TYPE_TOKEN)==0 then
