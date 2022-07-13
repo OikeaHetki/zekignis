@@ -75,10 +75,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)
-	end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,3) end
+	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetParam(3)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	   Duel.Draw(tp,3,REASON_EFFECT)
- end
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Draw(p,d,REASON_EFFECT)
+end
