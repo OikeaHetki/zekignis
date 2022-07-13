@@ -101,7 +101,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetChainLimit(aux.FALSE)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.Remove(ev,POS_FACEUP,REASON_EFFECT) and re:GetHandler():IsRelateToEffect(re) then
+	if Duel.Remove(eg,POS_FACEUP,REASON_EFFECT) and re:GetHandler():IsRelateToEffect(re) then
 	Duel.Remove(Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_GRAVE,nil),POS_FACEUP,REASON_EFFECT)
 	end
 end
