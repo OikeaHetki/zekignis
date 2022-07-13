@@ -101,8 +101,20 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetChainLimit(aux.FALSE)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.Remove(eg,POS_FACEUP,REASON_EFFECT) and re:GetHandler():IsRelateToEffect(re) then
-	Duel.Remove(Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_GRAVE,nil),POS_FACEUP,REASON_EFFECT)
+	if not Duel.Remove(eg,POS_FACEUP,REASON_EFFECT) and re:GetHandler():IsRelateToEffect(re) then return end
+	local rg=Group.CreateGroup()
+	for tc in sg:Iter() do
+		if tc:IsLocation(LOCATION_REMOVED) then
+			local tpe=tc:GetType()
+			if (tpe&TYPE_TOKEN)==0 then
+				rg:Merge(Duel.GetMatchingGroup(Card.IsCode,tp,0,LOCATION_DECK+LOCATION_HAND,nil,tc:GetCode()))
+			end
+		end
+	end
+	if #rg>0 then
+		Duel.BreakEffect()
+		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
+		Duel.Remove(Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_GRAVE,nil),POS_FACEUP,REASON_EFFECT)
 	end
 end
 function s.rmfilter(c)
