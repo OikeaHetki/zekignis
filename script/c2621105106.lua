@@ -73,8 +73,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 end
 ---onfield effect
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,true,nil,nil) end
@@ -89,20 +88,8 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.Remove(eg,POS_FACEUP,REASON_EFFECT) and re:GetHandler():IsRelateToEffect(re) then return end
-	local rg=Group.CreateGroup()
-	for tc in eg:Iter() do
-		if tc:IsLocation(LOCATION_REMOVED) then
-			local tpe=tc:GetType()
-			if (tpe&TYPE_TOKEN)==0 then
-				rg:Merge(Duel.GetMatchingGroup(Card.IsCode,tp,0,LOCATION_DECK+LOCATION_HAND,nil,tc:GetCode()))
-			end
-		end
-	end
-	if #rg>0 then
-		Duel.BreakEffect()
-		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
-		Duel.Remove(Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_GRAVE,nil),POS_FACEUP,REASON_EFFECT)
+	if Duel.Remove(eg,POS_FACEUP,REASON_EFFECT) then
+		Duel.Remove(Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil),POS_FACEUP,REASON_EFFECT)
 	end
 end
 function s.rmfilter(c)
