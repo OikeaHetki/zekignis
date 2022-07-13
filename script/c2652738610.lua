@@ -1,23 +1,7 @@
 --影霊衣の舞姫
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
-	--act limit
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_CHAINING)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetOperation(s.chainop)
-	c:RegisterEffect(e1)
-	--cannot be target
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(s.tgtg)
-	e2:SetValue(aux.tgoval)
-	c:RegisterEffect(e2)
 	--tohand
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -44,18 +28,6 @@ function s.initial_effect(c)
 end
 s.listed_series={0xb4}
 s.listed_names={id}
-function s.chainop(e,tp,eg,ep,ev,re,r,rp)
-	local rc=re:GetHandler()
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsSetCard(0xb4) and re:IsActiveType(TYPE_RITUAL) then
-		Duel.SetChainLimit(s.chainlm)
-	end
-end
-function s.chainlm(e,rp,tp)
-	return tp==rp
-end
-function s.tgtg(e,c)
-	return c:IsSetCard(0xb4) and c:IsType(TYPE_RITUAL)
-end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0
 end
