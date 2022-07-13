@@ -2,6 +2,20 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
+	--draw
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetCategory(CATEGORY_DRAW)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetCountLimit(1,{id,2})
+	e1:SetTarget(s.drtg)
+	e1:SetOperation(s.drop)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e2)
 	--tohand
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -16,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--return
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_TOGRAVE)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_REMOVE)
@@ -28,6 +42,19 @@ function s.initial_effect(c)
 end
 s.listed_series={0xb4}
 s.listed_names={id}
+function s.filter(c)
+	return c:IsSetCard(0xb4) and c:IsDiscardable(REASON_EFFECT)
+end
+function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+end
+function s.drop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.DiscardHand(tp,s.filter,1,1,REASON_EFFECT+REASON_DISCARD,nil)~=0 then
+		Duel.Draw(tp,1,REASON_EFFECT)
+	end
+end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0
 end
