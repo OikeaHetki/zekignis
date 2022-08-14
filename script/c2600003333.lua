@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),nil)
 	--cannot special summon from Main Deck
-	local e4=Effect.CreateEffect(c)
+	local e4=Effect.CreateEffect(e:GetHandler())
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(CARD_EHERO_BLAZEMAN)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
