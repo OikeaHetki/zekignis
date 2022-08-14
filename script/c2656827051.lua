@@ -77,9 +77,9 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
 	local sel=nil
 	if c:GetLevel()==1 then
-		sel=Duel.SelectOption(tp,aux.Stringid(id,2))
+		sel=Duel.SelectOption(tp,aux.Stringid(id,3))
 	else
-		sel=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
+		sel=Duel.SelectOption(tp,aux.Stringid(id,3),aux.Stringid(id,4))
 	end
 	if sel==1 then
 		ct=ct*-1
