@@ -14,7 +14,6 @@ function s.initial_effect(c)
 end
 function s.filter(c,tp)
 	return c:IsRitualSpell() and c:IsAbleToHand()
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_GRAVE,0,1,nil,c)
 end
 function s.filter2(c,mc)
 	return c:IsRitualMonster() and c:IsAbleToHand()
