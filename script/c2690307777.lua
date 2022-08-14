@@ -3,8 +3,6 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
-	--ritual level
-	Ritual.AddWholeLevelTribute(c,aux.FilterBoolFunction(Card.IsSetCard,0xb4))
 	--tohand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -27,18 +25,17 @@ function s.initial_effect(c)
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-    --tohand from deck when banished
-    local e3=Effect.CreateEffect(c)
-    e3:SetDescription(aux.Stringid(id,2))
-    e3:SetCategory(CATEGORY_TOHAND+CATEGORY_HANDES)
-    e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-    e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-    e3:SetCode(EVENT_REMOVE)
-    e3:SetCountLimit(1,{id,2})
-	e3:SetCost(s.gcost)
-    e3:SetTarget(s.gtg)
-    e3:SetOperation(s.gop)
-    c:RegisterEffect(e3)
+	--tohand from deck when banished
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_HANDES)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetCode(EVENT_REMOVE)
+	e3:SetCountLimit(1,{id,2})
+	e3:SetTarget(s.gtg)
+	e3:SetOperation(s.gop)
+	c:RegisterEffect(e3)
 end
 s.listed_series={0xb4}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -72,11 +69,6 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
 	end
-end
-function s.gcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() and c:IsStatus(STATUS_EFFECT_ENABLED) end
-	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.gfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xb4) and c:IsAbleToHand()
