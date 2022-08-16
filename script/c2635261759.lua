@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e0:SetCondition(s.accon)
 		e0:SetValue(s.aclimit)
 		e0:SetReset(RESET_PHASE+PHASE_END,2)
-		Duel.RegisterEffect(e0,tp)
+		Duel.RegisterEffect(e0,p)
 		Duel.RegisterFlagEffect(p,id,RESET_PHASE+PHASE_END,0,2)
 		--Opponent takes no further damage this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
