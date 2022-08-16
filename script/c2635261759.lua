@@ -49,11 +49,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTargetRange(0,1)
 		e2:SetValue(0)
 		e2:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e2,1-tp)
+		Duel.RegisterEffect(e2,tp)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 		e3:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e3,1-tp)
+		Duel.RegisterEffect(e3,tp)
 end
 function s.accon(e)
 	return Duel.GetCustomActivityCount(id,e:GetHandlerPlayer(),ACTIVITY_CHAIN)>0
