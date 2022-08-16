@@ -47,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(p,g)
 		Duel.SelectYesNo(tp,aux.Stringid(id,1))
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-		local sg=tg:Select(p,1,1,nil)
+		local sg=Select(p,1,1,nil)
 			Duel.SendtoDeck(sg,nil,1,REASON_EFFECT)
 			Duel.Draw(tp-1,1,REASON_EFFECT)
 		end
