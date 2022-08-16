@@ -65,9 +65,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 --dragon's rage condition
 function s.drccon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_SPELL),0,LOCATION_GRAVE,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_TRAP),0,LOCATION_GRAVE,0,1,nil)
-			and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),0,LOCATION_GRAVE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_SPELL),tp,LOCATION_GRAVE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_TRAP),tp,LOCATION_GRAVE,0,1,nil)
+			and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),tp,LOCATION_GRAVE,0,1,nil)
 end
 --surveil operation
 function s.survcost(e,tp,eg,ep,ev,re,r,rp,chk)
