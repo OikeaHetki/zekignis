@@ -3,6 +3,16 @@
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
+	--burn
+	local e0=Effect.CreateEffect(c)
+	e0:SetDescription(aux.Stringid(id,3))
+	e0:SetCategory(CATEGORY_DAMAGE)
+	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e0:SetCode(EVENT_TO_GRAVE)
+	e0:SetTarget(s.target)
+	e0:SetOperation(s.operation)
+	c:RegisterEffect(e0)
 	--surveil
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -42,6 +52,17 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_MUST_ATTACK)
 	c:RegisterEffect(e6)
 end
+--burn
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetParam(500)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,500)
+end
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Damage(p,d,REASON_EFFECT)
+end
 --dragon's rage condition
 function s.drccon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_SPELL),0,LOCATION_GRAVE,0,1,nil)
@@ -60,7 +81,7 @@ function s.survop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,1)
 	Duel.ConfirmCards(tp,g)
 	local tc=g:GetFirst()
-	local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
+	local opt=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,1))
 	if opt==1 then
 		Duel.DiscardDeck(tp,1,REASON_EFFECT)
 		end
