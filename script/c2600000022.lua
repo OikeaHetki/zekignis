@@ -49,9 +49,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 		local sg=g:Select(p,1,1,nil)
 			Duel.SendtoDeck(sg,nil,1,REASON_EFFECT)
+			Duel.BreakEffect()
 			Duel.Draw(tp-1,1,REASON_EFFECT)
 		end
-	Duel.ShuffleHand(1-p)
+		Duel.ShuffleHand(1-p)
 end
 function s.rdcon(e)
 	local c=e:GetHandler()
