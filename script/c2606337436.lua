@@ -49,6 +49,10 @@ function s.drccon(e)
 			and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),0,LOCATION_GRAVE,0,1,nil)
 end
 --surveil operation
+function s.survcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
+	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
+end
 function s.survop(e,tp,eg,ep,ev,re,r,rp)
 	if (re:GetActiveType()==0x4 or re:GetActiveType()==0x2)
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and rp==tp then
