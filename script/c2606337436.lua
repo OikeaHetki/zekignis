@@ -50,7 +50,7 @@ function s.drccon(e)
 end
 --surveil operation
 function s.survop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetActiveType()==TYPE_SPELL+TYPE_TRAP and re:IsType(TYPE_NORMAL) 
+	if re:GetActiveType()==0x4+0x2
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and rp==tp then
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
 	local g=Duel.GetDecktopGroup(tp,1)
