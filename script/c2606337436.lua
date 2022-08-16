@@ -59,6 +59,7 @@ function s.survop(e,tp,eg,ep,ev,re,r,rp)
 	local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 	if opt==1 then
 		Duel.DiscardDeck(tp,1,REASON_COST)
+		end
 	end
 end
 ---dirattack
