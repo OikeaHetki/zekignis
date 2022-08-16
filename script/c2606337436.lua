@@ -68,7 +68,7 @@ function s.drccon(e,tp,eg)
 	local g1=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
 	local g2=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL)
 	local g3=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_TRAP)
-	return #g1>0 and #g1>0 and #g3>0
+	return #g1>0 and #g2>0 and #g3>0
 end
 --surveil operation
 function s.survcost(e,tp,eg,ep,ev,re,r,rp,chk)
