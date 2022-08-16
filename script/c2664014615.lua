@@ -36,6 +36,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ct==3 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
-		Duel.Discard(tp,1,REASON_EFFECT)
+		Duel.DiscardHand(tp,1,REASON_EFFECT)
 	end
 end
