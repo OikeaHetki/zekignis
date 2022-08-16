@@ -43,15 +43,17 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local g=Duel.GetFieldGroup(p,0,LOCATION_HAND)
-	if #g>0 then
-		Duel.ConfirmCards(p,g)
-		Duel.SelectYesNo(tp,aux.Stringid(id,1))
+	if #g>0 and Duel.ConfirmCards(p,g) and Duel.SelectYesNo(tp,aux.Stringid(id,1))
+		then
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 		local sg=g:Select(p,1,1,nil)
 			Duel.SendtoDeck(sg,nil,1,REASON_EFFECT)
 			Duel.BreakEffect()
-			Duel.Draw(tp-1,1,REASON_EFFECT)
+
+			Duel.Draw(1-p,1,REASON_EFFECT)
 		end
+		else 
+		Duel.ConfirmCards(p,g)
 		Duel.ShuffleHand(1-p)
 end
 function s.rdcon(e)
