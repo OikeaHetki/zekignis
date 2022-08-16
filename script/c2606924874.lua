@@ -51,7 +51,7 @@ function s.spcon(e)
 	local g=Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_MZONE,0)
 	if #g~=1 then return false end
 	local c=g:GetFirst()
-	return c:IsFaceup() and (c:IsCode(CARD_HARPIE_LADY) or c:IsCode(CARD_HARPIE_LADY_SISTERS))
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x64)
 end
 ---
 function s.cfilter(c)
