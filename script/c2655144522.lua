@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not (re:IsCode(99284890) or re:IsCode(4896788))
+	return re:IsActiveType(TYPE_MONSTER) and not (re:GetHandler():IsCode(99284890) or not re:GetHandler():IsCode(4896788))
 end
 function s.damval(e,re,dam,r,rp,rc)
 	if (r&REASON_EFFECT)~=0 then
