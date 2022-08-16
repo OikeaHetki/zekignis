@@ -78,7 +78,7 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.value(e,c)
-	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_REMOVED,TYPE_SPELL+TYPE_TRAP)*300
+	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_REMOVED,0,nil,TYPE_SPELL+TYPE_TRAP)*300
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

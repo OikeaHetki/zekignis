@@ -46,7 +46,7 @@ end
 function s.drccon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_SPELL),0,LOCATION_GRAVE,0,1,nil)
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_TRAP),0,LOCATION_GRAVE,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),0,LOCATION_GRAVE,0,1,nil)
+			and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),0,LOCATION_GRAVE,0,1,nil)
 end
 --surveil operation
 function s.survop(e,tp,eg,ep,ev,re,r,rp)
@@ -58,7 +58,7 @@ function s.survop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 	if opt==1 then
-		Duel.DiscardDeck(tp,1,REASON_COST)
+		Duel.DiscardDeck(tp,1,REASON_EFFECT)
 		end
 	end
 end
