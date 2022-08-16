@@ -1,4 +1,4 @@
---Pot of Sadicious Greed
+--Pot of Sadistic Greed
 --zek
 --
 local s,id=GetID()
