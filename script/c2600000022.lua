@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_SUMMON_SUCCESS)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetCountLimit(1,id)
 	e4:SetCondition(s.condition)
 	e4:SetTarget(s.target)
 	e4:SetOperation(s.operation)
@@ -52,5 +53,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	Duel.ShuffleHand(1-p)
 end
-
-
+function s.rdcon(e)
+	local c=e:GetHandler()
+	local tp=e:GetHandlerPlayer()
+	return Duel.GetAttackTarget()==nil
+		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+end
