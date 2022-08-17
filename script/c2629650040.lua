@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	--effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_FZONE)
+	e2:SetRange(LOCATION_SZONE)
 	e2:SetTarget(s.target)
 	c:RegisterEffect(e2)
 end
