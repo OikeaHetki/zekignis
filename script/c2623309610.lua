@@ -75,24 +75,9 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	local ct=g:FilterCount(Card.IsType,nil,TYPE_SPELL+TYPE_TRAP)
-	local atk=ct*500
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SET_BASE_ATTACK)
-	e1:SetValue(atk+1000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_SET_BASE_DEFENSE)
-	e2:SetValue(atk+1000)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-	c:RegisterEffect(e2)
-	g:DeleteGroup()
 end
 function s.value(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_REMOVED,0,nil,TYPE_SPELL+TYPE_TRAP)*300
+	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_REMOVED,0,nil,TYPE_SPELL+TYPE_TRAP)*500
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
