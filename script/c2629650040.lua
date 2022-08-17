@@ -103,13 +103,12 @@ function s.descfilter(c,f)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
-	if chk==0 then
+	if chk==0 and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) then
 		local pg1=Duel.GetMatchingGroup(s.descfilter,tp,LOCATION_ONFIELD,0,nil,Card.IsOddScale)
 		local pg2=Duel.GetMatchingGroup(s.descfilter,tp,LOCATION_ONFIELD,0,nil,Card.IsEvenScale)
 		return Duel.GetFlagEffect(tp,id+2)==0 and #g>0 and
 		(pg1:GetClassCount(Card.GetLeftScale)>=3 or pg2:GetClassCount(Card.GetLeftScale)>=3
-		or pg1:GetClassCount(Card.GetRightScale)>=3 or pg2:GetClassCount(Card.GetRightScale)>=3)
-		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) 		
+		or pg1:GetClassCount(Card.GetRightScale)>=3 or pg2:GetClassCount(Card.GetRightScale)>=3)		
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
