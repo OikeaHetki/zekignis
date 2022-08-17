@@ -19,5 +19,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.splimit(e,c,tp,sumtp,sumpos)
-	return (sumtp&SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO
+	return (sumtp&SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
 end
