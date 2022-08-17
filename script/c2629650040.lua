@@ -98,11 +98,11 @@ end
 function s.cfilter(c)
 	return c:IsSetCard(0x164) and c:IsType(TYPE_MONSTER)
 end
-function s.filter(c,e)
+function s.filter2(c,e)
 	return c:IsCanBeEffectTarget(e)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil,e)
+	local dg=Duel.GetMatchingGroup(s.filter2,tp,0,LOCATION_ONFIELD,nil,e)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,aux.ReleaseCheckTarget,nil,dg) end
 	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,aux.ReleaseCheckTarget,nil,dg)
 	Duel.Release(g,REASON_COST)
