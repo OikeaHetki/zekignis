@@ -109,7 +109,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		return Duel.GetFlagEffect(tp,id+2)==0 and #g>0 and
 		(pg1:GetClassCount(Card.GetLeftScale)>=3 or pg2:GetClassCount(Card.GetLeftScale)>=3
 		or pg1:GetClassCount(Card.GetRightScale)>=3 or pg2:GetClassCount(Card.GetRightScale)>=3)
-		and return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) 		
+		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) 		
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
