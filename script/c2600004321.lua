@@ -76,12 +76,13 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
-	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT) and	 Duel.ConfirmCards(1-tp,g)
+	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
-			Duel.HintSelection(g)
-			Duel.Destroy(g,REASON_EFFECT)
+			local rg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
+			Duel.HintSelection(rg)
+			Duel.Destroy(rg,REASON_EFFECT)
 	end
+	Duel.ConfirmCards(1-tp,g)
 end
