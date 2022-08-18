@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x7d}
 function s.setfilter(c)
-	return c:IsSetCard(0x7d) and c:IsSSetable() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSetCard(0x7d) and c:IsSSetable() and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end

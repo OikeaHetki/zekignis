@@ -58,6 +58,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e11)
 end
 s.xyz_number=5
+function s.indcon(e)
+	return e:GetHandler():GetOverlayCount()>0
+end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*1000
 end
