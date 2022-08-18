@@ -7,7 +7,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -24,9 +23,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x7d}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
-end
 function s.filter(c,tp)
 	return c:IsSetCard(0x7d) and c:GetActivateEffect():IsActivatable(tp,true,true) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(id)
 end
