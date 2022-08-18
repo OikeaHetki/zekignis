@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x7d}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
 	return tp~=Duel.GetTurnPlayer() and at and at:IsFaceup() and at:IsAttribute(ATTRIBUTE_FIRE)
