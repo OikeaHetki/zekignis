@@ -48,14 +48,10 @@ function s.initial_effect(c)
 	e10:SetType(EFFECT_TYPE_IGNITION)
 	e10:SetRange(LOCATION_MZONE)
 	e10:SetCountLimit(1)
+	e10:SetCondition(s.ovcon)
 	e10:SetTarget(s.ovtg)
 	e10:SetOperation(s.ovop)
 	e10:SetLabel(RESET_EVENT+RESETS_STANDARD)
-	local e11=Effect.CreateEffect(c)
-	e11:SetType(EFFECT_TYPE_SINGLE)
-	e11:SetCode(EFFECT_RANKUP_EFFECT)
-	e11:SetLabelObject(e10)
-	c:RegisterEffect(e11)
 end
 s.xyz_number=5
 function s.indcon(e)
@@ -108,6 +104,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Overlay(c,sg)
 		end
 	end
+end
+function s.ovcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return aux.bdcon(e,tp,eg,ep,ev,re,r,rp) and c:CanChainAttack()
+		and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,90126061)
 end
 function s.ovtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_HAND,0,1,nil) end
