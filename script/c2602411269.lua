@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct5=g:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_EARTH)
 	local ct6=g:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WATER)
 	if ct1>0 then
-		Duel.DiscardDeck(1-tp,ct1,REASON_EFFECT)
+		Duel.DiscardDeck(tp,ct1,REASON_EFFECT)
 	end
 	local og1=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if ct2>0 and #og1>0 then
@@ -47,44 +47,44 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(ct3*-200)
+			e1:SetValue(ct3*-300)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)
-			e2:SetValue(ct3*-200)
+			e2:SetValue(ct3*-300)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
 		end
 	end
 	if ct3>0 then
-		Duel.Damage(1-tp,ct3*200,REASON_EFFECT)
+		Duel.Damage(1-tp,ct3*300,REASON_EFFECT)
 	end
 	local og2=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-	if ct4>0 and #og2>0 then
-		for tc in aux.Next(og) do
-			local e3=Effect.CreateEffect(c)
-			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetCode(EFFECT_UPDATE_ATTACK)
-			e3:SetValue(ct3*400)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e3)
-		end
+	if ct4>0 then
+		Duel.DiscardDeck(1-tp,ct1,REASON_EFFECT)
+	end
 	end
 	local og3=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	if ct5>0 and #og3>0 then
 		for tc in aux.Next(og) do
+			local e3=Effect.CreateEffect(c)
+			e3:SetType(EFFECT_TYPE_SINGLE)
+			e3:SetCode(EFFECT_UPDATE_ATTACK)
+			e3:SetValue(ct3*300)
+			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e3)
 			local e4=Effect.CreateEffect(c)
 			e4:SetType(EFFECT_TYPE_SINGLE)
 			e4:SetCode(EFFECT_UPDATE_DEFENSE)
-			e4:SetValue(ct3*500)
+			e4:SetValue(ct3*300)
 			e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e4)
 		end
 	end
 	if ct6>0 then
-		Duel.Recover(tp,ct6*600,REASON_EFFECT)
+		Duel.Recover(tp,ct6*300,REASON_EFFECT)
 	end
 end
 
