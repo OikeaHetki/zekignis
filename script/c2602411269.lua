@@ -61,10 +61,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct3>0 then
 		Duel.Damage(1-tp,ct3*300,REASON_EFFECT)
 	end
-	local og2=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	if ct4>0 then
 		Duel.DiscardDeck(1-tp,ct1,REASON_EFFECT)
-	end
 	end
 	local og3=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	if ct5>0 and #og3>0 then
