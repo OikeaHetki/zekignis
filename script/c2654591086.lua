@@ -29,7 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local rg=Duel.SelectReleaseGroupCost(tp,s.rfilter,1,1<<52,false,nil,nil)
 	e:SetLabel(#rg)
-	Duel.Release(rg*2,REASON_COST)
+	Duel.Release(rg,REASON_COST)
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToGrave()
