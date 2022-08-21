@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,nil,2,2,s.lcheck)
+	Link.AddProcedure(c,s.matfilter,1,1)
 	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -32,8 +32,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x112}
-function s.lcheck(g,lc,sumtype,tp)
-	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
+function s.matfilter(c,lc,stype,tp)
+	return c:IsType(TYPE_LINK,lc,stype,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
@@ -68,6 +68,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atktg(e,c)
-	return c:GetMutualLinkedGroupCount()==0
+	return not c:IsLinked()
 end
 
