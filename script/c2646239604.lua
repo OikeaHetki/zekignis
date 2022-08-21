@@ -34,7 +34,7 @@ end
 s.listed_series={0x12}
 s.listed_names={id}
 function s.atlimit(e,c)
-	return c~=e:GetHandler()
+	return c:IsFaceup() and c:GetCode()~=id or c:GetOriginalCode()~=id
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

@@ -26,13 +26,14 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_REMOVE)
+	e3:SetCountLimit(1,id)
 	e3:SetTarget(s.tgtg)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x12}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(0x12) and c:GetCode()~=id and c:GetOriginalCode()~=id
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttackTarget()==nil
