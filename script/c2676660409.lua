@@ -37,6 +37,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #sg>0 then
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	end
-	Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	Duel.SelectYesNo(tp,aux.Stringid(id,0))
 	Duel.Draw(tp,1,REASON_EFFECT)
 end
