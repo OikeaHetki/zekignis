@@ -43,7 +43,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if not (tc and tc:IsFaceup()) then return false end
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_PENDULUM),tp,LOCATION_PZONE,0,nil)
 	local _,sc=g:GetMinGroup(function(c) return c:GetScale() end)
-	return sc and tc and tc:IsControler(1-tp) and tc:IsAttackAbove(sc*300)
+	return sc and tc and tc:IsControler(1-tp) and tc:IsAttackAbove(sc*500)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -54,7 +54,8 @@ end
 --spsfromhand
 function s.spcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsType,2,false,2,true,c,c:GetControler(),nil,false,nil,TYPE_PENDULUM)
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 
+		and Duel.CheckReleaseGroup(c:GetControler(),Card.IsType,2,false,2,true,c,c:GetControler(),nil,false,nil,TYPE_PENDULUM)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectReleaseGroup(tp,Card.IsType,2,2,false,true,true,c,nil,nil,false,nil,TYPE_PENDULUM)
@@ -83,19 +84,34 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1,true)
 end
-function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+function s.thfilter1(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAttackPos() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsType(TYPE_MONSTER) and chkc:IsAbleToHand() and chkc:IsController(1-tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.thfilter1,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,s.thfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.thfilter1,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
-	if #g>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
+	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsOddScale),tp,LOCATION_PZONE,0,1,nil) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
+		local tc=g:GetFirst()
+		if tc then
+			Duel.BreakEffect()
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(500)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_UPDATE_DEFENSE)
+			tc:RegisterEffect(e2)
+		end	
 	end
 end
