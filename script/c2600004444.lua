@@ -71,7 +71,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 			if #g>0 then
 				Duel.DisableShuffleCheck()
-				Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
+				Duel.MoveToDeckBottom(g)
 		end
 	end
 end
