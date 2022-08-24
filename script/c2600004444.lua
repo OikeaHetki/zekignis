@@ -27,19 +27,20 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>2 end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
+	if Duel.IsPlayerCanDiscardDeck(tp,3)==0 then return end
 	local g=Duel.GetDecktopGroup(tp,3)
-	Duel.SortDecktop(tp,tp,3)
-	local tc=g:GetFirst()
-	local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,0))
-	if opt==0 then
-		Duel.MoveSequence(tc,1)
+		Duel.ConfirmCards(tp,g)
+		if #g>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local sg=g:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)
+			g:Sub(sg)
+			if #sg>0 then
+				Duel.DisableShuffleCheck()
+				Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			end
+			if #g>0 then
+				Duel.DisableShuffleCheck()
+				Duel.SendtoGrave(g,REASON_EFFECT)
 		end
-	Duel.Draw(p,d,REASON_EFFECT)==0
-	local tc=Duel.GetOperatedGroup():GetFirst()
-	Duel.ConfirmCards(1-tp,tc)
-	if not (tc:IsSetCard(0xe6) and tc:IsType(TYPE_MONSTER)) then
-		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end
-	Duel.ShuffleHand(tp)
 end
