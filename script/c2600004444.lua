@@ -29,15 +29,15 @@ s.listed_names={id}
 function s.counterfilter(c)
 	return c:IsSetCard(0xe6)
 end
-function s.cfilter(c)
+function s.xfilter(c)
 	return c:IsSetCard(0xe6) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SUMMON)==0 and
 	Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 and
-	Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
+	Duel.IsExistingMatchingCard(s.xfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.xfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
