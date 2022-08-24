@@ -13,6 +13,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SUMMON,s.counterfilter)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
+	--special summon
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCost(s.spcost)
+	e2:SetTarget(s.sptg)
+	e2:SetOperation(s.spop)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0xe6}
 s.listed_names={id}
@@ -61,7 +71,29 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 			if #g>0 then
 				Duel.DisableShuffleCheck()
-				Duel.SendtoGrave(g,REASON_EFFECT)
+				Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
 		end
+	end
+end
+function s.cfilter(c,ft,tp)
+	return ft>0 or (c:GetSequence()<5 and c:IsControler(tp))
+end
+function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chk==0 then return ft>-1 and e:GetHandler():IsAbleToRemoveAsCost() and Duel.CheckReleaseGroup(tp,s.cfilter,1,nil,ft,tp) end
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+	local g=Duel.SelectReleaseGroup(tp,s.cfilter,1,1,nil,ft,tp)
+	Duel.Release(g,REASON_COST)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 	end
 end
