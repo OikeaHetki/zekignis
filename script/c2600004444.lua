@@ -75,6 +75,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function s.filter(c,e,tp)
+	return c:IsSetCard(0xe6) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+end
 function s.cfilter(c,ft,tp)
 	return ft>0 or (c:GetSequence()<5 and c:IsControler(tp))
 end

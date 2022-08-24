@@ -49,8 +49,22 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,0x13,0,1,1,nil,e,tp)
 	local tc=g
-	if tc:GetCount()>0 then Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
+	if tc:GetCount()>0 and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP) and tc:IsFaceup() and tc:IsControler(tp) then
+		--Unaffected by opponent's card effects
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3110)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_IMMUNE_EFFECT)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetValue(s.efilter)
+		e1:SetReset(RESET_PHASE+PHASE_END,2)
+		e1:SetOwnerPlayer(tp)
+		tc:RegisterEffect(e1)
 	end
+end
+function s.efilter(e,re)
+	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
 ---ondes search
 function s.handcon(e,tp,eg,ep,ev,re,r,rp)

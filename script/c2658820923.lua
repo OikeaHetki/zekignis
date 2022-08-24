@@ -1,17 +1,11 @@
 --No.95 ギャラクシーアイズ・ダークマター・ドラゴン
+--Number 95: Galaxy-Eyes Dark Matter Dragon
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,nil,9,3,s.ovfilter,aux.Stringid(id,0),3,s.xyzop)
 	c:EnableReviveLimit()
-	--xyzlimit
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-	e1:SetValue(1)
-	c:RegisterEffect(e1)
 	--remove
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -32,6 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.xyz_number=95
+--additional xyz procedure
 function s.ovfilter(c,tp,xyzc)
 	return c:IsFaceup() and c:IsSetCard(0x107b,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp)
 end
@@ -40,6 +35,7 @@ function s.xyzop(e,tp,chk)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	return true
 end
+--on summon
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
@@ -47,16 +43,10 @@ function s.cfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsAbleToGraveAsCost()
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_DECK,0,nil)
-	if chk==0 then return g:GetClassCount(Card.GetCode)>1 end
-	local tg=Group.CreateGroup()
-	for i=1,2 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local sg=g:Select(tp,1,1,nil)
-		g:Remove(Card.IsCode,nil,sg:GetFirst():GetCode())
-		tg:Merge(sg)
-	end
-	Duel.SendtoGrave(tg,REASON_COST)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>1
@@ -67,13 +57,14 @@ function s.rmfilter(c)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(1-tp,30459350) then return end
-	local g=Duel.GetMatchingGroup(s.rmfilter,1-tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.rmfilter,1-tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,nil)
 	if #g>1 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_REMOVE)
-		local sg=g:Select(1-tp,2,2,nil)
+		local sg=g:Select(1-tp,3,3,nil)
 		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	end
 end
+---atk
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
