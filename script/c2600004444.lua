@@ -32,11 +32,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SortDecktop(tp,tp,3)
 	local tc=g:GetFirst()
 	local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,0))
-	if opt==1 then
+	if opt==0 then
 		Duel.MoveSequence(tc,1)
 		end
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if Duel.Draw(p,d,REASON_EFFECT)==0 then return end
+	Duel.Draw(p,d,REASON_EFFECT)==0
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
 	if not (tc:IsSetCard(0xe6) and tc:IsType(TYPE_MONSTER)) then
