@@ -71,7 +71,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 			if #g>0 then
 				Duel.DisableShuffleCheck()
-				Duel.MoveToDeckBottom(g)
+				Duel.MoveToDeckTop(g)
 		end
 	end
 end
