@@ -14,21 +14,6 @@ function s.initial_effect(c)
 	e1:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e1)
 	local e2=aux.AddNormalSetProcedure(c)
-	--atkup
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EFFECT_UPDATE_ATTACK)
-	e3:SetValue(s.value)
-	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(EFFECT_UPDATE_DEFENSE)
-	e4:SetValue(s.value)
-	c:RegisterEffect(e4)
 	--Direct attack
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
@@ -75,9 +60,6 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
-end
-function s.value(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_REMOVED,0,nil,TYPE_SPELL+TYPE_TRAP)*500
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
