@@ -84,13 +84,13 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(ct)
 end
 function s.filter(c)
-	return c:IsAbleToRemove() and c:IsType(TYPE_MONSTER) and aux.SpElimFilter(c)
+	return c:IsAbleToRemove() and aux.SpElimFilter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,ct,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_GRAVE,ct,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,ct,ct,nil)
+	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_GRAVE,ct,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#ct,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
