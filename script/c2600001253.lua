@@ -36,7 +36,7 @@ end
 s.listed_names={CARD_DARK_MAGICIAN}
 --sphand
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x10a2)
+	return c:IsFaceup() and c:IsCode(CARD_DARK_MAGICIAN)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -48,7 +48,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp
 end
 function s.cfilter(c)
-	return (c:IsType(TYPE_MONSTER) and c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK)) and (c:IsAbleToHand() or c:IsAbleToGrave())
+	return (c:IsType(TYPE_MONSTER) and c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK)) and c:IsLevelBelow(6) (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
