@@ -1,4 +1,6 @@
 --蝶の短剣－エルマ
+--Butterfly Dagger - Elma
+--Zekpro Version
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -6,13 +8,13 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_DEFENSE)
-	e1:SetValue(300)
+	e1:SetValue(500)
 	c:RegisterEffect(e1)
 	--Atk
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetValue(300)
+	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	--tohand
 	local e4=Effect.CreateEffect(c)
