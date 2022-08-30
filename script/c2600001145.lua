@@ -81,8 +81,6 @@ end
 function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<=5 then return end
-	_replace_count=_replace_count+1
-	if _replace_count<=_replace_max then
 		Duel.DiscardDeck(tp,6,REASON_EFFECT)
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
