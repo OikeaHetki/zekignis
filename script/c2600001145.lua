@@ -62,7 +62,7 @@ function s.dredgecon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>5
 end
 function s.dredgetg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return e:GetHandler():IsAbleToHand() end
 	local dt=Duel.GetDrawCount(tp)
 	if dt~=0 then
 		_replace_count=0
@@ -76,15 +76,17 @@ function s.dredgetg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetValue(0)
 		Duel.RegisterEffect(e1,tp)
 	end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,6)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,6)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
-function s.cfop(e,tp,eg,ep,ev,re,r,rp)
+function s.dredgeop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<=5 then return end
-		Duel.DiscardDeck(tp,6,REASON_EFFECT)
 		Duel.DisableShuffleCheck()
+		if Duel.DiscardDeck(tp,6,REASON_EFFECT) then
 		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 		Duel.ShuffleHand(tp)
+	end
 	local ge1=Effect.CreateEffect(e:GetHandler())
 	ge1:SetType(EFFECT_TYPE_FIELD)
 	ge1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
