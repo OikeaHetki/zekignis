@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetOperation(s.sacop)
 	c:RegisterEffect(e2)
+	--res
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -64,6 +65,6 @@ end
 function s.sacop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		Duel.Release(g,REASON_EFFECT)
+		Duel.Release(c,REASON_EFFECT)
 	end
 end
