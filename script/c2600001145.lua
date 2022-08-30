@@ -2,6 +2,16 @@
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
+	--special summon
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_FIELD)
+	e0:SetCode(EFFECT_SPSUMMON_PROC)
+	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e0:SetRange(LOCATION_HAND)
+	e0:SetCondition(s.spcon)
+	e0:SetTarget(s.sptg)
+	e0:SetOperation(s.spop)
+	c:RegisterEffect(e0)
 	--base attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -30,6 +40,26 @@ function s.initial_effect(c)
 	e3:SetTarget(s.dredgetg)
 	e3:SetOperation(s.dredgeop)
 	c:RegisterEffect(e3)
+end
+--sp
+function s.spcon(e,c)
+	if c==nil then return true end
+	return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,2,false,2,true,c,c:GetControler(),nil,false,nil)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=Duel.SelectReleaseGroup(tp,aux.TRUE,2,2,false,true,true,c,nil,nil,false,nil)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 --atk
 function s.atkval(e,c)
