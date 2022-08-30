@@ -85,7 +85,6 @@ function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 		Duel.ShuffleHand(tp)
-	end
 	local ge1=Effect.CreateEffect(e:GetHandler())
 	ge1:SetType(EFFECT_TYPE_FIELD)
 	ge1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
