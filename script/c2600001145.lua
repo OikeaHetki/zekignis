@@ -72,7 +72,7 @@ end
 function s.dredgecon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetDrawCount(tp)>0 --Verify the player can actually draw normally
 		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>5 --Dredge 6 requires at least 5 or more cards in Deck
-			and Duel.GetFlagEffectLabel()==60
+			and Duel.GetFlagEffectLabel(tp,id)==60
 end
 function s.dredgetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end
