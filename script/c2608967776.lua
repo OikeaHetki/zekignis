@@ -110,7 +110,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return false
 end
 function s.repfilter(c)
-	return c:IsSetCard(0x4a) and c:IsFaceup() and c:IsAbleToRemove()
+	return c:IsRace(RACE_FAIRY) and c:IsFaceup() and c:IsAbleToRemove()
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

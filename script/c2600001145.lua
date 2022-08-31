@@ -2,16 +2,6 @@
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_FIELD)
-	e0:SetCode(EFFECT_SPSUMMON_PROC)
-	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e0:SetRange(LOCATION_HAND)
-	e0:SetCondition(s.spcon)
-	e0:SetTarget(s.sptg)
-	e0:SetOperation(s.spop)
-	c:RegisterEffect(e0)
 	--base attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -40,26 +30,18 @@ function s.initial_effect(c)
 	e3:SetTarget(s.dredgetg)
 	e3:SetOperation(s.dredgeop)
 	c:RegisterEffect(e3)
+	--verify the starting deck possesses 60 cards
+	aux.GlobalCheck(s,function()
+    local ge1=Effect.CreateEffect(c)
+    ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    ge1:SetCode(EVENT_STARTUP)
+    ge1:SetOperation(s.checkop)
+    Duel.RegisterEffect(ge1,0) end)
 end
---sp
-function s.spcon(e,c)
-	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,2,false,2,true,c,c:GetControler(),nil,false,nil)
-end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,aux.TRUE,2,2,false,true,true,c,nil,nil,false,nil)
-	if g then
-		g:KeepAlive()
-		e:SetLabelObject(g)
-	return true
-	end
-	return false
-end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=e:GetLabelObject()
-	if not g then return end
-	Duel.Release(g,REASON_COST)
-	g:DeleteGroup()
+--60deckcheck
+function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+    local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
+    Duel.RegisterFlagEffect(tp,id,0,0,1,ct)
 end
 --atk
 function s.atkval(e,c)
@@ -88,8 +70,9 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 end
 ---dredge 6
 function s.dredgecon(e,tp,eg,ep,ev,re,r,rp)
-	return tp==Duel.GetTurnPlayer() and Duel.GetDrawCount(tp)>0
-		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>5
+	return tp==Duel.GetTurnPlayer() and Duel.GetDrawCount(tp)>0 --Verify the player can actually draw normally
+		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>5 --Dredge 6 requires at least 5 or more cards in Deck
+			and Duel.GetFlagEffectLabel()==60
 end
 function s.dredgetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end
@@ -118,16 +101,4 @@ function s.dredgeop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,e:GetHandler())
 		Duel.ShuffleHand(tp)
 	end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetDescription(aux.Stringid(id,2))
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(s.splimit)
-	Duel.RegisterEffect(e1,tp)
-end
-function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA)
 end
