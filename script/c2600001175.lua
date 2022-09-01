@@ -60,9 +60,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
-	end
 	--Opponent can discard 2 cards to negate this effect
 	if Duel.IsChainDisablable(0) then
 		local g=Duel.GetMatchingGroup(Card.IsDiscardable,tp,2,LOCATION_HAND,nil,REASON_EFFECT)
@@ -70,7 +67,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
 			local sg=g:Select(1-tp,2,2,nil)
 			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
-			return
-		end
+			return false end
+	end
+	if e:GetHandler():IsRelateToEffect(e) then
+		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 	end
 end
