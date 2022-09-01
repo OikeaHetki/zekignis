@@ -18,18 +18,31 @@ function s.initial_effect(c)
 	--local e3=e1:Clone()
 	--e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	--c:RegisterEffect(e3)
+	--to grave
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_TOGRAVE)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode(EVENT_BATTLE_DAMAGE)
+	e3:SetCondition(s.tgcon)
+	e3:SetTarget(s.tgtg)
+	e3:SetOperation(s.tgop)
+	c:RegisterEffect(e3)
 end
-s.toss_coin=true
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (e:GetLabel()==1 or Duel.GetLocationCount(tp,LOCATION_MZONE)>0) 
-		and Duel.IsExistingMatchingCard(Card.IsSummonableCard,tp,LOCATION_DECK,0,1,nil) and Duel.IsPlayerCanDiscardDeck(tp,1)
-		and not Duel.IsPlayerAffectedByEffect(tp,CARD_EHERO_BLAZEMAN) end
+	if chk==0 then returnDuel.IsPlayerCanDiscardDeck(tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,1)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,TYPE_SPELL+TYPE_TRAP,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_DECK,0,nil,TYPE_MONSTER)
 	local dcount=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
+	if dcount==0 then return end
+	if #g==0 then
+		Duel.ConfirmDecktop(tp,dcount)
+		Duel.ShuffleDeck(tp)
+		return
+	end
 	local seq=-1
 	local tc=g:GetFirst()
 	local spcard=nil
@@ -39,11 +52,33 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			spcard=tc
 		end
 	end
-	if seq==-1 then
-		Duel.ConfirmDecktop(tp,dcount)
-		Duel.ShuffleDeck(tp)
-		return
-	end
 	Duel.ConfirmDecktop(tp,dcount-seq)
-	Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT)
+	if spcard:IsAbleToHand() then
+		Duel.DisableShuffleCheck()
+		Duel.SendtoHand(spcard,nil,REASON_EFFECT)
+		Duel.DiscardDeck(tp,dcount-seq-1,REASON_EFFECT+REASON_REVEAL)
+		Duel.ConfirmCards(1-tp,spcard)
+		Duel.ShuffleHand(tp)
+	else Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT+REASON_REVEAL) end
+end
+function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	return ep~=tp
+end
+function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,5))
+	local op=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3),aux.Stringid(id,4))
+	e:SetLabel(op)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_DECK)
+end
+function s.tgfilter(c,ty)
+	return c:IsType(ty) and c:IsAbleToGrave()
+end
+function s.tgop(e,tp,eg,ep,ev,re,r,rp)
+	local g=nil
+	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
+	if e:GetLabel()==0 then g=Duel.SelectMatchingCard(1-tp,s.tgfilter,1-tp,LOCATION_DECK,0,1,1,nil,TYPE_MONSTER)
+	elseif e:GetLabel()==1 then g=Duel.SelectMatchingCard(1-tp,s.tgfilter,1-tp,LOCATION_DECK,0,1,1,nil,TYPE_SPELL)
+	else g=Duel.SelectMatchingCard(1-tp,s.tgfilter,1-tp,LOCATION_DECK,0,1,1,nil,TYPE_TRAP) end
+	Duel.SendtoGrave(g,REASON_EFFECT)
 end
