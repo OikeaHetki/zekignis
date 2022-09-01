@@ -59,7 +59,7 @@ function s.descon(e)
 end
 --personal effect
 function s.target(e,c)
-	return and c:IsSetCard(0x23)
+	return c:IsSetCard(0x23)
 end
 --succ filter
 function s.sucfilter(c,tp)
