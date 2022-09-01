@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,0x13,0,1,1,nil,e,tp)
 	local tc=g
-	if tc:GetCount()>0 and Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP) and tc:IsFaceup() and tc:IsControler(tp) then
+	if tc:GetCount()>0 and Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP) and tc:IsControler(tp) then
 		--Unaffected by opponent's card effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3110)

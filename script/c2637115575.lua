@@ -47,7 +47,7 @@ end
 --if malefic die, summon
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
-		and c:IsPreviousSetCard(0x23) and c:GetPreviousCodeOnField()~=id
+		and c:IsPreviousSetCard(0x23) and c:GetPreviousCodeOnField()~=id and not c:IsOriginalCode(id) and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -82,12 +82,12 @@ function s.decon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.detg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,#g*800)
 end
 function s.deop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_ONFIELD,nil)
 	local ct=Duel.Destroy(g,REASON_EFFECT)
 	if ct~=0 then
 		Duel.BreakEffect()
