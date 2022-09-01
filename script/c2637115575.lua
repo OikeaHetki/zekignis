@@ -78,23 +78,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 --des
 function s.descon(e)
-	return not Duel.IsEnvironment(27564031)
+	return not not Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 --non-"Malefic" cannot attack
 function s.mlfatk(e,c)
 	return not c:IsSetCard(0x23)
-end
---desrep
-function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return not c:IsReason(REASON_REPLACE) 
-		and Duel.IsExistingMatchingCard(s.repfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	if Duel.SelectYesNo(tp,aux.Stringid(25165047,1)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,s.repfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-		Duel.Remove(g,POS_FACEUP,REASON_COST)
-		return true
-	else return false end
 end
 --bomb
 function s.decon(e,tp,eg,ep,ev,re,r,rp)
@@ -102,6 +90,7 @@ function s.decon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=tc:GetBattleTarget()
 	return tc:IsRelateToBattle() and tc:IsStatus(STATUS_OPPO_BATTLE) and tc:IsControler(tp) and tc:IsSetCard(0x23)
 		and bc:IsReason(REASON_BATTLE)
+			and Duel.IsEnvironment(27564031)
 end
 function s.detg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
