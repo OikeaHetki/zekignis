@@ -49,7 +49,7 @@ function s.descon(e)
 end
 --lose ATK while other Synchro
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsMonster()
+	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsMonster() and not c:IsSetCard(0x23)
 end
 function s.atkcon(e,tp,ev,ep,eg,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
