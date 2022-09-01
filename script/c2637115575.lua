@@ -20,14 +20,6 @@ function s.initial_effect(c)
 	ea:SetCode(EFFECT_SELF_DESTROY)
 	ea:SetCondition(s.descon)
 	c:RegisterEffect(ea)
-	--non-"Malefic" cannot attack
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(s.mlfatk)
-	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -79,10 +71,6 @@ end
 --des
 function s.descon(e)
 	return not not Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
-end
---non-"Malefic" cannot attack
-function s.mlfatk(e,c)
-	return not c:IsSetCard(0x23)
 end
 --bomb
 function s.decon(e,tp,eg,ep,ev,re,r,rp)
