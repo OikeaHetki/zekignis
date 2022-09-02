@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCategory(CATEGORY_DECKDES)
+	e1:SetCategory(CATEGORY_DECKDES+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(s.target)
@@ -49,7 +49,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(1-tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,1)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_DECK,nil,TYPE_MONSTER)
@@ -70,15 +70,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	Duel.ConfirmDecktop(1-tp,dcount-seq)
-	if spcard:IsAbleToHand() then
+	if spcard:IsAbleToGrave() then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoHand(spcard,nil,REASON_EFFECT)
+		Duel.SendtoGrave(spcard,REASON_EFFECT)
 		Duel.DiscardDeck(1-tp,dcount-seq-1,REASON_EFFECT+REASON_REVEAL)
-		Duel.ConfirmCards(tp,spcard)
-		Duel.ShuffleHand(1-tp)
-		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
-		local dg=sg:Select(1-tp,1,1,nil)
-		Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)
 	else Duel.DiscardDeck(1-tp,dcount-seq,REASON_EFFECT+REASON_REVEAL) end
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
