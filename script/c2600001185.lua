@@ -47,7 +47,7 @@ function s.rdcon(e)
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then returnDuel.IsPlayerCanDiscardDeck(1-tp,1) end
+	if chk==0 then return Duel.IsPlayerCanDiscardDeck(1-tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,1)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
