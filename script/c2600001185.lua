@@ -76,6 +76,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.DiscardDeck(1-tp,dcount-seq-1,REASON_EFFECT+REASON_REVEAL)
 		Duel.ConfirmCards(tp,spcard)
 		Duel.ShuffleHand(1-tp)
+		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
+		local dg=sg:Select(1-tp,1,1,nil)
+		Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)
 	else Duel.DiscardDeck(1-tp,dcount-seq,REASON_EFFECT+REASON_REVEAL) end
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
