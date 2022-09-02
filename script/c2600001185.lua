@@ -30,17 +30,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then returnDuel.IsPlayerCanDiscardDeck(tp,1) end
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,1)
+	if chk==0 then returnDuel.IsPlayerCanDiscardDeck(1-tp,1) end
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,1)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_DECK,0,nil,TYPE_MONSTER)
-	local dcount=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
+	local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_DECK,nil,TYPE_MONSTER)
+	local dcount=Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)
 	if dcount==0 then return end
 	if #g==0 then
-		Duel.ConfirmDecktop(tp,dcount)
-		Duel.ShuffleDeck(tp)
+		Duel.ConfirmDecktop(1-tp,dcount)
+		Duel.ShuffleDeck(1-tp)
 		return
 	end
 	local seq=-1
@@ -52,14 +52,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			spcard=tc
 		end
 	end
-	Duel.ConfirmDecktop(tp,dcount-seq)
+	Duel.ConfirmDecktop(1-tp,dcount-seq)
 	if spcard:IsAbleToHand() then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(spcard,nil,REASON_EFFECT)
-		Duel.DiscardDeck(tp,dcount-seq-1,REASON_EFFECT+REASON_REVEAL)
-		Duel.ConfirmCards(1-tp,spcard)
-		Duel.ShuffleHand(tp)
-	else Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT+REASON_REVEAL) end
+		Duel.DiscardDeck(1-tp,dcount-seq-1,REASON_EFFECT+REASON_REVEAL)
+		Duel.ConfirmCards(tp,spcard)
+		Duel.ShuffleHand(1-tp)
+	else Duel.DiscardDeck(1-tp,dcount-seq,REASON_EFFECT+REASON_REVEAL) end
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
