@@ -41,6 +41,11 @@ function s.initial_effect(c)
 	e6:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	c:RegisterEffect(e6)
 end
+function s.rdcon(e)
+	local c,tp=e:GetHandler(),e:GetHandlerPlayer()
+	return Duel.GetAttackTarget()==nil and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then returnDuel.IsPlayerCanDiscardDeck(1-tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,1)
