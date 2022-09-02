@@ -55,8 +55,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local dcount=Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)
 	if dcount==0 then return end
 	if #g==0 then
-		Duel.ConfirmDecktop(1-tp,dcount)
-		Duel.ShuffleDeck(1-tp)
+		Duel.ConfirmDecktop(tp,dcount)
+		Duel.DiscardDeck(tp,dcount,REASON_EFFECT+REASON_REVEAL)
 		return
 	end
 	local seq=-1
