@@ -15,10 +15,10 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	local e3=e1:Clone()
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e3)
-	to grave
+	--local e3=e1:Clone()
+	--e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	--c:RegisterEffect(e3)
+	--to grave
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOGRAVE)
@@ -28,6 +28,18 @@ function s.initial_effect(c)
 	e4:SetTarget(s.tgtg)
 	e4:SetOperation(s.tgop)
 	c:RegisterEffect(e4)
+	--Direct attack
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_DIRECT_ATTACK)
+	c:RegisterEffect(e5)
+	--Reduce damage
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e6:SetCondition(s.rdcon)
+	e6:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
+	c:RegisterEffect(e6)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then returnDuel.IsPlayerCanDiscardDeck(1-tp,1) end
