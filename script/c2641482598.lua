@@ -48,7 +48,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCountLimit(1)
 	e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
 	e3:SetOperation(s.tgop)
-	Duel.RegisterEffect(e3,p)
+	Duel.RegisterEffect(e3,tp)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(e:GetOwnerPlayer(),LOCATION_HAND,0)
