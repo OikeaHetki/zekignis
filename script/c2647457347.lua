@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xf4}
+s.listed_names={86120751}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
