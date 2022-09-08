@@ -3,6 +3,7 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
+	c:SetUniqueOnField(1,0,id)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1,id)
+	e2:SetCountLimit(1)
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetCondition(s.drcon)
 	e2:SetTarget(s.drtg)
@@ -25,7 +26,30 @@ function s.initial_effect(c)
 end
 function s.clear(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	e:SetLabel(0)
+	if chk==0 then return true end
+	local c=e:GetHandler()
+	c:SetLabel(0)
+	--destroy
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCountLimit(1)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCondition(s.descon)
+	e1:SetOperation(s.desop)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+	c:RegisterEffect(e1)
+end
+function s.descon(e,tp,eg,ep,ev,re,r,rp)
+	return tp==Duel.GetTurnPlayer()
+end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+	local c=e:GetHandler()
+		Duel.Destroy(c,REASON_RULE)
+		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)<4
