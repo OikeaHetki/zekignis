@@ -48,6 +48,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
-	Duel.SetLP(tp,0)
+	Duel.Win(1-tp,WIN_REASON_LAST_TURN)
 end
 
