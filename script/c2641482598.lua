@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.clear)
 	c:RegisterEffect(e1)
 	--draw
 	local e2=Effect.CreateEffect(c)
@@ -21,35 +20,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.drcon)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
-	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
-end
-function s.clear(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if chk==0 then return true end
-	local c=e:GetHandler()
-	c:SetLabel(0)
-	--destroy
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e1:SetCountLimit(1)
-	e1:SetRange(LOCATION_SZONE)
-	e1:SetCondition(s.descon)
-	e1:SetOperation(s.desop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
-	c:RegisterEffect(e1)
-end
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return tp==Duel.GetTurnPlayer()
-end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-	local c=e:GetHandler()
-		Duel.Destroy(c,REASON_RULE)
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
-	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)<4
@@ -64,18 +35,15 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local ht=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 	if ht<4 then
 		Duel.Draw(tp,4-ht,REASON_EFFECT)
-		e:GetLabelObject():SetLabel(4-ht)
-	else e:GetLabelObject():SetLabel(0) end
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetCountLimit(1)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+	e3:SetReset(RESET_PHASE+PHASE_END)
 	e3:SetOperation(s.tgop)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(e:GetOwnerPlayer(),LOCATION_HAND,0)
-	Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_EFFECT)
 end
-
