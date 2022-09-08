@@ -35,6 +35,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local ht=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 	if ht<4 then
 		Duel.Draw(tp,4-ht,REASON_EFFECT)
+	end
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
