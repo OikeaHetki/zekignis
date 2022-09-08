@@ -23,7 +23,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(3) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsSummonableCard()
+	return c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsSummonableCard()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -39,14 +39,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
+	end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+		e1:SetCode(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
 		e1:SetCountLimit(1)
 		e1:SetOperation(s.lpop)
 		Duel.RegisterEffect(e1,tp)
-	end
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
