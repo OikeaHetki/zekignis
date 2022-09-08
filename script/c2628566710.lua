@@ -42,12 +42,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetLabel(1-tp)
 	e1:SetCountLimit(1)
-	e1:SetOperation(s.lpop)
+	e1:SetOperation(s.winop)
 	Duel.RegisterEffect(e1,tp)
 end
-function s.lpop(e,tp,eg,ep,ev,re,r,rp)
+function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
-	Duel.Win(1-tp,WIN_REASON_LAST_TURN)
+	Duel.Win(e:GetLabel(),WIN_REASON_LAST_TURN)
 end
 
