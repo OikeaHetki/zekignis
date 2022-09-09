@@ -44,6 +44,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
+			Duel.ShuffleHand(tp)
+			sg:Sub(g)
+			Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
 		end
 	end
 	Duel.ShuffleDeck(tp)
