@@ -47,7 +47,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.ShuffleDeck(tp)
 	else
+		local g1=Duel.GetDecktopGroup(tp,dc)
 		Duel.DisableShuffleCheck()
-		Duel.Remove(dc,POS_FACEUP,REASON_EFFECT)
+		Duel.Remove(g1,POS_FACEUP,REASON_EFFECT)
 	end
 end
