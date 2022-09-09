@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dc=Duel.TossDice(1-tp,1)
 	if dc==a1 or dc==a2 then
 		Duel.ConfirmDecktop(tp,dc)
-		if #dc>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		if (#a1>0 or #a2) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=dc:Select(tp,1,1,nil)
 		if #g>0 then
