@@ -45,10 +45,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
 			Duel.ShuffleHand(tp)
-			Duel.SendtoGrave(g1,REASON_EFFECT+REASON_REVEAL)
+			g1:Sub(g)
 		end
+	Duel.SendtoGrave(g1,REASON_EFFECT+REASON_REVEAL)
 	end
-	Duel.ShuffleDeck(tp)
 	else
 		local g2=Duel.GetDecktopGroup(tp,dc)
 		Duel.DisableShuffleCheck()
