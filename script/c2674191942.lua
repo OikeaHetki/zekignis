@@ -13,23 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,aux.FALSE)
-	--verify the starting deck possesses 60 cards
-	aux.GlobalCheck(s,function()
-	local ge1=Effect.CreateEffect(c)
-	ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	ge1:SetCode(EVENT_STARTUP)
-	ge1:SetOperation(s.checkop)
-	Duel.RegisterEffect(ge1,0) end)
 end
---60deckcheck
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffectLabel(tp,id)==60
-end
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
-	Duel.RegisterFlagEffect(tp,id,0,0,1,ct)
-end
---cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -41,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
-	e2:SetDescription(aux.Stringid(id,3))
+	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	e2:SetTargetRange(1,0)
 	Duel.RegisterEffect(e2,tp)
@@ -51,11 +35,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_DECK,0,5,5,nil)
 	if #g<5 then return end
 	Duel.ConfirmCards(1-tp,g)
-	Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(id,2))
+	Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(id,1))
 	local sg=g:Select(1-tp,1,1,nil)
 	Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	g:Sub(sg)

@@ -40,10 +40,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
 		if Duel.GetTurnPlayer()==1-tp and Duel.GetCurrentPhase()==PHASE_END then
 			e1:SetLabel(Duel.GetTurnCount())
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+			e1:SetReset(RESET_PHASE+PHASE_END)
 		else
 			e1:SetLabel(0)
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+			e1:SetReset(RESET_PHASE+PHASE_END)
 		end
 		e1:SetLabelObject(tc)
 		e1:SetCondition(s.retcon)
