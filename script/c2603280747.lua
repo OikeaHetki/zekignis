@@ -39,7 +39,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmDecktop(tp,dc)
 		if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=dc:Select(tp,1,1,nil)
+		local g1=Duel.GetDecktopGroup(tp,dc)
+		local g=g1:Select(tp,1,1,nil)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
@@ -47,8 +48,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.ShuffleDeck(tp)
 	else
-		local g1=Duel.GetDecktopGroup(tp,dc)
+		local g2=Duel.GetDecktopGroup(tp,dc)
 		Duel.DisableShuffleCheck()
-		Duel.Remove(g1,POS_FACEUP,REASON_EFFECT)
+		Duel.Remove(g2,POS_FACEUP,REASON_EFFECT)
 	end
 end
