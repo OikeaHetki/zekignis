@@ -29,7 +29,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	local g2=Duel.GetFieldGroup(tp,LOCATION_GRAVE,0)
 	local ct=#g1
-	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+	g1:Merge(g2)
+	Duel.SendtoDeck(g1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	Duel.BreakEffect()
 	Duel.Draw(tp,ct,REASON_EFFECT)
 end
