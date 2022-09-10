@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.costfilter(c,ft,tp)
-	return c:IsRace(RACE_PSYCHIC) and not c:IsCode(id)
+	return c:IsRace(RACE_PSYCHIC) and not (c:IsCode(id) or c:IsOriginalCode(id))
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
