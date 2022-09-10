@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2,99,s.lcheck)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),4,99,s.lcheck)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.lcheck(g,lc,sumtype,tp)
-	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp) and (g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_DARK,lc,sumtype,tp) or g:IsExists(Card.IsRace,1,nil,RACE_SPELLCASTER,lc,sumtype,tp))
+	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
