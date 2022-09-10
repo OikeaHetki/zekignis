@@ -32,5 +32,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	g1:Merge(g2)
 	Duel.SendtoDeck(g1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	Duel.BreakEffect()
+	Duel.ShuffleDeck(tp)
 	Duel.Draw(tp,ct,REASON_EFFECT)
 end
