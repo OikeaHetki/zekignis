@@ -19,7 +19,7 @@ end
 function s.costfilter(c,ft,tp)
 	return c:IsRace(RACE_INSECT) and not (c:IsCode(id) or c:IsOriginalCode(id)) 
 	and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsFaceup()
-		and c:IsControler(tp)
+		and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and
