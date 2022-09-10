@@ -22,7 +22,9 @@ function s.costfilter(c,ft,tp)
 		and c:IsControler(tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
+	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and
+	Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,e:GetHandler())
+	end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 	local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil,ft,tp)
 	Duel.Release(sg,REASON_COST)
