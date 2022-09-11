@@ -1,5 +1,6 @@
 --無限泡影
 --Infinite Impermanence
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,6 +33,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local pos=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	if tc and ((tc:IsFaceup() and not tc:IsDisabled() and not tc:IsImmuneToEffect(e)) or tc:IsType(TYPE_TRAPMONSTER)) and tc:IsRelateToEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
+		local ea=Effect.CreateEffect(c)
+		ea:SetType(EFFECT_TYPE_SINGLE)
+		ea:SetCode(EFFECT_SET_ATTACK)
+		ea:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		ea:SetValue(0)
+		ea:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(ea)
+		local eb=ea:Clone()
+		eb:SetCode(EFFECT_SET_DEFENSE)
+		tc:RegisterEffect(eb)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)

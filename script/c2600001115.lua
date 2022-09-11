@@ -30,7 +30,7 @@ end
 ---search
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDefense(c:GetAttack()) and c:IsAttackAbove(0) and c:IsDefenseAbove(0)
-	and c:IsAttribute(ATTRIBUTE_DARK) and c:GetLevel()==3
+	and c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelBelow(4)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
