@@ -38,7 +38,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
-	if #g>0 and	Duel.SendtoHand(g,nil,REASON_EFFECT) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.ConfirmCards(1-tp,g)
 			Duel.BreakEffect()
 			Duel.ShuffleHand(tp)
@@ -47,4 +47,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Summon(tp,sc,true,nil) 
 		end
 	end
+end
 end
