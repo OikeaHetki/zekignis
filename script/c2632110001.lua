@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.costfilter(c,att)
+function s.costfilter(c,e,tp)
 	return c:IsType(TYPE_EFFECT) and c:GetAttack()==1800 and c:GetDefense()==200 and not c:IsPublic()
 		and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil,c:GetAttribute(),e,tp,c)
 end
