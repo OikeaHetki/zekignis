@@ -25,7 +25,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local fid=c:GetFieldID()
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		--Return it to the hand during the End Phase
-		local e1=Effect.CreateEffect(c)
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
@@ -34,7 +34,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(c)
 		e1:SetCondition(s.thcon)
 		e1:SetOperation(s.thop)
-		Duel.RegisterEffect(e1,tp)
+		Duel.RegisterEffect(e1)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
