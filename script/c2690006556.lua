@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
-	--special summon
+	--special summon [Dash 1R]
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -17,34 +17,39 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e2)
+	--Effect on combat damage
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetCategory(CATEGORY_DECKDES+CATEGORY_TOKEN+CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode(EVENT_BATTLE_DAMAGE)
+	e3:SetCondition(s.ddcon)
+	e3:SetTarget(s.ddtg)
+	e3:SetOperation(s.ddop)
+	c:RegisterEffect(e3)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)>0 then
 	local fid=c:GetFieldID()
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
-		--Return it to the hand during the End Phase
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetCountLimit(1)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetLabel(fid)
-		e1:SetLabelObject(c)
-		e1:SetCondition(s.thcon)
-		e1:SetOperation(s.thop)
-		Duel.RegisterEffect(e1)
 	end
 end
-function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if tc:GetFlagEffectLabel(id)~=e:GetLabel() then
-		e:Reset()
-		return false
-	else return true end
+---effect on combat
+function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
+	return ep~=tp
 end
-function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoHand(e:GetLabelObject(),nil,REASON_EFFECT)
+function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then
+		local g=Duel.GetDecktopGroup(1-tp,1)
+		local tc=g:GetFirst()
+		return tc and tc:IsAbleToRemove()
+	end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK)
 end
-
+function s.ddop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local g=Duel.GetDecktopGroup(1-tp,1)
+	Duel.DisableShuffleCheck()
+	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+end
