@@ -40,6 +40,12 @@ function s.initial_effect(c)
 	e3:SetCondition(aux.bdocon)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
+	--Reduce damage
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e4:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
+	c:RegisterEffect(e4)
 end
 s.listed_series={0xbd}
 s.listed_names={CARD_GAIA_CHAMPION}
