@@ -30,6 +30,16 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e3)
+	--pilfer
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,2))
+	e4:SetCategory(CATEGORY_TOHAND)
+	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(1)
+	e4:SetCost(s.atkcost)
+	e4:SetOperation(s.atkop)
+	c:RegisterEffect(e4)
 end
 --Dash 1R
 function s.spcon(e,c)
@@ -95,4 +105,26 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-
+--pilfer
+function s.pilcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,c) end
+	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,c)
+	Duel.Release(g,REASON_COST)
+end
+function s.pilfil(c)
+	return c:IsFaceup() and c:IsAbleToHand()
+end
+function s.piltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.pilfil(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.pilfil,tp,0,LOCATION_REMOVED,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectTarget(tp,s.pilfil,tp,0,LOCATION_REMOVED,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+end
+function s.pilop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+	end
+end
