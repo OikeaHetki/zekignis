@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.thcon)
 		e1:SetOperation(s.thop)
 		e1:SetReset(RESET_PHASE+PHASE_END,2)
-		e:GetHandler().RegisterEffect(e1,tp)	
+		e:GetHandler():RegisterEffect(e1,tp)	
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
