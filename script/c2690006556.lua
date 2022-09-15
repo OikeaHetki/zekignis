@@ -79,6 +79,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local e6=e3:Clone()
 	e6:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	c:RegisterEffect(e6)
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_SINGLE)
+	e7:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e7:SetRange(LOCATION_MZONE)
+	e7:SetCode(EFFECT_UNRELEASABLE_NONSUM)
+	e7:SetValue(1)
+	c:RegisterEffect(e7)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
     Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
@@ -126,6 +133,6 @@ end
 function s.pilop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		Duel.SendtoHand(tc,tp,REASON_EFFECT)
 	end
 end
