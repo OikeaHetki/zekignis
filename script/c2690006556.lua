@@ -63,12 +63,6 @@ function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
 end
-function s.treasfil(c)
-	return c:IsFaceup() and c:IsCode(id+1)
-end
-function s.filter(c)
-	return c:IsFaceup() and c:IsCode(id+1)
-end
 function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetDecktopGroup(1-tp,1)
@@ -78,3 +72,4 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
+
