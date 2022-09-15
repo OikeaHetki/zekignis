@@ -83,7 +83,7 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
 			local sg=rg:Select(tp,1,1,nil)
 			local sc=sg:GetFirst()
-			local sc:IsAbleToHand()
+			local sc=sg:IsAbleToHand()
 				Duel.SendtoHand(sc,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,sc)
 			end
