@@ -37,8 +37,9 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
-	e4:SetCost(s.atkcost)
-	e4:SetOperation(s.atkop)
+	e4:SetCost(s.pilcost)
+	e4:SetTarget(s.piltg)
+	e4:SetOperation(s.pilop)
 	c:RegisterEffect(e4)
 end
 --Dash 1R
