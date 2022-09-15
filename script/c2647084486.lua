@@ -1,4 +1,6 @@
 --虚無魔人
+--Vanity's Fiend
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -15,5 +17,9 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,1)
+	e2:SetTarget(s.splimit)
 	c:RegisterEffect(e2)
+end
+function s.splimit(e,c)
+	return c:IsLocation(LOCATION_HAND+LOCATION_GRAVE)
 end
