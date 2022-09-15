@@ -36,32 +36,18 @@ function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e) then return end
-		--tohand it during the End Phase of the next turn.
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetCountLimit(1)
-		e1:SetCondition(s.thcon)
-		e1:SetOperation(s.thop)
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
-		e:GetHandler():RegisterEffect(e1,tp)	
-end
-function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if tc:IsRelateToEffect(e) then
-		return Duel.GetTurnCount()==e:GetLabel()
-	else
-		e:Reset()
-		return false
-	end
+function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+    local e1=Effect.CreateEffect(c)
+    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    e1:SetCode(EVENT_PHASE+PHASE_END)
+    e1:SetRange(LOCATION_MZONE)
+    e1:SetCountLimit(1)
+    e1:SetOperation(s.thop)
+    e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+    c:RegisterEffect(e1)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	Duel.SendtoHand(c,nil,REASON_EFFECT)
+    Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 end
 ---effect on combat
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
