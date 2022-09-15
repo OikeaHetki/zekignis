@@ -77,15 +77,4 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	local token=Duel.CreateToken(tp,id+1)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
-	local rg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_REMOVED,nil,e,tp)
-	if #rg>0 and Duel.IsExistingMatchingCard(s.treasfil,tp,LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then 
-			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
-			local sg=rg:Select(tp,1,1,nil)
-			local sc=sg:GetFirst()
-			local sc=sg:IsAbleToHand()
-				Duel.SendtoHand(sc,nil,REASON_EFFECT)
-				Duel.ConfirmCards(1-tp,sc)
-			end
-			Duel.ShuffleHand(tp)
 end
