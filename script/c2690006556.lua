@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetValue(1)
+	e1:SetCondition(s.spcon)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--to hand [Dash EOT Effect]
@@ -31,26 +32,26 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e4)
 end
+function s.spcon(e,c)
+	if c==nil then return true end
+	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)>0 then
+	if not c then return end
 		--tohand it during the End Phase of the next turn.
-		local e1=Effect.CreateEffect(c)
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetLabel(Duel.GetTurnCount()+1)
-		e1:SetLabelObject(tc)
 		e1:SetCountLimit(1)
-		e1:SetCondition(s.rmcon)
-		e1:SetOperation(s.rmop)
+		e1:SetCondition(s.thcon)
+		e1:SetOperation(s.thop)
 		e1:SetReset(RESET_PHASE+PHASE_END,2)
-		Duel.RegisterEffect(e1,tp)
-		tc:CreateEffectRelation(e1)
-	end
+		e:GetHandler().RegisterEffect(e1,tp)	
 end
-function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
+function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if tc:IsRelateToEffect(e) then
 		return Duel.GetTurnCount()==e:GetLabel()
@@ -59,7 +60,7 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 		return false
 	end
 end
-function s.rmop(e,tp,eg,ep,ev,re,r,rp)
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	Duel.SendtoHand(c,nil,REASON_EFFECT)
 end
