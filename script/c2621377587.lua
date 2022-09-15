@@ -4,7 +4,6 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
-
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_PIERCE)
@@ -12,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_EXTRA_ATTACK)
+	e3:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 	e3:SetCondition(s.tribcon)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
