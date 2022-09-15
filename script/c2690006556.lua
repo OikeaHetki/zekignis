@@ -88,6 +88,4 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.ConfirmCards(1-tp,sc)
 			end
 			Duel.ShuffleHand(tp)
-	else
-	Duel.SendtoGrave(tc,REASON_EFFECT+REASON_REVEAL)
 end
