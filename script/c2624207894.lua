@@ -17,6 +17,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetOperation(s.adjustop)
 	c:RegisterEffect(e2)
+    local e3=Effect.CreateEffect(c)
+    e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+    e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+    e3:SetRange(LOCATION_SZONE)
+    e3:SetCountLimit(1)
+    e3:SetOperation(s.mtop)
+    c:RegisterEffect(e3)
 	--cannot summon,spsummon,flipsummon
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -77,4 +85,11 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(sg,REASON_RULE)
 		Duel.Readjust()
 	end
+end
+function s.mtop(e,tp,eg,ep,ev,re,r,rp)
+    if Duel.CheckLPCost(tp,1000) then
+        Duel.PayLPCost(tp,1000)
+    else
+        Duel.Destroy(e:GetHandler(),REASON_COST)
+    end
 end

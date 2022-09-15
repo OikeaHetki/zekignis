@@ -14,16 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--to hand [Dash EOT Effect]
-	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TOHAND)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1)
-	e2:SetCondition(s.regcon)
-	e2:SetTarget(s.regtg)
-	e2:SetOperation(s.regop)
-	c:RegisterEffect(e2)
+
 	--Effect on combat damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
@@ -44,34 +35,33 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)>0 then
-	local fid=c:GetFieldID()
+		--tohand it during the End Phase of the next turn.
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetLabel(Duel.GetTurnCount()+1)
+		e1:SetLabelObject(tc)
+		e1:SetCountLimit(1)
+		e1:SetCondition(s.rmcon)
+		e1:SetOperation(s.rmop)
+		e1:SetReset(RESET_PHASE+PHASE_END,2)
+		Duel.RegisterEffect(e1,tp)
+		tc:CreateEffectRelation(e1)
 	end
 end
-function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
-end
-function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
-end
-function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE+PHASE_END)
-	e1:SetCountLimit(1)
-	e1:SetTarget(s.rettg)
-	e1:SetOperation(s.retop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-end
-function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsRelateToEffect(e) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
-end
-function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) and Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)==1 then
-		Duel.ConfirmCards(1-tp,e:GetHandler())
+function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if tc:IsRelateToEffect(e) then
+		return Duel.GetTurnCount()==e:GetLabel()
+	else
+		e:Reset()
+		return false
 	end
+end
+function s.rmop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	Duel.SendtoHand(c,nil,REASON_EFFECT)
 end
 ---effect on combat
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
