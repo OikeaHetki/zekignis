@@ -7,7 +7,9 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(TIMING_STANDBY_PHASE,TIMING_STANDBY_PHASE+TIMINGS_CHECK_MONSTER)
+	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e1:SetCondition(s.condition)
+	e1:SetCost(s.cost)
 	e1:SetTarget(s.acttg)
 	c:RegisterEffect(e1)
 	--adjust
@@ -18,14 +20,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetOperation(s.adjustop)
 	c:RegisterEffect(e2)
-    local e3=Effect.CreateEffect(c)
-    e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-    e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
-    e3:SetRange(LOCATION_SZONE)
-    e3:SetCountLimit(1)
-    e3:SetOperation(s.mtop)
-    c:RegisterEffect(e3)
 	--cannot summon,spsummon,flipsummon
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -45,6 +39,9 @@ function s.initial_effect(c)
 end
 s[0]=0
 s[1]=0
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==1-tp and Duel.IsBattlePhase()
+end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	s[0]=0
@@ -102,10 +99,8 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Readjust()
 	end
 end
-function s.mtop(e,tp,eg,ep,ev,re,r,rp)
-    if Duel.CheckLPCost(tp,1000) then
-        Duel.PayLPCost(tp,1000)
-    else
-        Duel.Destroy(e:GetHandler(),REASON_COST)
-    end
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,nil,1,nil) end
+	local rg=Duel.SelectReleaseGroup(tp,nil,1,1,nil)
+	Duel.Release(rg,REASON_COST)
 end
