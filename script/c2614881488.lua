@@ -1,5 +1,5 @@
---Regulation of Tribe
---Zekpro
+--Invoke Prejudice
+--Zek
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_STANDBY_PHASE,TIMING_STANDBY_PHASE+TIMINGS_CHECK_MONSTER)
+	e1:SetCost(s.cost)
 	e1:SetTarget(s.acttg)
 	c:RegisterEffect(e1)
 	--adjust
@@ -36,6 +37,10 @@ function s.initial_effect(c)
 end
 s[0]=0
 s[1]=0
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckLPCost(tp,1000) end
+	Duel.PayLPCost(tp,1000)
+end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	s[0]=0

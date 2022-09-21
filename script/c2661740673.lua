@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCost(s.cost)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
 	--disable
@@ -34,6 +35,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.mtop)
 	c:RegisterEffect(e4)
 end
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckLPCost(tp,1000) end
+	Duel.PayLPCost(tp,1000)
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetActivityCount(tp,ACTIVITY_BATTLE_PHASE)==0 and not Duel.CheckPhaseActivity()
 end
@@ -47,8 +52,8 @@ function s.disoperation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.CheckLPCost(tp,1400) then
-		Duel.PayLPCost(tp,1400)
+	if Duel.CheckLPCost(tp,1000) then
+		Duel.PayLPCost(tp,1000)
 	else
 		Duel.Destroy(e:GetHandler(),REASON_COST)
 	end

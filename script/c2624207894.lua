@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
-	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	c:RegisterEffect(e1)
 	--adjust
@@ -38,9 +37,6 @@ function s.initial_effect(c)
 end
 s[0]={}
 s[1]={}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and Duel.IsBattlePhase()
-end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	local tp=sump
 	if targetp then tp=targetp end
