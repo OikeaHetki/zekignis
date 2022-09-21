@@ -67,7 +67,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	summon(summonable2,e,1-p,tograve,ft2)
 	Duel.SpecialSummonComplete()
 	if #tohand>0 then
-		Duel.SendToGrave(tohand,nil,REASON_EFFECT)
+		Duel.SendToGrave(tohand,REASON_EFFECT)
 	end
 	if #tograve>0 then
 		Duel.SendtoGrave(tograve,REASON_EFFECT)
