@@ -97,14 +97,14 @@ function s.dredgetg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetValue(0)
 		Duel.RegisterEffect(e1,tp)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,6)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,5)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function s.dredgeop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<=5 then return end
+	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<=4 then return end
 		Duel.DisableShuffleCheck()
-		if Duel.DiscardDeck(tp,6,REASON_EFFECT) then
+		if Duel.DiscardDeck(tp,5,REASON_EFFECT) then
 		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,e:GetHandler())
 		Duel.ShuffleHand(tp)
