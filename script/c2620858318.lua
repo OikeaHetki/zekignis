@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1a}
 s.listed_names={76922029}
-function s.con(e,tp,eg,ep,ev,re,r,rp)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,76922029),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c,e,tp)
