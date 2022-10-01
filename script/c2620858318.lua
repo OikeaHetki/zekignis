@@ -30,9 +30,7 @@ function s.confilter(c)
 	return c:IsFaceup() and c:IsCode(76922029)
 end
 function s.condition(e,c)
-	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.confilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.confilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x1a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
