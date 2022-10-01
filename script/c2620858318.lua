@@ -29,8 +29,7 @@ s.listed_names={76922029}
 function s.confilter(c)
 	return c:IsFaceup() and c:IsCode(76922029)
 end
-function s.condition(e,c)
-	if c==nil then return true end
+function s.condition(e)
 	return Duel.IsExistingMatchingCard(s.confilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c,e,tp)
