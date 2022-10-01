@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,nil,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP) then
 	Duel.BreakEffect()
-	Duel.Draw(tp,1,REASON_EFFECT)
+	Duel.Draw(tp,sg:GetCount(),REASON_EFFECT)
 	end
 end
 function s.thfilter(c)
