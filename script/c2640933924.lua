@@ -32,7 +32,7 @@ s.listed_series={0x1a}
 s.listed_names={76922029}
 --one dark scorpion, except id
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x1a,lc,sumtype,tp) and not c:IsType(lc,type,tp,TYPE_LINK)
+	return c:IsSetCard(0x1a,lc,sumtype,tp) and not c:IsType(TYPE_LINK,lc,sumtype,tp)
 end
 --direct attack tg
 function s.diratktg(c)
