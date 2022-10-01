@@ -26,11 +26,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1a}
 s.listed_names={76922029}
-function s.confilter(c)
-	return c:IsFaceup() and c:IsCode(76922029)
-end
-function s.condition(e)
-	return Duel.IsExistingMatchingCard(s.confilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
+function s.con(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,76922029),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x1a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
