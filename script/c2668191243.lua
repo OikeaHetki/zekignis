@@ -30,6 +30,7 @@ s.listed_series={0x1a}
 s.listed_names={76922029}
 function s.cfilter(c)
 	return (c:IsSetCard(0x1a) or c:IsCode(76922029)) and not c:IsPublic()
+	and c:IsType(TYPE_MONSTER)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

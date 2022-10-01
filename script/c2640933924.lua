@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EFFECT_DIRECT_ATTACK)
-	e3:SetTarget(s.dirattg)
+	e3:SetTarget(s.diratktg)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	c:RegisterEffect(e3)
 end
@@ -32,7 +32,11 @@ s.listed_series={0x1a}
 s.listed_names={76922029}
 --one dark scorpion, except id
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x1a,lc,sumtype,tp) and not c:IsSummonCode(lc,sumtype,tp,id)
+	return c:IsSetCard(0x1a,lc,sumtype,tp) and not c:IsType(lc,type,tp,TYPE_LINK)
+end
+--direct attack tg
+function s.diratktg(c)
+	return (c:IsSetCard(0x1a) or c:IsCode(76922029))
 end
 --Check for "Dark Scorpion" ST or "Don Zaloog"
 function s.thfilter(c)
