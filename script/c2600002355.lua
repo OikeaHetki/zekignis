@@ -3,17 +3,16 @@
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
-	--can only ss once
-	c:SetSPSummonOnce(id)
 	--xyz summon
 	Xyz.AddProcedure(c,s.matfilter,3,2,s.ovfilter,aux.Stringid(id,0),99,s.xyzop)
 	c:EnableReviveLimit()
 	--act from gy then banish
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.con)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.activate)
@@ -28,7 +27,9 @@ function s.cfilter(c)
 	return c:IsSpellTrap() and c:IsDiscardable()
 end
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsRace(RACE_PSYCHIC,lc,SUMMON_TYPE_XYZ,tp) and c:IsLevelBelow(3)
+	return c:IsFaceup() and c:IsRace(RACE_PSYCHIC,lc,SUMMON_TYPE_XYZ,tp) 
+	and (c:IsRankBelow(2) or c:IsLevelBelow(2) or c:IsLinkBelow(2)) 
+	and c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.xyzop(e,tp,chk,mc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -56,6 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ADJUST)
+	e1:SetCountLimit(1)
 	e1:SetOperation(s.operation)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
