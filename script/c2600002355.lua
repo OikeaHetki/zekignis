@@ -25,10 +25,10 @@ function s.matfilter(c,xyz,sumtype,tp)
 end
 --
 function s.cfilter(c)
-	return c:IsRace(RACE_PSYCHIC) and c:IsDiscardable()
+	return c:IsSpellTrap() and c:IsDiscardable()
 end
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsRace(RACE_PSYCHIC,lc,SUMMON_TYPE_XYZ,tp)
+	return c:IsFaceup() and c:IsRace(RACE_PSYCHIC,lc,SUMMON_TYPE_XYZ,tp) and c:IsLevelBelow(3)
 end
 function s.xyzop(e,tp,chk,mc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -75,5 +75,4 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
-	Duel.Remove(tc,POS_FACEUP,REASON_RULE)
 end
