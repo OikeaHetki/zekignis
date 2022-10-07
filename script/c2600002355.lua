@@ -41,7 +41,7 @@ function s.matfilter(c,xyz,sumtype,tp)
 end
 --
 function s.cfilter(c)
-	return c:IsSpellTrap() and c:IsDiscardable()
+	return c:IsMonster() and c:IsDiscardable()
 end
 function s.gyrfilter(c)
 	return not (c:IsRankBelow(2) or c:IsLevelBelow(2) or c:IsLinkBelow(2)) 
