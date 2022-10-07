@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,s.matfilter,3,2,s.ovfilter,aux.Stringid(id,0),99,s.xyzop)
+	Xyz.AddProcedure(c,s.matfilter,3,3,s.ovfilter,aux.Stringid(id,0),99,s.xyzop)
 	c:EnableReviveLimit()
 	--act from gy then banish
 	local e1=Effect.CreateEffect(c)
@@ -13,7 +13,6 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.con)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -44,9 +43,6 @@ function s.xyzop(e,tp,chk,mc)
 	else return false end
 end
 --
-function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
