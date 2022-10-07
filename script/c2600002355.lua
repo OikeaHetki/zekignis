@@ -30,8 +30,8 @@ function s.gyrfilter(c)
 	return not (c:IsRankBelow(2) or c:IsLevelBelow(2) or c:IsLinkBelow(2)) 
 end
 function s.ovfilter(c,tp,lc)
-	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
-	return #g>0 and not g:IsExists(s.cfilter,1,nil)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
+	return #g>0 and not g:IsExists(s.gyrfilter,1,nil)
 	and c:IsFaceup() and (c:IsRankBelow(2) or c:IsLevelBelow(2) or c:IsLinkBelow(2)) 
 end
 function s.xyzop(e,tp,chk,mc)
