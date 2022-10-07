@@ -26,10 +26,13 @@ end
 function s.cfilter(c)
 	return c:IsSpellTrap() and c:IsDiscardable()
 end
+function s.gyrfilter(c)
+	return not (c:IsRankBelow(2) or c:IsLevelBelow(2) or c:IsLinkBelow(2)) 
+end
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsRace(RACE_PSYCHIC,lc,SUMMON_TYPE_XYZ,tp) 
-	and (c:IsRankBelow(2) or c:IsLevelBelow(2) or c:IsLinkBelow(2)) 
-	and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
+	return #g>0 and not g:IsExists(s.cfilter,1,nil)
+	and c:IsFaceup() and (c:IsRankBelow(2) or c:IsLevelBelow(2) or c:IsLinkBelow(2)) 
 end
 function s.xyzop(e,tp,chk,mc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
