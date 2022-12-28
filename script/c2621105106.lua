@@ -42,9 +42,16 @@ function s.mat_filter(c)
 	return c:GetLevel()~=11
 end
 ---gain card advantage lol
+function s.cfilter(c)
+	return c:IsSetCard(0xb4) and c:IsDiscardable()
+end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+	if chk==0 then return e:GetHandler():IsDiscardable()
+		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
+	g:AddCard(e:GetHandler())
+	Duel.SendtoGrave(g,REASON_DISCARD+REASON_COST)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0xb4) and c:IsAbleToHand() and not c:IsCode(id) or c:IsOriginalCode(id)
@@ -82,7 +89,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Remove(eg,POS_FACEUP,REASON_EFFECT) then
-		Duel.Remove(Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD+LOCATION_GRAVE,nil),POS_FACEUP,REASON_EFFECT)
+		Duel.Remove(Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil),POS_FACEUP,REASON_EFFECT)
 	end
 end
 function s.rmfilter(c)
