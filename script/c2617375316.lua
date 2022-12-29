@@ -23,6 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)~=0
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,1-tp,LOCATION_HAND)
+	Duel.SetChainLimit(aux.FALSE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g0=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
