@@ -46,7 +46,7 @@ end
 s.listed_names={23995346,5405694}
 s.material_setcode={0x10cf,0xcf,0xdd}
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_DRAGON),c:GetControler(),LOCATION_MZONE+LOCATION_GRAVE,0,c)*500
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_DRAGON),c:GetControler(),LOCATION_MZONE+LOCATION_GRAVE,0,c)*500
 end
 function s.valcheck(e,c)
 	if c:GetMaterial():IsExists(Card.IsCode,1,nil,23995346) and c:GetMaterial():IsExists(Card.IsCode,1,nil,5405694) then

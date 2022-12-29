@@ -48,5 +48,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_WINGEDBEAST),c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())*100
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_WINGEDBEAST),c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())*100
 end

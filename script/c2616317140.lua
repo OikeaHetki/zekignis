@@ -60,7 +60,7 @@ function s.efilter(e,re)
 end
 --hyper blaze
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,6007213),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
+	return tp~=Duel.GetTurnPlayer() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,6007213),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter(c)
 	return c:IsType(TYPE_TRAP) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)

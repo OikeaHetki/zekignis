@@ -45,7 +45,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 end
 --atk
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),c:GetControler(),LOCATION_GRAVE,0,nil)*400
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_MONSTER),c:GetControler(),LOCATION_GRAVE,0,nil)*400
 end
 --replace
 function s.repfilter(c,e)

@@ -54,7 +54,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.DiscardHand(1-tp,nil,2,2,REASON_EFFECT+REASON_DISCARD)
 		end
 	elseif dc==4 then
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local c=e:GetHandler()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
