@@ -61,31 +61,37 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	e:GetLabelObject():SetLabel(e:GetLabel())
 end
+function s.rmfilter1(c)
+	return c:IsAbleToRemove()
+end
+function s.rmfilter2(c)
+	return c:IsFacedown() and c:IsAbleToRemove()
+end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToRemove() end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_ONFIELD) and chkc:IsAbleToRemove() end
 	if chk==0 then
 		if e:GetLabel()==ATTRIBUTE_LIGHT then
-			return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+			return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil)
 		else
-			return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil,tp,POS_FACEDOWN)
+			return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 		end
 	end
 	if e:GetLabel()==ATTRIBUTE_LIGHT then
-		local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
+		local g=Duel.GetMatchingGroup(s.rmfilter1,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
 	else
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
+		g=Duel.GetMatchingGroup(s.rmfilter2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		e:SetProperty(0)
 	end
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==ATTRIBUTE_LIGHT then
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
+	local g=Duel.GetMatchingGroup(s.rmfilter1,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
 		if #g>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		Duel.Recover(tp,#g*300,REASON_EFFECT)
 		end
 	else
-		local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
+		local g=Duel.GetMatchingGroup(s.rmfilter2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		if #g>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		Duel.Damage(1-tp,#g*200,REASON_EFFECT)

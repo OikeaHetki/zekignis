@@ -8,6 +8,8 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(s.tg)
+	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 	--mzone limit
 	local e2=Effect.CreateEffect(c)
@@ -36,6 +38,18 @@ function s.initial_effect(c)
 	e4:SetTargetRange(1,0)
 	e4:SetTarget(s.sumlimit)
 	c:RegisterEffect(e4)
+end
+function s.desfilter(c)
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+end
+function s.sendtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
+	if chk==0 then return #g>0 end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0,LOCATION_MZONE)
+end
+function s.sendop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
+	Duel.SendtoGrave(g,REASON_EFFECT)
 end
 function s.value(e,fp,rp,r)
 	local limit=Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)
