@@ -25,6 +25,6 @@ end
 function s.val(e,c)
 	local r=c:GetRace()
 	if (r&RACE_DRAGON+RACE_WINGEDBEAST+RACE_THUNDER+RACE_WYRM+RACE_PYRO)>0 then return 300
-	elseif (r&RACE_ROCK+RACE_WARRIOR)>0 then return -300
+	elseif (r&RACE_ROCK+RACE_WARRIOR+RACE_BEASTWARRIOR)>0 then return -300
 	else return 0 end
 end
