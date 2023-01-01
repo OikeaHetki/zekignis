@@ -13,18 +13,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter(c,e)
-	return c:IsFaceup() and c:IsDefenseAbove(0) and c:IsOnField() and c:IsCanBeEffectTarget(e)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e):GetMaxGroup(Card.GetDefense) g=g
-	if chkc then return g:IsContains(chkc) end
-	if chk==0 then return #g>0 end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	local tg=g:GetMaxGroup(Card.GetDefense)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local tc=g:Select(tp,1,1,nil)
+	local tc=tg:Select(tp,1,1,nil)
 	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 end
+
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
