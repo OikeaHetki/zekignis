@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.atkcon)
-	e1:SetValue(800)
+	e1:SetValue(500)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
