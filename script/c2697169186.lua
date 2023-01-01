@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
+	e1:SetTarget(s.target)''
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
@@ -17,9 +17,9 @@ function s.filter(c,e)
 	return c:IsFaceup() and c:IsDefenseAbove(0) and c:IsOnField() and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e):GetMaxGroup(Card.GetDefense)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e):GetMaxGroup(Card.GetDefense) g=g
 	if chkc then return g:IsContains(chkc) end
-	if chk==0 then return chkc==g end
+	if chk==0 then return #g>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tc=g:Select(tp,1,1,nil)
 	Duel.SetTargetCard(tc)
