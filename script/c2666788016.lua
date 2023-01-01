@@ -19,7 +19,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,0,LOCATION_MZONE,nil,e):GetMinGroup(Card.GetAttack)
 	if chkc then return g:IsContains(chkc) end
-	if chk==0 then return #g>0 end
+	if chk==0 then return chkc==g end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tc=g:Select(tp,1,1,nil)
 	Duel.SetTargetCard(tc)
