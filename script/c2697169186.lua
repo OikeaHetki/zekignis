@@ -17,17 +17,17 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsDefenseAbove(0) and c:IsOnField() and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e):GetMaxGroup(Card.GetDefense)
-    if chkc then return g:IsContains(chkc) end
-    if chk==0 then return chkc==g end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-    local tc=g:Select(tp,1,1,nil)
-    Duel.SetTargetCard(tc)
-    Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e):GetMaxGroup(Card.GetDefense)
+	if chkc then return g:IsContains(chkc) end
+	if chk==0 then return chkc==g end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	local tc=g:Select(tp,1,1,nil)
+	Duel.SetTargetCard(tc)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-    local tc=Duel.GetFirstTarget()
-    if tc and tc:IsRelateToEffect(e) then
-        Duel.Destroy(tc,REASON_EFFECT)
-    end
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) then
+		Duel.Destroy(tc,REASON_EFFECT)
+	end
 end
