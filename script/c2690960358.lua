@@ -55,12 +55,11 @@ function s.twcon(c)
 	return c:IsFaceup() and c:IsCode(15259703)
 end
 function s.hspcon(e,c)
-	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,1,false,1,true,c,c:GetControler(),nil,false,nil)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,15259703),c:GetControler(),LOCATION_ONFIELD,0,1,nil)
+	if c==nil then return Duel.IsExistingMatchingCard(s.twcon,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil) end
+	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsType,1,false,1,true,c,c:GetControler(),nil,false,nil,TYPE_MONSTER)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,aux.TRUE,2,2,false,true,true,c,nil,nil,false,nil)
+	local g=Duel.SelectReleaseGroup(tp,Card.IsType,1,1,false,true,true,c,nil,nil,false,nil,TYPE_MONSTER)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)
