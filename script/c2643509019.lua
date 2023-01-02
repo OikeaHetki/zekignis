@@ -44,7 +44,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,tp)
-	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
 		if tc:IsType(TYPE_FIELD) then
