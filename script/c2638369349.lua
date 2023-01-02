@@ -1,5 +1,5 @@
---トゥーン・サイバー・ドラゴン
---Toon Cyber Dragon
+--トゥーン・ドラゴン・エッガー
+--Manga Ryu-Ran
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,9 +7,11 @@ function s.initial_effect(c)
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD)
 	e0:SetCode(EFFECT_SPSUMMON_PROC)
-	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetRange(LOCATION_HAND)
-	e0:SetCondition(s.spcon)
+	e0:SetCondition(s.hspcon)
+	e0:SetTarget(s.hsptg)
+	e0:SetOperation(s.hspop)
 	c:RegisterEffect(e0)
 	--Cannot attack
 	local e1=Effect.CreateEffect(c)
@@ -38,27 +40,49 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_DIRECT_ATTACK)
 	e5:SetCondition(s.dircon)
 	c:RegisterEffect(e5)
-	--spsummon from hand
+	--atk
 	local e6=Effect.CreateEffect(c)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e6:SetType(EFFECT_TYPE_FIELD)
-	e6:SetRange(LOCATION_HAND)
-	e6:SetCode(EFFECT_SPSUMMON_PROC)
-	e6:SetCondition(s.hspcon)
-	e6:SetTarget(s.hsptg)
-	e6:SetOperation(s.hspop)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetCode(EFFECT_UPDATE_ATTACK)
+	e6:SetCondition(s.atkcon)
+	e6:SetValue(400)
 	c:RegisterEffect(e6)
+	--def
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_SINGLE)
+	e7:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e7:SetRange(LOCATION_MZONE)
+	e7:SetCode(EFFECT_UPDATE_DEFENSE)
+	e7:SetCondition(s.atkcon)
+	e7:SetValue(400)
+	c:RegisterEffect(e7)
 end
 s.listed_names={15259703}
 --spsum from hand
 function s.twcon(c)
 	return c:IsFaceup() and c:IsCode(15259703)
 end
-function s.spcon(e,c)
-	if c==nil then return Duel.IsExistingMatchingCard(s.twcon,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil) end
-	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
-		and Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0
-		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+function s.hspcon(e,c)
+	if c==nil then return true end
+	return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,2,false,2,true,c,c:GetControler(),nil,false,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,15259703),c:GetControler(),LOCATION_ONFIELD,0,1,nil)
+end
+function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=Duel.SelectReleaseGroup(tp,aux.TRUE,2,2,false,true,true,c,nil,nil,false,nil)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
+end
+function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 --summoning sickness
 function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
@@ -84,22 +108,8 @@ function s.dircon(e)
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TOON),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 --personal effect
-function s.hspcon(e,c)
-	if c==nil then return Duel.IsExistingMatchingCard(s.twcon,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil) end
-	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsType,1,false,1,true,c,c:GetControler(),nil,false,nil,TYPE_MONSTER)
-end
-function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,Card.IsType,1,1,false,true,true,c,nil,nil,false,nil,TYPE_MONSTER)
-	if g then
-		g:KeepAlive()
-		e:SetLabelObject(g)
-	return true
-	end
-	return false
-end
-function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=e:GetLabelObject()
-	if not g then return end
-	Duel.Release(g,REASON_COST)
-	g:DeleteGroup()
+function s.atkcon(e)
+	local ph=Duel.GetCurrentPhase()
+	local tp=Duel.GetTurnPlayer()
+	return tp~=e:GetHandler():GetControler() and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end

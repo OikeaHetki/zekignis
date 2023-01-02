@@ -1,6 +1,6 @@
 --トゥーン・ディフェンス
---Toon Defense
---zekpro
+--Toon Defense (retrain)
+--zek
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,6 +35,7 @@ function s.cfilter2(c)
 	return c:IsFaceup() and c:IsType(TYPE_TOON)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local tp=e:GetHandlerPlayer()
 	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 		or not Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil)
   then return false end
