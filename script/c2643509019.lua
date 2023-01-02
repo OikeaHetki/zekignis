@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--avoid battle damage
 	local e2=Effect.CreateEffect(c)
@@ -25,8 +26,38 @@ function s.initial_effect(c)
 	e3:SetCost(aux.bfgcost)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
+	--destroy
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetCode(EVENT_DESTROYED)
+	e4:SetCondition(s.descon)
+	e4:SetOperation(s.desop)
+	c:RegisterEffect(e4)
 end
 s.listed_names={15259703}
+--activate toon world
+function s.filter(c,tp)
+	return c:IsCode(15259703) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true)
+		and (c:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
+end
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,tp)
+	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+		local tc=g:Select(tp,1,1,nil):GetFirst()
+		if tc:IsType(TYPE_FIELD) then
+			Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+		else
+			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			local te=tc:GetActivateEffect()
+			local tep=tc:GetControler()
+			local cost=te:GetCost()
+			if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
+		end
+	end
+end
 --check for toon world and monster
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(15259703)
@@ -62,4 +93,14 @@ function s.valcon(e,re,r,rp,rc)
 		end
 	end
 	return false
+end
+--selfdes
+function s.dfilter(c,tp)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsCode(15259703)
+end
+function s.descon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.dfilter,1,nil,tp)
+end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
