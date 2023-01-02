@@ -55,7 +55,7 @@ function s.twcon(c)
 	return c:IsFaceup() and c:IsCode(15259703)
 end
 function s.spcon(e,c)
-	if c==nil then return Duel.IsExistingMatchingCard(s.twcon,e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if c==nil then return Duel.IsExistingMatchingCard(s.twcon,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil) end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 --summoning sickness

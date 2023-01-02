@@ -9,14 +9,14 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
-	--toonbd
+	--avoid battle damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TOON))
-	e2:SetValue(1)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetTargetRange(1,0)
+	e2:SetCondition(s.condition)
 	c:RegisterEffect(e2)
 	--damage conversion
 	local e3=Effect.CreateEffect(c)
@@ -26,22 +26,19 @@ function s.initial_effect(c)
 	e3:SetCost(aux.bfgcost)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	--self destroy
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(EFFECT_SELF_DESTROY)
-	e4:SetCondition(aux.NOT(s.condition))
-	c:RegisterEffect(e4)
 end
 s.listed_names={15259703}
---twcheck
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.twcheck,tp,LOCATION_ONFIELD,0,1,nil)
-end
-function s.twcheck()
+--check for toon world and monster
+function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(15259703)
+end
+function s.cfilter2(c)
+	return c:IsFaceup() and c:IsType(TYPE_TOON)
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
+		or not Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil)
+  then return false end
 end
 --gybanish
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
