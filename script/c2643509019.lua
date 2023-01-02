@@ -36,9 +36,9 @@ function s.cfilter2(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tp=e:GetHandlerPlayer()
-	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
-		or not Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil)
-  then return false end
+	if Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil)
+  then return true end
 end
 --gybanish
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
