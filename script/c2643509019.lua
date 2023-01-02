@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(s.twcheck)
+	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
 	--toonbd
 	local e2=Effect.CreateEffect(c)
@@ -32,11 +32,14 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCode(EFFECT_SELF_DESTROY)
-	e4:SetCondition(aux.NOT(s.twcheck))
+	e4:SetCondition(aux.NOT(s.condition))
 	c:RegisterEffect(e4)
 end
 s.listed_names={15259703}
 --twcheck
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(s.twcheck,tp,LOCATION_ONFIELD,0,1,nil)
+end
 function s.twcheck()
 	return c:IsFaceup() and c:IsCode(15259703)
 end
