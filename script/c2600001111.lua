@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e2:SetCondition(s.rdcon)
-	e2:SetValue(s.rval)
+	e2:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	c:RegisterEffect(e2)
 	--tograve
 	local e3=Effect.CreateEffect(c)
@@ -40,12 +40,11 @@ end
 function s.matcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_EARTH,lc,sumtype,tp)
 end
-function s.rval(e,damp)
-	if damp==1-e:GetHandlerPlayer() then
-		return e:GetHandler():GetBaseAttack()
-	else
-		return -1
-	end
+function s.rdcon(e)
+	local c=e:GetHandler()
+	local tp=e:GetHandlerPlayer()
+	return Duel.GetAttackTarget()==nil
+		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
