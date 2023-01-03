@@ -59,7 +59,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
-	e1:SetCode(EFFECT_SET_BASE_ATTACK)
+	e1:SetCode(EFFECT_SET_BASE_DEFENSE)
 	e1:SetValue(2000)
 	c:RegisterEffect(e1)
 	end

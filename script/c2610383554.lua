@@ -44,12 +44,12 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(1000)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler():GetBattleTarget(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetHandler():GetBattleTarget()
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if bc and bc:IsRelateToBattle() and	Duel.Destroy(bc,REASON_EFFECT)
+	if bc and bc:IsRelateToBattle() and Duel.Destroy(bc,REASON_EFFECT)
 	then Duel.Damage(p,d,REASON_EFFECT)
 	end
 end
