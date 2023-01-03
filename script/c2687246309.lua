@@ -18,62 +18,67 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--tograve
+	--tohand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_TOGRAVE)
+	e3:SetCategory(CATEGORY_DECKDES)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_BE_MATERIAL)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCondition(s.tgcon)
-	e3:SetCost(s.tgcost)
-	e3:SetTarget(s.tgtg)
-	e3:SetOperation(s.tgop)
+	e3:SetCondition(s.disdc)
+	e3:SetTarget(s.disdtg)
+	e3:SetOperation(s.disdop)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xa9,0xc3,0xad}
-function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
-function s.thfilter(c)
-	return (c:IsSetCard(0xa9) or c:IsSetCard(0xc3)) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+function s.filter(c)
+	return ((c:IsSetCard(0xa9) or c:IsSetCard(0xc3)) and not c:IsCode(id) and not c:IsOriginalCode(id)) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_GRAVE) then
+		local tc=Duel.GetFirstTarget()
+		if tc:IsRelateToEffect(e) then
+			Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		end
 	end
 end
-function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
+function s.disdc(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsLocation(LOCATION_GRAVE) and r==REASON_FUSION and c:GetReasonCard():IsOriginalSetCard(0xad)
 end
-function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
+function s.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0xad)
 end
-function s.tgfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and (c:IsSetCard(0xa9) or c:IsSetCard(0xc3))
+function s.disdtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,ct) end
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,ct)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,ct*500)
 end
-function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.tgfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_REMOVED,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_REMOVED,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
+function s.ctfilter2(c)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(0xa9)
 end
-function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local sg=tg:Filter(Card.IsRelateToEffect,nil,e)
-	if #sg>0 then
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_RETURN)
+function s.disdop(e,tp,eg,ep,ev,re,r,rp)
+	local ct1=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if ct1>0 then
+		if Duel.DiscardDeck(tp,ct1,REASON_EFFECT)~=0 then
+			local og=Duel.GetOperatedGroup()
+			local ct2=og:FilterCount(s.ctfilter2,nil)
+			if ct2>0 then
+				Duel.Recover(tp,ct2*500,REASON_EFFECT)
+			end
+		end
 	end
 end
