@@ -36,15 +36,13 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
+
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tg=e:GetHandler():GetBattleTarget()
-	if chkc then return chkc==tg end
-	if chk==0 then return tg:IsOnField() and tg:IsCanBeEffectTarget(e) end
-	Duel.SetTargetCard(tg)
+	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(1000)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler():GetBattleTarget(),1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetHandler():GetBattleTarget()

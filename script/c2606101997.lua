@@ -6,15 +6,13 @@ function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,30068120,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9))
-	--actlimit upon attacking
+	--immune
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(0,1)
-	e1:SetValue(s.aclimit)
-	e1:SetCondition(s.actcon)
+	e1:SetCode(EFFECT_IMMUNE_EFFECT)
+	e1:SetValue(s.efilter)
 	c:RegisterEffect(e1)
 	--atk limit (opponent)
 	local e2=Effect.CreateEffect(c)
@@ -47,12 +45,6 @@ s.material_setcode={0xa9,0xc3}
 function s.atklimit(e,c)
 	return c==e:GetHandler()
 end
-function s.aclimit(e,re,tp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
-end
-function s.actcon(e)
-	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
-end
-function s.atlimit(e,c)
-	return c~=e:GetHandler()
+function s.efilter(e,te)
+	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner() and not te:IsActiveType(TYPE_FUSION)
 end
