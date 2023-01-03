@@ -56,7 +56,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_FUSION
 end
 function s.filter(c)
-	return (c:IsSetCard(0xc3) or c:IsSetCard(0xa9)) and (c:IsMonster() and not c:IsCode(id))
+	return (c:IsSetCard(0xc3) or c:IsSetCard(0xa9)) and (c:IsMonster() and not c:IsCode(id) and not c:IsOriginalCode(id))
 		and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
