@@ -43,5 +43,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	Duel.ConfirmDecktop(tp,3)
 	Duel.SortDecktop(tp,tp,3)
-	end
 end
