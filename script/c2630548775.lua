@@ -41,6 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	Duel.SendtoDeck(sg,nil,3,REASON_EFFECT)
 	Duel.BreakEffect()
+	Duel.ShuffleDeck(tp)
 	Duel.ConfirmDecktop(tp,3)
 	Duel.SortDecktop(tp,tp,3)
 end
