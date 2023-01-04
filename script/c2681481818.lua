@@ -13,6 +13,15 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+	--special summon
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_SPSUMMON_PROC)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e2:SetRange(LOCATION_HAND)
+	e2:SetCountLimit(1,{id,1})
+	e2:SetCondition(s.spcon)
+	c:RegisterEffect(e2)
 	--fusion substitute
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -22,8 +31,19 @@ function s.initial_effect(c)
 	e3:SetValue(s.subval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xad}
+s.listed_series={0xad,0xa9}
 s.listed_names={18138630}
+function s.spcon(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+end
+function s.cfilter(c)
+	return c:IsFacedown() or not c:IsSetCard(0xa9)
+end
 function s.subval(e,c)
 	return c:IsSetCard(0xad)
 end

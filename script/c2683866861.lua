@@ -27,6 +27,20 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	e2:SetCondition(s.actcon)
 	c:RegisterEffect(e2)
+	--fusion summon cannot be negated
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e3:SetCondition(s.effcon)
+	c:RegisterEffect(e3)
+	--summon success
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e4:SetCondition(s.effcon2)
+	e4:SetOperation(s.spsumsuc)
+	c:RegisterEffect(e4)
 end
 s.listed_series={0xad}
 s.material_setcode=0xad
@@ -67,4 +81,16 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
+end
+function s.effcon(e)
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION
+end
+function s.effcon2(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION
+end
+function s.spsumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.SetChainLimitTillChainEnd(s.chlimit)
+end
+function s.chlimit(e,ep,tp)
+	return tp==ep
 end
