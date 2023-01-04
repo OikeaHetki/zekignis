@@ -49,7 +49,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
-	return ((c:IsSetCard(0xad) and c:IsSpellTrap()) or c:IsCode(CARD_POLYMERIZATION)) and c:IsAbleToHand()
+	return ((c:IsSetCard(0xad) and c:IsSpellTrap()) or c:IsCode(CARD_POLYMERIZATION)) and c:IsAbleToHand() and (not c:IsCode(id) or c:IsOriginalCode(id))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
@@ -65,7 +65,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsRace(RACE_FIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetReason()&0x40008)==0x40008
+	return c:IsLevelBelow(4) and c:IsRace(RACE_FIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:GetReason()&0x40008)==0x40008
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
