@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_FUSION))
-	e2:SetValue(300)
+	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	--defup
 	local e3=Effect.CreateEffect(c)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_FUSION))
-	e3:SetValue(300)
+	e3:SetValue(500)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xa9,0xc3,0xad}
