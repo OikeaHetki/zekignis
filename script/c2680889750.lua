@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xad))
-	e3:SetValue(500)
+	e3:SetValue(300)
 	c:RegisterEffect(e3)
 	--Cannot be destroyed
 	local e4=Effect.CreateEffect(c)
