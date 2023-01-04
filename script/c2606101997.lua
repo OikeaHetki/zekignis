@@ -6,13 +6,14 @@ function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,30068120,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9))
-	--immune
+	--atk
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EFFECT_IMMUNE_EFFECT)
-	e1:SetValue(s.efilter)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xad))
+	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
 	--atk limit (opponent)
 	local e2=Effect.CreateEffect(c)
@@ -45,6 +46,9 @@ s.material_setcode={0xa9,0xc3}
 function s.atklimit(e,c)
 	return c==e:GetHandler()
 end
-function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner() and not te:IsActiveType(TYPE_FUSION)
+function s.atkfilter(c)
+	return c:IsFaceup() and (c:IsSetCard(0xa9) or c:IsSetCard(0xad))
+end
+function s.atkval(e,c)
+	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_MZONE,0,nil)*200
 end
