@@ -55,17 +55,17 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsLocation(LOCATION_GRAVE) and r==REASON_FUSION and c:GetReasonCard():IsOriginalSetCard(0xad)
 end
-function s.filter(c)
+function s.filter2(c)
 	return (c:IsSetCard(0xa9) or c:IsSetCard(0xc3)) and c:IsMonster()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end
+		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.DiscardHand(tp,s.filter,1,1,REASON_EFFECT)==0 then return end
+	if Duel.DiscardHand(tp,s.filter2,1,1,REASON_EFFECT)==0 then return end
 	local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
 	if ct>0 then
 		Duel.Draw(tp,1,REASON_EFFECT)

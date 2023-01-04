@@ -65,7 +65,7 @@ function s.disdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,ct) end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,ct)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,ct*500)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,ct*800)
 end
 function s.ctfilter2(c)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(0xa9)
@@ -77,7 +77,7 @@ function s.disdop(e,tp,eg,ep,ev,re,r,rp)
 			local og=Duel.GetOperatedGroup()
 			local ct2=og:FilterCount(s.ctfilter2,nil)
 			if ct2>0 then
-				Duel.Recover(tp,ct2*500,REASON_EFFECT)
+				Duel.Recover(tp,ct2*800,REASON_EFFECT)
 			end
 		end
 	end
