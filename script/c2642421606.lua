@@ -51,7 +51,6 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,2,REASON_EFFECT)
 	elseif dc==3 then
 		Duel.DiscardHand(1-tp,nil,2,2,REASON_EFFECT+REASON_DISCARD)
-		end
 	elseif dc==4 then
 	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local c=e:GetHandler()
