@@ -15,8 +15,6 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetProperty(EFFECT_FLAG_BOTH_SIDE)
-	e2:SetTarget(params)
-	e2:SetOperation(params)
 	c:RegisterEffect(e2)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e2)
