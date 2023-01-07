@@ -58,17 +58,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTarget(s.distg)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		--act limit
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD)
-		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e3:SetCode(EFFECT_CANNOT_ACTIVATE)
-		e3:SetCondition(s.con)
-		e3:SetRange(LOCATION_MZONE)
-		e3:SetTargetRange(0,1)
-		e3:SetValue(s.aclimit)
+		--Inflict piercing damage
+		local e3=Effect.CreateEffect(e:GetHandler())
+		e3:SetDescription(3208)
+		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_PIERCE)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e3)
+		tc:RegisterEffect(e3)
 	end
 end
 function s.discon(e)
@@ -77,11 +74,4 @@ function s.discon(e)
 end
 function s.distg(e,c)
 	return e:GetHandler():GetBattleTarget()==c
-end
-function s.con(e)
-	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
-end
-function s.aclimit(e,re,tp)
-	return re:GetHandler():IsTrap() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
