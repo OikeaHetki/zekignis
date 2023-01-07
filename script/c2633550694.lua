@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(Fusion.SummonEffOP(nil,Card.IsAbleToRemove,nil,Fusion.BanishMaterial))
 	c:RegisterEffect(e2)
 	--fusion
-	local params = {fusfilter=s.fusfilter,matfilter=aux.FALSE,extrafil=s.extrafil,stage2=s.stage2,extratg=s.extratg,extraop=Fusion.BanishMaterial}
+	local params = {fusfilter=s.fusfilter,matfilter=aux.FALSE,extrafil=s.extrafil,extratg=s.extratg,extraop=Fusion.BanishMaterial,stage2=s.sstage2,desc=aux.Stringid(id,2)}
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -48,18 +48,15 @@ end
 function s.extrafil(e,tp,mg1)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
 end
-function s.stage2(e,tc,tp,sg,chk)
+function s.sstage2(e,tc,tp,sg,chk)
 	if chk==1 then
-		local c=e:GetHandler()
-		c:SetCardTarget(tc)
-		--Cannot attack directly
-		local e1=Effect.CreateEffect(tc)
-		e1:SetDescription(3207)
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:GetFirst():RegisterEffect(e1,tp)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1)
 	end
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
