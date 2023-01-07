@@ -29,7 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e1:SetProperty(EFFECT_FLAG_OATH)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.ftarget)
-	e1:SetLabel(g:GetFirst():GetFieldID())
+	e1:SetLabel(e:GetFirst():GetFieldID())
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
@@ -57,6 +57,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTarget(s.distg)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
+		--act limit
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_FIELD)
+		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e3:SetCode(EFFECT_CANNOT_ACTIVATE)
+		e3:SetCondition(s.con)
+		e3:SetRange(LOCATION_MZONE)
+		e3:SetTargetRange(0,1)
+		e3:SetValue(s.aclimit)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e3)
 	end
 end
 function s.discon(e)
@@ -65,4 +76,11 @@ function s.discon(e)
 end
 function s.distg(e,c)
 	return e:GetHandler():GetBattleTarget()==c
+end
+function s.con(e)
+	local ph=Duel.GetCurrentPhase()
+	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+end
+function s.aclimit(e,re,tp)
+	return re:GetHandler():IsTrap() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
