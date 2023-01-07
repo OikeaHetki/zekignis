@@ -53,13 +53,13 @@ function s.stage2(e,tc,tp,sg,chk)
 		local c=e:GetHandler()
 		c:SetCardTarget(tc)
 		--Cannot attack directly
-		local e1=Effect.CreateEffect(c)
+		local e1=Effect.CreateEffect(tc)
 		e1:SetDescription(3207)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:GetFirst():RegisterEffect(e1,tp)
+		tc:GetFirst():RegisterEffect(e1,tp)
 	end
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
