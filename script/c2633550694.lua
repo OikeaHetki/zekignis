@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
+		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,nil)
 	end
 end
 function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
