@@ -15,23 +15,23 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetProperty(EFFECT_FLAG_BOTH_SIDE)
-	e2:SetCountLimit(1)
 	e2:SetTarget(Fusion.SummonEffTG(nil,Card.IsAbleToRemove,nil,Fusion.BanishMaterial))
 	e2:SetOperation(Fusion.SummonEffOP(nil,Card.IsAbleToRemove,nil,Fusion.BanishMaterial))
 	c:RegisterEffect(e2)
 	--fusion
-	local params = {fusfilter=s.fusfilter,matfilter=aux.FALSE,extrafil=s.extrafil,stage2=s.stage2,extratg=s.extratg}
+	local params = {fusfilter=s.fusfilter,matfilter=aux.FALSE,extrafil=s.extrafil,stage2=s.stage2,extratg=s.extratg,extraop=Fusion.BanishMaterial}
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetProperty(EFFECT_FLAG_BOTH_SIDE)
-	e3:SetCountLimit(1)
 	e3:SetCost(s.cost)
 	e3:SetTarget(Fusion.SummonEffTG(params))
 	e3:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e3)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e3)
 end
 function s.cfilter(c)
 	return c:IsSpell() and c:IsAbleToRemoveAsCost()
