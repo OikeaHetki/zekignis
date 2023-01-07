@@ -25,9 +25,16 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_BOTH_SIDE)
 	e3:SetCountLimit(1)
+	e3:SetCondition(s.reccon)
 	e3:SetTarget(s.rectg)
 	e3:SetOperation(s.recop)
 	c:RegisterEffect(e3)
+end
+function s.cfilter1(c)
+	return c:IsFaceup() and c:IsRace(RACE_FAIRY)
+end
+function s.reccon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
