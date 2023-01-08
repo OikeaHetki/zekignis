@@ -48,30 +48,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		--disable
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(EFFECT_DISABLE)
+		--immune
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e2:SetRange(LOCATION_MZONE)
-		e2:SetTargetRange(0,LOCATION_MZONE)
-		e2:SetCondition(s.discon)
-		e2:SetTarget(s.distg)
+		e2:SetCode(EFFECT_IMMUNE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetValue(s.efilter)
 		tc:RegisterEffect(e2)
-		--Inflict piercing damage
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetDescription(3208)
-		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetCode(EFFECT_PIERCE)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e3)
 	end
 end
-function s.discon(e)
-	local ec=e:GetHandler()
-	return Duel.GetAttacker()==ec or Duel.GetAttackTarget()==ec
-end
-function s.distg(e,c)
-	return e:GetHandler():GetBattleTarget()==c
+function s.efilter(e,re,rp)
+	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetOwner()~=e:GetOwner()
 end
