@@ -23,9 +23,13 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e2:SetCountLimit(1)
+	e2:SetValue(s.indct)
 	c:RegisterEffect(e2)
 end
 s.listed_names={72446038}
+function s.indct(e,re,r,rp)
+	return (r&REASON_BATTLE+REASON_EFFECT)~=0
+end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
