@@ -36,20 +36,6 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetValue(ATTRIBUTE_DARK)
 	c:RegisterEffect(e4)
-	--atk
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetCode(EFFECT_UPDATE_ATTACK)
-	e5:SetCondition(s.condtion)
-	e5:SetValue(500)
-	c:RegisterEffect(e5)
-	--def
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetCode(EFFECT_UPDATE_ATTACK)
-	e6:SetCondition(s.condtion)
-	e6:SetValue(500)
-	c:RegisterEffect(e6)
 end
 s.listed_names={2600000014}
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
@@ -70,14 +56,28 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.Equip(tp,c,tc)
-		--equip limit
+		--atk
 		local e5=Effect.CreateEffect(c)
 		e5:SetType(EFFECT_TYPE_SINGLE)
-		e5:SetCode(EFFECT_EQUIP_LIMIT)
-		e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e5:SetValue(s.eqlimit)
-		e5:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e5:SetCode(EFFECT_UPDATE_ATTACK)
+		e5:SetCondition(s.condtion)
+		e5:SetValue(500)
 		c:RegisterEffect(e5)
+		--def
+		local e6=Effect.CreateEffect(c)
+		e6:SetType(EFFECT_TYPE_SINGLE)
+		e6:SetCode(EFFECT_UPDATE_ATTACK)
+		e6:SetCondition(s.condtion)
+		e6:SetValue(500)
+		c:RegisterEffect(e6)
+		--equip limit
+		local e7=Effect.CreateEffect(c)
+		e7:SetType(EFFECT_TYPE_SINGLE)
+		e7:SetCode(EFFECT_EQUIP_LIMIT)
+		e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e7:SetValue(s.eqlimit)
+		e7:SetReset(RESET_EVENT+RESETS_STANDARD)
+		c:RegisterEffect(e7)
 	end
 end
 function s.eqlimit(e,c)
