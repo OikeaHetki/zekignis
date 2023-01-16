@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local val=Duel.Damage(tp,atk,REASON_EFFECT)
 		if val>0 and Duel.GetLP(tp)>0 then
 			Duel.BreakEffect()
-			Duel.Damage(1-tp,val,REASON_EFFECT)
+			Duel.Damage(1-tp,atk,REASON_EFFECT)
 		end
 	end
 end
