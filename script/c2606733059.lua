@@ -28,6 +28,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return ((tn==tp and Duel.IsMainPhase()) or (tn~=tp and Duel.IsBattlePhase()))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
 	if chk==0 then return c:GetFlagEffect(id)==0 end 
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
