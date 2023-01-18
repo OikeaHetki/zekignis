@@ -19,12 +19,15 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+function s.filter(c,e,tp)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e) and not c:IsSummonPlayer(tp) and c:GetAttack()>=1500
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if not eg then return false end
-	local tc=eg:GetFirst()
-	if chkc then return chkc==tc end
-	if chk==0 then return ep~=tp and tc:IsFaceup() and tc:GetAttack()>=1500 and tc:IsOnField() and tc:IsCanBeEffectTarget(e) end
-	Duel.SetTargetCard(eg)
+	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,tp) end
+	if chk==0 then return eg:IsExists(s.filter,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	local g=eg:FilterSelect(tp,s.filter,1,1,nil,e,tp)
+	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
