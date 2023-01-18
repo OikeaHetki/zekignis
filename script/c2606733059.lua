@@ -1,5 +1,6 @@
 --死霊の巣
 --Skull Lair
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,39 +14,41 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
-	e2:SetCost(s.descost)
+	e2:SetCondition(s.descon)
+	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	return true
+function s.descon(e,tp,eg,ep,ev,re,r,rp)
+	local tn=Duel.GetTurnPlayer()
+	return ((tn==tp and Duel.IsMainPhase()) or (tn~=tp and Duel.IsBattlePhase()))
+end
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
+	if chk==0 then return true end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.cfilter(c)
-	return c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c)
-end
-function s.rescon(fg)
-	return function(sg,e,tp,mg)
-		return fg:IsExists(Card.IsLevel,1,sg,#sg),not fg:IsExists(Card.IsLevelAbove,1,sg,#sg)
-	end
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	local fg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,#cg),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if chk==0 then return aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon(fg),0) end
-	local rg=aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon(fg),1,tp,HINTMSG_REMOVE,s.rescon(fg))
-	Duel.Remove(rg,POS_FACEUP,REASON_COST)
-	Duel.SetTargetParam(#rg)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,fg:Filter(Card.IsLevel,rg,#rg),1,0,0)
+	return c:IsAbleToRemove() and aux.SpElimFilter(c)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	if lv==0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsLevel,lv),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.Destroy(g,REASON_EFFECT)
+	local tc=Duel.GetFirstTarget()
+	local lv=tc:GetOriginalLevel()
+		if tc:IsType(TYPE_XYZ) then
+			lv=tc:GetOriginalRank()
+		end
+		if tc:IsType(TYPE_LINK) then
+			lv=tc:GetLink()
+		end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,lv,lv,nil)
+	if Duel.Remove(g,POS_FACEUP,REASON_COST) and tc and tc:IsRelateToEffect(e) then
+		Duel.Destroy(tc,REASON_EFFECT)
+	end
 end
