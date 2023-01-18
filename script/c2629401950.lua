@@ -31,7 +31,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
+	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:GetAttack()>=1500 then
 		Duel.Destroy(tc,REASON_EFFECT,LOCATION_REMOVED)
 	end
