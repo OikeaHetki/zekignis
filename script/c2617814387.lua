@@ -34,12 +34,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(700)
 		tc:RegisterEffect(e1)
 	end
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	if c:IsSSetable(true) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
-		Duel.BreakEffect()
-		c:CancelToGrave()
-		Duel.ChangePosition(c,POS_FACEDOWN)
-		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
-	end
 end
