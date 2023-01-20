@@ -20,11 +20,6 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--disable
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_EQUIP)
-	e3:SetCode(EFFECT_DISABLE)
-	c:RegisterEffect(e3)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,800) end

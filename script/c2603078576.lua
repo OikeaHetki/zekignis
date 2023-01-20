@@ -28,10 +28,15 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(2)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
+	Duel.SetTargetParam(3)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,2)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)
+	if Duel.Draw(p,d,REASON_EFFECT)==3 then
+		Duel.ShuffleHand(p)
+		Duel.BreakEffect()
+		Duel.DiscardHand(p,nil,2,2,REASON_EFFECT+REASON_DISCARD)
+	end
 end
