@@ -53,6 +53,7 @@ function s.cbtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.GetAttacker():IsHasEffect(EFFECT_CANNOT_DIRECT_ATTACK) end
 end
 function s.cbop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.ChangeAttackTarget(nil)
 			local e1=Effect.CreateEffect(c)
