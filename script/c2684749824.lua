@@ -1,5 +1,6 @@
 --神の警告
 --Solemn Warning
+--zekpro nerfed version
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)
@@ -34,8 +35,8 @@ function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain(true)==0
 end
 function s.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,3000)
-	else Duel.PayLPCost(tp,3000) end
+	if chk==0 then return Duel.CheckLPCost(tp,2500)
+	else Duel.PayLPCost(tp,2500) end
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -52,8 +53,8 @@ function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasCategory(CATEGORY_SPECIAL_SUMMON)
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,2000)
-	else Duel.PayLPCost(tp,2000) end
+	if chk==0 then return Duel.CheckLPCost(tp,2500)
+	else Duel.PayLPCost(tp,2500) end
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
