@@ -16,8 +16,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
+	if chk==0 then return Duel.CheckLPCost(tp,3000) end
+	Duel.PayLPCost(tp,3000)
 end
 function s.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsAttackBelow(1500) 
