@@ -61,8 +61,8 @@ end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(500)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,500)
+	Duel.SetTargetParam(800)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,800)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

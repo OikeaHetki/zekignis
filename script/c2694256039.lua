@@ -78,7 +78,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,ct,REASON_EFFECT) and Duel.Destroy(e:GetHandler(),REASON_EFFECT)~=0 then
+	if e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,5,REASON_EFFECT) and Duel.Destroy(e:GetHandler(),REASON_EFFECT)~=0 then
 		Duel.Damage(ep,5000,REASON_EFFECT)
 	end
 end
