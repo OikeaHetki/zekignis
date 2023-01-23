@@ -1,4 +1,4 @@
---Doron
+--Toad Master
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +20,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonType(SUMMON_TYPE_NORMAL) and Duel.GetCurrentPhase()==PHASE_MAIN1
 end
 function s.filter(c,e,tp)
-	return c:IsCode(id) or c:IsOriginalCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(68638985) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

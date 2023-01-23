@@ -60,10 +60,10 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x45)
+	return c:IsFaceup() and c:IsSetCard(0x45) and c:IsType(TYPE_MONSTER)
 end
 function s.descon(e)
-	return not Duel.IsExistingMatchingCard(s.desfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+	return not Duel.IsExistingMatchingCard(s.desfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.ctval(e,c)
 	return e:GetHandlerPlayer()
