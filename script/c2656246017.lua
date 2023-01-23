@@ -44,5 +44,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 		tc:RegisterEffect(e2,true)
+		end
 	end
 end
