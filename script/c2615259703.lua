@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetCountLimit(1)
-	e2:SetLabel(0)
+	e2:SetLabel(1000)
 	e2:SetCondition(s.costcon)
 	e2:SetOperation(s.costop)
 	c:RegisterEffect(e2)
@@ -47,7 +47,7 @@ function s.costop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.restorecon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-    return c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK)
+	return c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK)
 end
 function s.restoretg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
