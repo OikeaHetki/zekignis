@@ -40,6 +40,13 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_DIRECT_ATTACK)
 	e5:SetCondition(s.dircon)
 	c:RegisterEffect(e5)
+	--disable and destroy
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e6:SetCode(EVENT_CHAIN_SOLVING)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetOperation(s.disop)
+	c:RegisterEffect(e6)
 end
 s.listed_names={15259703}
 --spsum from hand
@@ -89,4 +96,16 @@ function s.dircon(e)
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TOON),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 --personal effect
---skull archfiend is very large, and needs no effect
+function s.disop(e,tp,eg,ep,ev,re,r,rp)
+	if ep==tp then return end
+	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	if not tg or not tg:IsContains(e:GetHandler()) or not Duel.IsChainDisablable(ev) then return false end
+	local rc=re:GetHandler()
+	local dc=Duel.TossDice(tp,1)
+	if dc==2 or dc==5 then
+		if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) then
+			Duel.Destroy(rc,REASON_EFFECT)
+		end
+	end
+end

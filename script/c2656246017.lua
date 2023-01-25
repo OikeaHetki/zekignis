@@ -28,7 +28,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
-	if not Duel.IsEnvironment(94585852) then Duel.Damage(tp,800,REASON_EFFECT)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		--Cannot be tributed
@@ -44,5 +43,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 		tc:RegisterEffect(e2,true)
 		end
+	if not Duel.IsEnvironment(94585852) then Duel.Damage(tp,800,REASON_EFFECT)
 	end
 end
