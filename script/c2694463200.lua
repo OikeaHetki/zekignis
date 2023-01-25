@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.damop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x45}
+s.listed_series={SET_ARCHFIEND}
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x45),tp,LOCATION_MZONE,0,1,nil)
 end
