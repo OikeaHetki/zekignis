@@ -1,5 +1,5 @@
 --E・HERO バブルマン・ネオ
---Elemental HERO Neo Bubbleman
+--Elemental HERO Neo Burstnatrix
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,12 +25,11 @@ function s.initial_effect(c)
 	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
+	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_BATTLED)
-	e3:SetCondition(s.condition)
-	e3:SetTarget(s.target)
-	e3:SetOperation(s.operation)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e3:SetTarget(s.destg)
+	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
 s.listed_names={79979666}
@@ -70,19 +69,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.SendtoGrave(g,REASON_COST)
 	g:DeleteGroup()
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetBattleTarget()~=nil
+function s.filter(c)
+	return c:IsFacedown() and c:IsDestructable()
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local tc=e:GetHandler():GetBattleTarget()
-	Duel.SetTargetCard(tc)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
+	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and
-		Duel.Destroy(tc,REASON_EFFECT)
-		then Duel.Draw(tp,1,REASON_EFFECT)
-	end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
+	Duel.Destroy(g,REASON_EFFECT)
 end

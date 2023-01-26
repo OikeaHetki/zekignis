@@ -1,5 +1,5 @@
 --E・HERO バブルマン・ネオ
---Elemental HERO Neo Bubbleman
+--Elemental HERO Neo Avian
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,20 +20,24 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e2:SetCode(EFFECT_CHANGE_CODE)
-	e2:SetValue(79979666)
+	e2:SetValue(21844576)
 	c:RegisterEffect(e2)
-	--destroy
+	--battle dam 0
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_BATTLED)
-	e3:SetCondition(s.condition)
-	e3:SetTarget(s.target)
-	e3:SetOperation(s.operation)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e3:SetValue(1)
 	c:RegisterEffect(e3)
+	--Unaffected by Opponent Card Effects
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCode(EFFECT_IMMUNE_EFFECT)
+	e5:SetValue(s.unval)
+	c:RegisterEffect(e5)
 end
-s.listed_names={79979666}
+s.listed_names={21844576}
 function s.spfilter(c,...)
 	return c:IsCode(...) and c:IsAbleToGraveAsCost() and (c:IsFaceup or c:IsLocation(LOCATION_HAND))
 end
@@ -41,12 +45,12 @@ function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg)
 end
 function s.chk(c,sg)
-	return c:IsCode(79979666) and sg:IsExists(Card.IsCode,1,c,46411259)
+	return c:IsCode(21844576) and sg:IsExists(Card.IsCode,1,c,46411259)
 end
 function s.spcon(e,c)
 	if c==nil then return true end 
 	local tp=c:GetControler()
-	local g1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil,79979666)
+	local g1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil,21844576)
 	local g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,46411259)
 	local g=g1:Clone()
 	g:Merge(g2)
@@ -54,7 +58,7 @@ function s.spcon(e,c)
 		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil,79979666)
+	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil,21844576)
 	sg:Merge(Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,46411259))
 	local g=aux.SelectUnselectGroup(sg,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
 	if #g>0 then
@@ -70,19 +74,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.SendtoGrave(g,REASON_COST)
 	g:DeleteGroup()
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetBattleTarget()~=nil
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local tc=e:GetHandler():GetBattleTarget()
-	Duel.SetTargetCard(tc)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
-end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and
-		Duel.Destroy(tc,REASON_EFFECT)
-		then Duel.Draw(tp,1,REASON_EFFECT)
-	end
+function s.unval(e,te)
+	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
