@@ -30,16 +30,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--special summon
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
-	e3:SetCode(EVENT_LEAVE_FIELD)
-	e3:SetCondition(s.spcon2)
-	e3:SetTarget(s.sptg2)
-	e3:SetOperation(s.spop2)
-	c:RegisterEffect(e3)
+--	local e3=Effect.CreateEffect(c)
+--	e3:SetDescription(aux.Stringid(id,2))
+--	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+--	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+--	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+--	e3:SetCode(EVENT_LEAVE_FIELD)
+--	e3:SetCondition(s.spcon2)
+--	e3:SetTarget(s.sptg2)
+--	e3:SetOperation(s.spop2)
+--	c:RegisterEffect(e3)
 end
 s.listed_names={1412158}
 ---contact proc
@@ -86,27 +86,27 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 ---sponpop
-function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT) and not c:IsLocation(LOCATION_DECK)
-		and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP) and c:GetReasonPlayer()==1-tp
-end
-function s.filter2(c,e,tp)
-	return c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_REMOVED)
-end
-function s.spop2(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<=0 then return end
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	if ft>2 then ft=2 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_REMOVED,0,1,ft,nil,e,tp)
-	if #g~=0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-	end
-end
+--function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
+--	local c=e:GetHandler()
+--	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT) and not c:IsLocation(LOCATION_DECK)
+--		and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP) and c:GetReasonPlayer()==1-tp
+--end
+--function s.filter2(c,e,tp)
+--	return c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+--end
+--function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
+--	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+--		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
+--	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_REMOVED)
+--end
+--function s.spop2(e,tp,eg,ep,ev,re,r,rp)
+--	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+--	if ft<=0 then return end
+--	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
+--	if ft>2 then ft=2 end
+--	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+--	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_REMOVED,0,1,ft,nil,e,tp)
+--	if #g~=0 then
+--		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+--	end
+--end
