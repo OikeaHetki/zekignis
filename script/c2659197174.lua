@@ -1,5 +1,4 @@
---闇
---Yami
+--Outer Space
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,24 +13,17 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetValue(s.aval)
+	e2:SetValue(s.val)
 	c:RegisterEffect(e2)
 	--Def
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
-	e3:SetValue(s.dval)
 	c:RegisterEffect(e3)
 end
 --atkdef
-function s.aval(e,c)
+function s.val(e,c)
 	local r=c:GetRace()
-	if (r&RACE_FIEND+RACE_SPELLCASTER+RACE_PSYCHIC)>0 then return c:GetBaseAttack()*0.3
-	elseif (r&RACE_FAIRY+RACE_WYRM)>0 then return -(c:GetBaseAttack()*0.3)
-	else return 0 end
-end
-function s.dval(e,c)
-	local r=c:GetRace()
-	if (r&RACE_FIEND+RACE_SPELLCASTER+RACE_PSYCHIC)>0 then return c:GetBaseDefense()*0.3
-	elseif (r&RACE_FAIRY+RACE_WYRM)>0 then return -(c:GetBaseDefense()*0.3)
+	if (r&RACE_FAIRY+RACE_MACHINE+RACE_PSYCHIC+RACE_CYBERSE)>0 then return 300
+	elseif (r&RACE_PYRO+RACE_THUNDER)>0 then return -300
 	else return 0 end
 end
