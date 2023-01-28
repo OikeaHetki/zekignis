@@ -45,14 +45,14 @@ end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local ec=eg:FilterCount(s.ctfilter,nil,tp)
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,ec,0,0x1f)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,ec,0,COUNTER_A)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=eg:Filter(s.ctfilter,nil,tp)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
-		tc:AddCounter(0x1f,1)
+		tc:AddCounter(COUNTER_A,1)
 	end
 end
 function s.cfilter(c,check)
