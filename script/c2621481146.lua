@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_RECOVERY)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_RECOVER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetCondition(s.condition)
@@ -27,7 +27,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,#g*1000)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-	if #g>0 and Duel.Destroy(g,REASON_EFFECT) then Duel.Recover(p,#g*1000,REASON_EFFECT)
+	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_MZONE,nil)
+	local ct=Duel.Destroy(g,REASON_EFFECT)
+	if ct~=0 then
+		Duel.BreakEffect()
+		Duel.Recover(tp,ct*1000,REASON_EFFECT)
 	end
 end

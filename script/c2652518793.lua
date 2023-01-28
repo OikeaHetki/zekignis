@@ -56,11 +56,11 @@ s.listed_series={0x19}
 function s.atkval(e,c)
 	return e:GetHandler():GetCounter(0x7)*100
 end
-function s.cfilter(c,tp)
+function s.counterfil(c,tp)
 	return c:IsPreviousLocation(LOCATION_DECK)
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(s.counterfil,1,nil,tp)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x7,1)
@@ -74,7 +74,7 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardHand(tp,Card.IsSetCard,1,1,REASON_EFFECT+REASON_DISCARD,nil,0x19)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x19) and c:IsSpellTrap() and c:IsDiscardable()
+	return c:IsSpellTrap() and c:IsDiscardable()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
