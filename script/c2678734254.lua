@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetValue(17955766)
 	c:RegisterEffect(e3)
 end
+s.listed_names={17955766}
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)

@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetValue(17732278)
 	c:RegisterEffect(e3)
 end
+s.listed_names={17732278}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker() or e:GetHandler()==Duel.GetAttackTarget()
 end

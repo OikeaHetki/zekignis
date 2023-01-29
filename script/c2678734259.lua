@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetValue(54959865)
 	c:RegisterEffect(e3)
 end
+s.listed_names={54959865}
 function s.adval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)*500
 end
