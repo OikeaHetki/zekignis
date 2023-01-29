@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcCode2(c,CARD_NEOS,2613857940,false,false)
+	Fusion.AddProcCode2(c,CARD_NEOS,2613857935,false,false)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--negate
 	local e1=Effect.CreateEffect(c)
