@@ -46,6 +46,15 @@ function s.initial_effect(c)
 	e5:SetCondition(s.cbbtcon)
 	e5:SetValue(aux.imval1)
 	c:RegisterEffect(e5)
+	--cannot be target
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e6:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetValue(aux.tgoval)
+	e6:SetCondition(s.cbbtcon)
+	c:RegisterEffect(e6)
 end
 --change to def on summon
 function s.potg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
