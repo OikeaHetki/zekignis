@@ -1,5 +1,5 @@
---ディザーム
---Disarm
+--フロッグ・バリア
+--Parry
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,8 +16,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x19}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x19),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x19),tp,LOCATION_MZONE,0,1,nil)
+		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,nil) end
