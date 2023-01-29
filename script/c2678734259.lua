@@ -29,5 +29,5 @@ function s.initial_effect(c)
 end
 s.listed_names={54959865}
 function s.adval(e,c)
-	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)*500
+	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_HAND)*500
 end

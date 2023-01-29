@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	--Activate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_DRAW)
+	e2:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_MZONE)
@@ -57,4 +57,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	Duel.ShuffleHand(tp)
+	Duel.Draw(tp,1,REASON_EFFECT)
+	Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
 end
