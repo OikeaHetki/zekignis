@@ -3,14 +3,16 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetRange(LOCATION_SZONE)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetLabel(0)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
@@ -25,42 +27,43 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x1f}
-s.list={[17955766]=2678734254,[43237273]=2613857935,[54959865]=2678734259,[17732278]=2613857930,[89621922]=2613857940,[80344569]=2678734264}
---Tribute 1 to summon the other
-function s.filter1(c,e,tp)
-	if c:IsFacedown() then return false end
-	local code=c:GetCode()
-	local tcode=s.list[code]
-	return tcode and Duel.IsExistingTarget(s.filter2,tp,LOCATION_EXTRA,0,1,nil,tcode,e,tp)
-end
-function s.filter2(c,tcode,e,tp)
-	return c:IsCode(tcode) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetLevel()==4
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	return true
+	e:SetLabel(100)
+	if chk==0 then return true end
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
+function s.costfilter(c,e,tp)
+	return c:IsSetCard(0x1f) and Duel.GetMZoneCount(tp,c)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
+end
+function s.spfilter(c,e,tp,tc)
+	return c:IsType(TYPE_FUSION)
+		and c:GetOriginalRace()==tc:GetOriginalRace()
+		and c:GetOriginalAttribute()==tc:GetOriginalAttribute()
+		and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+		and c:IsSetCard(0x1f)
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chkc then return chkc:IsLocation(LOCATION_EXTRA) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp,tc) end
 	if chk==0 then
-		local res=e:GetLabel()==1
+		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return res and Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-			and Duel.CheckReleaseGroupCost(tp,s.filter1,1,false,aux.ReleaseCheckMMZ,nil,e,tp) end
+		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+			and Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil,e,tp)
+	end
 	e:SetLabel(0)
-	local rg=Duel.SelectReleaseGroupCost(tp,s.filter1,1,1,false,aux.ReleaseCheckMMZ,nil,e,tp)
-	local code=rg:GetFirst():GetCode()
-	local tcode=s.list[code]
-	Duel.Release(rg,REASON_COST)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	local bg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil,e,tp)
+	Duel.Release(bg,REASON_COST)
+	Duel.SetTargetCard(bg)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,tcode,e,tp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 	end
 end
 --addbacktohand

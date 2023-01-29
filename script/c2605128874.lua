@@ -1,17 +1,12 @@
---N・グラン・モール
---Neo-Spacian Time Mole
---zekpro version
+--E・HERO Time Neos
+--zek
 local s,id=GetID()
 function s.initial_effect(c)
-	--must first properly special summon
+	--fusion material
 	c:EnableReviveLimit()
-	--cannot special summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	c:RegisterEffect(e1)
-	--todeck
+	Fusion.AddProcCode1(c,CARD_NEOS,2678734259,false,false)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
+	 --todeck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TODECK)
@@ -19,22 +14,21 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.cost)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	--add code
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EFFECT_ADD_CODE)
-	e3:SetValue(80344569)
-	c:RegisterEffect(e3)
 end
-s.listed_names={80344569}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+s.listed_names={CARD_NEOS}
+s.material_setcode={0x8,0x3008,0x9,0x1f}
+function s.contactfil(tp)
+	return Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD,0,nil)
+end
+function s.contactop(g,tp)
+	Duel.ConfirmCards(1-tp,g)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)
+end
+function s.splimit(e,se,sp,st)
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsAbleToDeck()
