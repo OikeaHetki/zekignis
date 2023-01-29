@@ -38,6 +38,9 @@ function s.initial_effect(c)
 	e5:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e5:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,att))
-	e5:SetValue(1)
+	e5:SetValue(s.evalue)
 	c:RegisterEffect(e5)
+end
+function s.evalue(e,re,rp)
+	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
