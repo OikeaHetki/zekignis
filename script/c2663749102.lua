@@ -1,4 +1,4 @@
---Fire Reaper
+--Exarion Universe
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,5 +39,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
+		--defdown
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_UPDATE_ATTACK)
+		e2:SetValue(-400)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		c:RegisterEffect(e2)
+		--defdown
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_UPDATE_DEFENSE)
+		e3:SetValue(-400)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		c:RegisterEffect(e3)
 	end
 end

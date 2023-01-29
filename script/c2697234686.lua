@@ -45,8 +45,9 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local ec=re:GetHandler()
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and tc and ec:CancelToGrave() and
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and tc then 
+	ec:CancelToGrave()
 	Duel.SendtoDeck(ec,nil,2,REASON_EFFECT)
-	then Duel.Destroy(tc,REASON_EFFECT)
+	Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
