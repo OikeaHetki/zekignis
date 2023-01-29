@@ -27,7 +27,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function s.tdfilter(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsFaceup() and 
+	return c:IsSetCard(0x19) and c:IsFaceup() 
 		and c:IsAbleToDeck() and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
