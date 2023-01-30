@@ -72,7 +72,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function s.filter(c)
-	return c:IsCanChangePosition() and c:IsFaceup() and not (c:IsCode(id) or c:IsOriginalCode(id)) and c:IsCanTurnSet()
+	return c:IsCanChangePosition() and (c:IsFaceup() or c:IsPosition(POS_FACEDOWN_DEFENSE)) and not (c:IsCode(id) or c:IsOriginalCode(id)) and c:IsCanTurnSet()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MMZONE,0,1,nil)
