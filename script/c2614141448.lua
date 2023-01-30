@@ -59,7 +59,7 @@ end
 s.listed_names={40240595,87756343}
 --limit attack
 function s.tg(e,c)
-	return c:IsFaceup() and c:GetCode()~=id and c:IsRace(RACE_INSECT)
+	return c:IsFaceup() and c:GetCode()~=id and not c:IsRace(RACE_INSECT)
 end
 --sumcon
 function s.eqfilter(c)

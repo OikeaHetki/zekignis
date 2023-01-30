@@ -28,6 +28,11 @@ function s.filter(c)
 	or (c:IsCode(91512835) or c:IsCode(03492538))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetHandler():GetReasonCard()
+	if tc:IsFaceup() and tc:IsRelateToBattle() then
+		tc:AddCounter(0x1045,2)
+	end
+	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
