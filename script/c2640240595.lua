@@ -110,32 +110,10 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EFFECT_SET_BASE_DEFENSE)
 	e3:SetValue(2000)
 	c:RegisterEffect(e3)
-	--pos change
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_POSITION)
-	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCountLimit(1)
-	e4:SetTarget(s.postg)
-	e4:SetOperation(s.posop)
-	c:RegisterEffect(e4)
 end
 --equip limitation
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
-end
---position
-function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler():GetEquipTarget(),1,0,0)
-end
-function s.posop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.ChangePosition(c:GetEquipTarget(),POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
-	end
 end
 --selfdes
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
