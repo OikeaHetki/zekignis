@@ -1,5 +1,6 @@
---グレート・モス
---Great Moth
+--究極完全態・グレート・モス
+--Perfectly Evolved Ultimate Great Moth
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -45,6 +46,14 @@ function s.initial_effect(c)
 		local e7=e6:Clone()
 		e7:SetCode(EFFECT_UPDATE_DEFENSE)
 		c:RegisterEffect(e7)
+	--disable
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_FIELD)
+	e8:SetRange(LOCATION_MZONE)
+	e8:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e8:SetCode(EFFECT_DISABLE)
+	e8:SetTarget(s.distg)
+	c:RegisterEffect(e8)
 end
 s.listed_names={40240595}
 --limit attack
@@ -68,4 +77,8 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(g) do
 		tc:AddCounter(0x1045,1)
 	end
+end
+--dis
+function s.distg(e,c)
+	return c:GetCounter(0x1045)>0 and c:GetCode()~=id
 end
