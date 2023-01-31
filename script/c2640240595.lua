@@ -133,7 +133,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spfilter(c,e,tp)
 	local ct=e:GetHandler():GetTurnCounter()
-	return (c:IsCode(48579379) and ct>=5) or (c:IsCode(14141448) and ct>=3) 
+	return c:IsCode(14141448) and ct>=4
 		and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
