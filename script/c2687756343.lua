@@ -67,7 +67,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.filter(c)
-	return c:IsAbleToHand() and (c:IsCode(40240595) 
+	return c:IsAbleToHand() and c:IsCode(40240595) 
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)

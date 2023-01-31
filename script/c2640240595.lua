@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--self-destroy
 	local e7=Effect.CreateEffect(c)
-	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e7:SetRange(LOCATION_SZONE)
 	e7:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e7:SetCountLimit(1)
@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e8:SetCode(EVENT_TO_GRAVE)
 	e8:SetCondition(s.spcon)
+	e8:SetTarget(s.sptg)
 	e8:SetOperation(s.spop)
 	c:RegisterEffect(e8)
 end
@@ -138,12 +139,31 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 end
 --selfdes
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetEquipTarget() and e:GetHandler():GetTurnCounter()>=5
+	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetEquipTarget()
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler():GetEquipTarget(),REASON_EFFECT)
 end
 --sp the moths
-
-
-
+function s.spcon(e,tp,eg,ev,ep,re,r,rp)
+	local ec=e:GetHandler():GetPreviousEquipTarget()
+	return e:GetHandler():IsReason(REASON_LOST_TARGET) and ec:IsReason(REASON_DESTROY) and ec:IsOriginalCodeRule(87756343)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+end
+function s.spfilter(c,e,tp)
+	local ct=e:GetHandler():GetTurnCounter()
+	return (c:IsCode(48579379) and ct>=5) or (c:IsCode(14141448) and ct>=3) 
+		and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
+		g:GetFirst():CompleteProcedure()
+	end
+end
