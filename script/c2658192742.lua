@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={40240595,91512835,03492538}
+s.listed_names={40240595,91512835,48579379}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
@@ -23,9 +23,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.filter(c)
 	return c:IsAbleToHand() and 
-	(c:IsLevelBelow(3) and c:IsRace(RACE_INSECT) and c:IsAttribute(ATTRIBUTE_EARTH))
+	(c:IsRace(RACE_INSECT) and c:IsType(TYPE_NORMAL))
 	or (c:ListsCode(40240595) and c:IsType(TYPE_MONSTER))
-	or (c:IsCode(91512835) or c:IsCode(03492538))
+	or (c:IsCode(91512835) or c:IsCode(48579379))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetReasonCard()

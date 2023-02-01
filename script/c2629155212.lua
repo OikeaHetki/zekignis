@@ -3,17 +3,14 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_FIELD)
-	e0:SetCode(EFFECT_SPSUMMON_PROC)
-	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e0:SetRange(LOCATION_HAND)
-	e0:SetTargetRange(POS_FACEUP_DEFENSE,0)
-	e0:SetCondition(s.spcon)
-	e0:SetTarget(s.sptg)
-	e0:SetOperation(s.spop)
-	c:RegisterEffect(e0)
+	-- summon with no tribute
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_SUMMON_PROC)
+	e5:SetCondition(s.ntcon)
+	c:RegisterEffect(e5)
 	--atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -45,24 +42,13 @@ function s.initial_effect(c)
 	end)
 end
 --sp from hand
-function s.spcon(e,c)
+function s.filter(c)
+	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE)
+end
+function s.ntcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,RACE_ZOMBIE)
-end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,false,true,true,c,nil,nil,false,nil,RACE_ZOMBIE)
-	if g then
-		g:KeepAlive()
-		e:SetLabelObject(g)
-	return true
-	end
-	return false
-end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=e:GetLabelObject()
-	if not g then return end
-	Duel.Release(g,REASON_COST)
-	g:DeleteGroup()
+	return c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,1,nil) and Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0
 end
 --atk and reg
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
