@@ -49,7 +49,7 @@ function s.initial_effect(c)
 	e6:SetValue(s.val)
 	c:RegisterEffect(e6)
 end
-s.listed_names={15259703}
+s.listed_names={15259703,CARD_DARK_MAGICIAN,30208479}
 --spsum from hand
 function s.twcon(c)
 	return c:IsFaceup() and c:IsCode(15259703)
@@ -98,5 +98,5 @@ function s.dircon(e)
 end
 --personal effect
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsCode,c:GetControler(),LOCATION_GRAVE,LOCATION_GRAVE,nil,CARD_DARK_MAGICIAN,30208479)*300
+	return Duel.GetMatchingGroupCount(Card.IsCode,c:GetControler(),LOCATION_GRAVE,LOCATION_GRAVE,nil,CARD_DARK_MAGICIAN,30208479,21296502)*300
 end

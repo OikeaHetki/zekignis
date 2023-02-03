@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
-		tc:AddCounter(COUNTER_A,1)
+		tc:AddCounter(0x1045,1)
 	end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
