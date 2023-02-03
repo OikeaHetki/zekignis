@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_names={94585852}
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x45),c:GetControler(),LOCATION_MZONE,0,e:GetHandler())*200
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x45),c:GetControler(),LOCATION_MZONE,0,e:GetHandler())*300
 end
 function s.indtg(e,c)
 	return c:IsFaceup() and c:IsCode(94585852)

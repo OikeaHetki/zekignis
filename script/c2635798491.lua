@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(0,LOCATION_MZONE)
 	e3:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-	e3:SetValue(s.tg)
+	e3:SetValue(s.tgtg)
 	c:RegisterEffect(e3)
 	--Prevent effect target
 	local e4=Effect.CreateEffect(c)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(s.tg)
+	e4:SetTarget(s.tgtg)
 	e4:SetValue(s.tgval)
 	c:RegisterEffect(e4)
 	--to defense
@@ -86,8 +86,8 @@ function s.poop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 	end
 end
-function s.tg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x45) and (c:GetCode()~=id or c:GetOriginalCode()~=id)
+function s.tgtg(e,c)
+	return c:IsFaceup() and c:IsSetCard(0x45) and c~=e:GetHandler()
 end
 function s.tgval(e,re,rp)
 	return rp==1-e:GetHandlerPlayer()

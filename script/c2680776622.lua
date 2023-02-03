@@ -97,7 +97,8 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsOddScale),tp,LOCATION_PZONE,0,1,nil) then
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsOddScale),tp,LOCATION_PZONE,0,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
 		local tc=g:GetFirst()
@@ -112,6 +113,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)
 			tc:RegisterEffect(e2)
-		end	
+		end 
 	end
 end

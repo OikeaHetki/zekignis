@@ -27,17 +27,18 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	--summon
+	--sumlimit
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_SUMMON_PROC)
-	e4:SetCondition(s.ntcon)
+	e4:SetCode(EFFECT_CANNOT_SUMMON)
+	e4:SetCondition(s.excon)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x45}
 s.roll_dice=true
+function s.excon(e)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x45),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+end
 --maintain
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.CheckLPCost(tp,500) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
@@ -75,16 +76,4 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD_EXC_GRAVE)
 		bc:RegisterEffect(e2)
 	end
-end
---summon con
-function s.ntcon(e,c)
-	if c==nil then return true end
-	return (Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
-		and	Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0
-		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0)
-		or (Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.cfilter,c:GetControler(),LOCATION_MZONE,0,1,nil))
-end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x45)
 end
