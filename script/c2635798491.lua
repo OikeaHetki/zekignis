@@ -87,7 +87,7 @@ function s.poop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x45) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(0x45) and (c:GetCode()~=id or c:GetOriginalCode()~=id)
 end
 function s.tgval(e,re,rp)
 	return rp==1-e:GetHandlerPlayer()

@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	--atkup
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_ATKCHANGE)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetRange(LOCATION_MZONE)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--discard deck
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetDescription(aux.Stringid(id,3))
 	e3:SetCategory(CATEGORY_DECKDES)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_BATTLE_DAMAGE)
@@ -51,7 +51,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if Duel.Damage(p,d,REASON_EFFECT)>0 then
+	if Duel.Damage(p,d,REASON_EFFECT)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
 		local tc=g:GetFirst()
