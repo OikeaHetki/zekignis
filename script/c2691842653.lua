@@ -40,6 +40,14 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_DIRECT_ATTACK)
 	e5:SetCondition(s.dircon)
 	c:RegisterEffect(e5)
+	--Treated as "Summoned Skull"
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e6:SetCode(EFFECT_ADD_CODE)
+	e6:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e6:SetValue(CARD_SUMMONED_SKULL)
+	c:RegisterEffect(e6)
 end
 s.listed_names={15259703}
 --spsum from hand

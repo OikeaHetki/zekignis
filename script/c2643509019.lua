@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
 	--change battle target
 	local e2=Effect.CreateEffect(c)
@@ -47,7 +48,7 @@ function s.dfilter(c,tp)
 end
 function s.cbcon(e,tp,eg,ep,ev,re,r,rp)
 	local bt=Duel.GetAttackTarget()
-	return bt and bt:IsFaceup() and bt:IsLevelBelow(4) and bt:IsType(TYPE_TOON) and bt:GetControler()==e:GetHandlerPlayer()
+	return bt and bt:IsFaceup() and bt:IsType(TYPE_TOON) and bt:GetControler()==e:GetHandlerPlayer()
 end
 function s.cbtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.GetAttacker():IsHasEffect(EFFECT_CANNOT_DIRECT_ATTACK) end

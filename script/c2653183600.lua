@@ -48,7 +48,6 @@ function s.initial_effect(c)
 	e6:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e6:SetCountLimit(1)
 	e6:SetRange(LOCATION_MZONE)
-	e6:SetCondition(s.descon)
 	e6:SetCost(s.descost)
 	e6:SetTarget(s.destg)
 	e6:SetOperation(s.desop)
@@ -102,9 +101,6 @@ function s.dircon(e)
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TOON),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 --personal effect
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,15259703),tp,LOCATION_ONFIELD,0,1,nil)
-end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) and e:GetHandler():GetAttackAnnouncedCount()==0 end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD,nil)
@@ -117,14 +113,14 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
-function s.dfilter(c,atk)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:GetAttack()<atk
+function s.dfilter(c)
+	return c:IsPosition(POS_FACEUP_ATTACK)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.dfilter,tp,0,LOCATION_MZONE,1,nil,e:GetHandler():GetAttack()) end
+	if chk==0 then return Duel.IsExistingTarget(s.dfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,s.dfilter,tp,0,LOCATION_MZONE,1,1,nil,c:GetAttack())
+	local g=Duel.SelectTarget(tp,s.dfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,LOCATION_MZONE)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
