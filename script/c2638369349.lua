@@ -40,16 +40,14 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_DIRECT_ATTACK)
 	e5:SetCondition(s.dircon)
 	c:RegisterEffect(e5)
-	--return 1 Toon card from the GY to the hand
+	--to defense
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(id,0))
-	e6:SetCategory(CATEGORY_TOHAND)
-	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DELAY)
-	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e6:SetCode(EVENT_BATTLE_DAMAGE)
-	e6:SetCondition(s.condition)
-	e6:SetTarget(s.target)
-	e6:SetOperation(s.operation)
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetCountLimit(1)
+	e6:SetCondition(s.poscon)
+	e6:SetOperation(s.posop)
 	c:RegisterEffect(e6)
 end
 s.listed_names={15259703}
@@ -100,23 +98,12 @@ function s.dircon(e)
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TOON),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 --personal effect
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+function s.poscon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetAttackedCount()>0
 end
-function s.thfil(c)
-	return c:IsType(TYPE_TOON) and c:IsAbleToHand()
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfil(chkc) end
-	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,s.thfil,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
-end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
+function s.posop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsAttackPos() then
+		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 	end
 end

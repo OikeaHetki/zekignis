@@ -50,6 +50,9 @@ function s.initial_effect(c)
 	local e6=e5:Clone()
 	e6:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e6)
+	local e7=e5:Clone()
+	e7:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e7)
 end
 s.listed_series={0x45}
 s.roll_dice=true
@@ -69,9 +72,10 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not tg or not tg:IsContains(e:GetHandler()) or not Duel.IsChainDisablable(ev) then return false end
 	local rc=re:GetHandler()
 	local dc=Duel.TossDice(tp,1)
-	if dc~=2 or dc~=5 then return end
-	if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) then
-		Duel.Destroy(rc,REASON_EFFECT)
+	if dc==1 or dc==3 or dc==6 then
+		if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) then
+			Duel.Destroy(rc,REASON_EFFECT)
+		end
 	end
 end
 --personal effects
