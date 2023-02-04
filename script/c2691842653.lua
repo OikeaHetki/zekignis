@@ -97,3 +97,4 @@ function s.dircon(e)
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TOON),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 --personal effect
+--alias name-change

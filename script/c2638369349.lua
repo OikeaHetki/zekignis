@@ -40,14 +40,14 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_DIRECT_ATTACK)
 	e5:SetCondition(s.dircon)
 	c:RegisterEffect(e5)
-	--to defense
+	--position
 	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetCountLimit(1)
-	e6:SetCondition(s.poscon)
-	e6:SetOperation(s.posop)
+	e6:SetDescription(aux.Stringid(id,0))
+	e6:SetCategory(CATEGORY_POSITION)
+	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e6:SetCode(EVENT_BE_BATTLE_TARGET)
+	e6:SetTarget(s.target)
+	e6:SetOperation(s.operation)
 	c:RegisterEffect(e6)
 end
 s.listed_names={15259703}
@@ -98,12 +98,13 @@ function s.dircon(e)
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TOON),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 --personal effect
-function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetAttackedCount()>0
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsAttackPos() end
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
 end
-function s.posop(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsAttackPos() then
+	if c:IsRelateToEffect(e) and c:IsPosition(POS_FACEUP_ATTACK) then
 		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 	end
 end

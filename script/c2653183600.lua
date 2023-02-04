@@ -40,17 +40,13 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_DIRECT_ATTACK)
 	e5:SetCondition(s.dircon)
 	c:RegisterEffect(e5)
-	--Destroy monster
+	--Treated as "Blue-Eyes White Dragon"
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(id,0))
-	e6:SetCategory(CATEGORY_DESTROY)
-	e6:SetType(EFFECT_TYPE_IGNITION)
-	e6:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e6:SetCountLimit(1)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetCost(s.descost)
-	e6:SetTarget(s.destg)
-	e6:SetOperation(s.desop)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e6:SetCode(EFFECT_ADD_CODE)
+	e6:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e6:SetValue(CARD_BLUEEYES_W_DRAGON)
 	c:RegisterEffect(e6)
 end
 s.listed_names={15259703}
@@ -101,31 +97,4 @@ function s.dircon(e)
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TOON),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 --personal effect
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) and e:GetHandler():GetAttackAnnouncedCount()==0 end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD,nil)
-	--Cannot attack this turn
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetDescription(3206)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e:GetHandler():RegisterEffect(e1)
-end
-function s.dfilter(c)
-	return c:IsPosition(POS_FACEUP_ATTACK)
-end
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.dfilter,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,s.dfilter,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,LOCATION_MZONE)
-end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
-		Duel.Destroy(tc,REASON_EFFECT)
-	end
-end
+--alias name-change
