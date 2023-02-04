@@ -42,17 +42,16 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 end
 --roll to negate
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-    if ep==tp then return end
-    if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
-    local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-    if not tg or not tg:IsContains(e:GetHandler()) or not Duel.IsChainDisablable(ev) then return false end
-    local rc=re:GetHandler()
-    local dc=Duel.TossDice(tp,1)
-    if dc==1 or dc==3 or dc==6 then
-        if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) then
-            Duel.Destroy(rc,REASON_EFFECT)
-        end
-    end
+	if ep==tp then return end
+	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	if not tg or not tg:IsContains(e:GetHandler()) or not Duel.IsChainDisablable(ev) then return false end
+	local rc=re:GetHandler()
+	local dc=Duel.TossDice(tp,1)
+	if dc~=2 and dc~=5 then return end
+	if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) then
+		Duel.Destroy(rc,REASON_EFFECT)
+	end
 end
 --personal effect
 function s.atkcon(e)
