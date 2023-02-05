@@ -54,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsCode(69890967) or (c:IsType(TYPE_MONSTER) and aux.ListsCode(c,69890967)) and c:IsAbleToHand()
+	return c:IsCode(69890967) or (c:IsType(TYPE_MONSTER) and c:ListsCode(69890967)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end

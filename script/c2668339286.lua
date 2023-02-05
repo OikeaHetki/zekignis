@@ -32,5 +32,5 @@ function s.ntcon(e,c)
 		and Duel.IsExistingMatchingCard(s.ffilter,e:GetHandlerPlayer(),LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.esfilter(c)
-	return c:IsType(TYPE_MONSTER) and (aux.ListsCode(c,59197169) or c:IsCode(62121))
+	return c:IsType(TYPE_MONSTER) and (c:ListsCode(59197169) or c:IsCode(62121))
 end

@@ -62,7 +62,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.thfilter(c,tp)
-	return c:IsType(TYPE_CONTINUOUS) and aux.ListsCode(c,CARD_GAIA_CHAMPION) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsType(TYPE_CONTINUOUS) and c:ListsCode(CARD_GAIA_CHAMPION) and c:IsType(TYPE_SPELL+TYPE_TRAP)
 		and (c:IsAbleToHand() or (c:GetActivateEffect():IsActivatable(tp,true,true) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

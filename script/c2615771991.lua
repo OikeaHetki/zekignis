@@ -81,7 +81,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for 1 spell/trap that specifically lists one of the gods
 function s.thfilter(c)
-	return (aux.ListsCode(c,CARD_RA) or aux.ListsCode(c,10000000) or aux.ListsCode(c,10000020)) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return (c:ListsCode(CARD_RA) or c:ListsCode(10000000) or c:ListsCode(10000020)) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
