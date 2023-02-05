@@ -1,4 +1,4 @@
---Cyber Harpie
+--Cyber Harpie Lady
 --Zekpro Version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,6 +9,14 @@ function s.initial_effect(c)
 	e1:SetCost(s.atcost)
 	e1:SetOperation(s.atop)
 	c:RegisterEffect(e1)
+	--change code
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e2:SetCode(EFFECT_CHANGE_CODE)
+	e2:SetValue(CARD_HARPIE_LADY)
+	c:RegisterEffect(e2)
 end
 function s.atcost(e,c,tp)
 	return Duel.IsExistingMatchingCard(Card.IsAbleToHandAsCost,tp,LOCATION_ONFIELD,0,1,e:GetHandler())

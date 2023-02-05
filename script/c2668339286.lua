@@ -31,6 +31,6 @@ function s.ntcon(e,c)
 	return c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.ffilter,e:GetHandlerPlayer(),LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
-function s.esfilter(c)
+function s.esfilter(e,c)
 	return c:IsType(TYPE_MONSTER) and (c:ListsCode(59197169) or c:IsCode(62121))
 end
