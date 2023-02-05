@@ -22,6 +22,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={59197169}
+--nt
+function s.ffilter(c)
+	return c:IsFaceup() and c:IsCode(59197169)
+end
+function s.ntcon(e,c)
+	if c==nil then return true end
+	return c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.ffilter,e:GetHandlerPlayer(),LOCATION_FZONE,LOCATION_FZONE,1,nil)
+end
 function s.esfilter(c)
 	return c:IsType(TYPE_MONSTER) and (aux.ListsCode(c,59197169) or c:IsCode(62121))
 end
