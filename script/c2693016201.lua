@@ -95,5 +95,5 @@ function s.lptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)~=0 end
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetLP(tp,Duel.GetLP(tp)-3000)
+	Duel.SetLP(tp,Duel.GetLP(tp)-1000)
 end
