@@ -35,16 +35,6 @@ function s.initial_effect(c)
 		ge1:SetOperation(s.regop)
 		Duel.RegisterEffect(ge1,0)
 	end)
-	--Destroy replace
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,2))
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_DESTROY_REPLACE)
-	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_FZONE)
-	e4:SetTarget(s.desreptg)
-	e4:SetOperation(s.desrepop)
-	c:RegisterEffect(e4)
 end
 s.listed_series={0x45}
 function s.regfilter(c)
@@ -88,12 +78,4 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end
-function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not e:GetHandler():IsReason(REASON_REPLACE+REASON_RULE)
-		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_HAND,0,1,nil,0x45) end
-	return Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(id,2))
-end
-function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DiscardHand(tp,Card.IsSetCard,1,1,REASON_EFFECT+REASON_DISCARD,nil,0x45)
 end

@@ -1,5 +1,5 @@
---カードを狩る死神
---Reaper of the Cards
+--バロックス
+--Barox
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SUMMON_PROC)
 	e1:SetCondition(s.ntcon)
 	c:RegisterEffect(e1)
-	--des trap
+	--des eff mon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -40,13 +40,13 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonType(SUMMON_TYPE_NORMAL) and Duel.GetCurrentPhase()==PHASE_MAIN1
 end
 function s.tfil(c)
-	return c:IsFacedown() or c:IsTrap()
+	return c:IsFacedown() or c:IsType(TYPE_EFFECT)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_SZONE) and s.tfil(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.tfil(chkc) end
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,s.tfil,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,s.tfil,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
 	if #g>0 and g:GetFirst():IsFaceup() then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	end
@@ -56,7 +56,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		if tc:IsFacedown() then Duel.ConfirmCards(tp,tc) end
-		if tc:IsTrap() then Duel.Destroy(tc,REASON_EFFECT) end
+		if tc:IsType(TYPE_EFFECT) then Duel.Destroy(tc,REASON_EFFECT) end
 	end
 	if c:IsRelateToEffect(e) then
 		--Cannot attack

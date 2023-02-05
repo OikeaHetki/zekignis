@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--500 LP Maintenance Cost
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)

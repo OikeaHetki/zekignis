@@ -1,5 +1,5 @@
---カードを狩る死神
---Reaper of the Cards
+--ダーク・キメラ
+--Dark Chimera
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,7 +40,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonType(SUMMON_TYPE_NORMAL) and Duel.GetCurrentPhase()==PHASE_MAIN1
 end
 function s.tfil(c)
-	return c:IsFacedown() or c:IsTrap()
+	return c:IsFacedown() or c:IsSpell()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and s.tfil(chkc) end
@@ -56,7 +56,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		if tc:IsFacedown() then Duel.ConfirmCards(tp,tc) end
-		if tc:IsTrap() then Duel.Destroy(tc,REASON_EFFECT) end
+		if tc:IsSpell() then Duel.Destroy(tc,REASON_EFFECT) end
 	end
 	if c:IsRelateToEffect(e) then
 		--Cannot attack
