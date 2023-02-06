@@ -73,7 +73,7 @@ function s.leave(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sumlimit(e,c,tp,sumtp)
-	return sumtp&SUMMON_TYPE_TRIBUTE==SUMMON_TYPE_TRIBUTE and (c:IsRace(RACE_DIVINE) or c:IsAttribute(ATTRIBUTE_DIVINE) or c:IsRace(RACE_CREATORGOD)
+	return sumtp&SUMMON_TYPE_TRIBUTE==SUMMON_TYPE_TRIBUTE and (c:IsRace(RACE_DIVINE) or c:IsAttribute(ATTRIBUTE_DIVINE) or c:IsRace(RACE_CREATORGOD))
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
