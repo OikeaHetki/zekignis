@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	Synchro.AddProcedure(c,aux.FilterSummonCode(74509280),1,1,Synchro.NonTunerEx(Card.IsSetCard,0x23),1,1)
 	c:EnableReviveLimit()
 	--only one can exist
-	c:SetUniqueOnField(1,0,id)
+	c:SetUniqueOnField(1,0,8310162)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

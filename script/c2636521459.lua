@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--only one can exist
-	c:SetUniqueOnField(1,0,id)
+	c:SetUniqueOnField(1,0,36521459)
 	aux.AddMaleficSummonProcedure(c,CARD_STARDUST_DRAGON,LOCATION_EXTRA)
 	--spson
 	local e0=Effect.CreateEffect(c)

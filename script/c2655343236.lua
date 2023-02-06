@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--only one can exist
-	c:SetUniqueOnField(1,0,id)
+	c:SetUniqueOnField(1,0,55343236)
 	--"Malefic" Special Summon Procedure
 	aux.AddMaleficSummonProcedure(c,CARD_REDEYES_B_DRAGON,LOCATION_HAND+LOCATION_DECK)
 	--spson

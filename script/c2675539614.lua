@@ -1,7 +1,7 @@
 --サイコ・ブレイド
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,id)
+	c:SetUniqueOnField(1,0,75539614)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsOriginalRace,RACE_PSYCHIC))
 	--Atk up
 	local e2=Effect.CreateEffect(c)

@@ -3,7 +3,7 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,id)
+	c:SetUniqueOnField(1,0,00464362)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9),1,99,30068120)

@@ -3,7 +3,7 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,id)
+	c:SetUniqueOnField(1,0,53569894)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	--summon limit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetRange(LOCATION_FZONE)
+	e4:SetRange(LOCATION_SZONE)
 	e4:SetCode(EFFECT_CANNOT_SUMMON)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetTargetRange(1,1)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
 	c:RegisterEffect(e6)
 	local e7=e4:Clone()
-	e7:SetCode(EFFECT_CANNOT_SPSUMMON)
+	e7:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	c:RegisterEffect(e7)
 	--spsummon
 	local e8=Effect.CreateEffect(c)

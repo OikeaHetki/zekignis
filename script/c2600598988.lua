@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--only one can exist
-	c:SetUniqueOnField(1,0,id)
+	c:SetUniqueOnField(1,0,598988)
 	--"Malefic" Special Summon Procedure
 	aux.AddMaleficSummonProcedure(c,79856792,LOCATION_HAND+LOCATION_DECK)
 	--spson

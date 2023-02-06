@@ -1,7 +1,9 @@
 --サイコ・ソード
+--Psychic Sword
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,id)
+	c:SetUniqueOnField(1,0,92346415)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsOriginalRace,RACE_PSYCHIC))
 	--extra attack
 	local e1=Effect.CreateEffect(c)

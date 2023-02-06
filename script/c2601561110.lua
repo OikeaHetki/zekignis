@@ -3,7 +3,7 @@
 --zekpro
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,id)
+	c:SetUniqueOnField(1,0,1561110)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,30012506,77411244,3405259)

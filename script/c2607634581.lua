@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--there can only be one
-	c:SetUniqueOnField(1,0,id)
+	c:SetUniqueOnField(1,0,7634581)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

@@ -3,7 +3,7 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,id)
+	c:SetUniqueOnField(1,0,45986603)
 	aux.AddEquipProcedure(c,1,aux.CheckStealEquip,s.eqlimit,nil,s.target)
 	--recover
 	local e1=Effect.CreateEffect(c)
