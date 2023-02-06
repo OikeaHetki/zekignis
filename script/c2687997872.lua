@@ -35,12 +35,6 @@ function s.initial_effect(c)
 	e4:SetCost(s.cost)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
-	local e6=e4:Clone()
-	e6:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	c:RegisterEffect(e6)
-	local e7=e4:Clone()
-	e7:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e7)
 end
 s.listed_names={53569894}
 function s.cfilter(c,tp,code)
