@@ -48,6 +48,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsType(TYPE_XYZ) then
 			lv=tc:GetOriginalRank()
 		end
+		if tc:IsType(TYPE_LINK) then
+			lv=tc:GetLink()
+		end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g1=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_EXTRA,0,lv,lv,nil)
 		local tg=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
