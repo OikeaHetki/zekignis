@@ -18,15 +18,13 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e2)
-	--return 1 parasite paracide or 1 card that lsits it
+	--force mill a spelltrap
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_TOHAND)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DELAY)
+	e3:SetCategory(CATEGORY_DECKDES)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_DAMAGE)
 	e3:SetCondition(s.condition)
-	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
@@ -46,24 +44,11 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
---personal effect
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
-function s.thfil(c)
-	return (c:ListsCode(27911549) or c:IsCode(27911549)) and c:IsAbleToHand()
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfil(chkc) end
-	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,s.thfil,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
-end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
-	end
+	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(1-tp,Card.IsSpellTrap,1-tp,LOCATION_DECK,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_EFFECT)
 end

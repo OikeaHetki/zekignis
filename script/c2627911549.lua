@@ -10,16 +10,21 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetRange(LOCATION_ONFIELD+LOCATION_HAND)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.condition(c,tp)
-	return e:GetHandler():GetOwner()==tp
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:GetOwner()==tp and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(id)==0 end
+	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
