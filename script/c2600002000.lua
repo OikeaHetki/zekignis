@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(aux.NOT(aux.TargetBoolFunction(Card.IsAttribute,att)))
-	e2:SetValue(-300)
+	e2:SetValue(-200)
 	c:RegisterEffect(e2)
 	--Def
 	local e3=e2:Clone()
