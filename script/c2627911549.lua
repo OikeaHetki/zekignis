@@ -16,8 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(c,tp)
-	local c=e:GetHandler()
-	return c:GetOwner()==tp
+	return e:GetHandler():GetOwner()==tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
