@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1a=Effect.CreateEffect(c)
-	e1a:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DAMAGE)
+	e1a:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DAMAGE+CATEGORY_TOHAND)
 	e1a:SetType(EFFECT_TYPE_ACTIVATE)
 	e1a:SetCode(EVENT_FREE_CHAIN)
 	e1a:SetOperation(s.activate)
@@ -63,13 +63,24 @@ end
 function s.spfilter(c,e,tp)
 	return c:IsCode(27911549) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp)
 end
+function s.thfilter(c)
+	return c:IsMonster() and c:IsAbleToHand() and c:IsRace(RACE_INSECT)
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)<=0 or not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,0,LOCATION_DECK,1,1,nil,e,tp)
 	if #g>0 and
 		Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE) then
-			Duel.Damage(1-tp,1000,REASON_EFFECT)
+		Duel.Damage(1-tp,1000,REASON_EFFECT)
+		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,nil)
+		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+			local sg=g:Select(tp,1,1,nil)
+			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,sg)
+		end
 	end
 end
 --insect world!
