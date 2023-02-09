@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	e1a:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DAMAGE)
 	e1a:SetType(EFFECT_TYPE_ACTIVATE)
 	e1a:SetCode(EVENT_FREE_CHAIN)
-	e1a:SetTarget(s.target)
 	e1a:SetOperation(s.activate)
 	c:RegisterEffect(e1a)
 	--Cannot be target
@@ -24,6 +23,36 @@ function s.initial_effect(c)
 	e1c:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1c:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	c:RegisterEffect(e1c)
+	--race
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetTargetRange(0,LOCATION_MZONE+LOCATION_GRAVE)
+	e2:SetCode(EFFECT_CHANGE_RACE)
+	e2:SetValue(RACE_INSECT)
+	e2:SetTarget(s.tg)
+	c:RegisterEffect(e2)
+	--summon limit
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetCode(EFFECT_CANNOT_SUMMON)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetTargetRange(1,1)
+	e3:SetTarget(s.sumlimit)
+	c:RegisterEffect(e3)
+	local e4=e3:Clone()
+	e4:SetCode(EFFECT_CANNOT_MSET)
+	c:RegisterEffect(e4)
+	--id chk
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_FIELD)
+	e5:SetCode(id)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e5:SetTargetRange(1,1)
+	e5:SetValue(s.val)
+	c:RegisterEffect(e5)
 end
 s.listed_names={27911549,id}
 --parasite paracide filter
@@ -41,41 +70,30 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and
 		Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE) then
 			Duel.Damage(1-tp,1000,REASON_EFFECT)
-			local e0=Effect.CreateEffect(c)
-			e0:SetType(EFFECT_TYPE_FIELD)
-			e0:SetCode(EFFECT_CHANGE_RACE)
-			e0:SetRange(LOCATION_MZONE)
-			e0:SetTargetRange(LOCATION_MZONE,0)
-			e0:SetValue(RACE_INSECT)
-			e0:SetReset(RESET_EVENT+RESETS_STANDARD)
-			c:RegisterEffect(e0)
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-			e1:SetRange(LOCATION_MZONE)
-			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e1:SetValue(1)
-			c:RegisterEffect(e1)
-			local e2=e1:Clone()
-			e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
-			c:RegisterEffect(e2)
-			local e3=Effect.CreateEffect(c)
-			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e3:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
-			e3:SetValue(1)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-			c:RegisterEffect(e3)
-			local e4=e3:Clone()
-			e4:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
-			c:RegisterEffect(e4)
-			local e5=e3:Clone()
-			e5:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-			c:RegisterEffect(e5)
-			local e6=e3:Clone()
-			e6:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
-			c:RegisterEffect(e6) 
 	end
 end
---
+--insect world!
+function s.tg(e,c)
+	if c:GetFlagEffect(1)==0 then
+		c:RegisterFlagEffect(1,0,0,0)
+		local eff
+		if c:IsLocation(LOCATION_MZONE) then
+			eff={Duel.GetPlayerEffect(c:GetControler(),EFFECT_NECRO_VALLEY)}
+		else
+			eff={c:GetCardEffect(EFFECT_NECRO_VALLEY)}
+		end
+		c:ResetFlagEffect(1)
+		for _,te in ipairs(eff) do
+			local op=te:GetOperation()
+			if not op or op(e,c) then return false end
+		end
+	end
+	return true
+end
+function s.val(e,c,re,chk)
+	if chk==0 then return true end
+	return RACE_INSECT
+end
+function s.sumlimit(e,c,tp,sumtp)
+	return sumtp&SUMMON_TYPE_TRIBUTE==SUMMON_TYPE_TRIBUTE and not c:IsRace(RACE_INSECT)
+end
