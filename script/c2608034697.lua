@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	--attackup
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_UPDATE_DEFENSE)
+	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetValue(s.attackup)
 	c:RegisterEffect(e2)
 	--draw
@@ -38,6 +38,12 @@ function s.initial_effect(c)
 	e3:SetTarget(s.drtg)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
+	--defenseup
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_UPDATE_DEFENSE)
+	e5:SetValue(s.attackup)
+	c:RegisterEffect(e5)
 end
 s.counter_place_list={COUNTER_SPELL}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
@@ -46,7 +52,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.attackup(e,c)
-	return c:GetCounter(COUNTER_SPELL)*500
+	return c:GetCounter(COUNTER_SPELL)*400
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,5,REASON_COST) end

@@ -89,7 +89,7 @@ end
 --e3
 function s.effectcon(e)
 	local c=e:GetHandler()
-	return c:GetFlagEffect(alias)==0 or c:IsHasEffect(EFFECT_CANNOT_DISABLE) and 
+	return c:GetFlagEffect(alias)==0 or c:IsHasEffect(EFFECT_CANNOT_DISABLE) 
 end
 --e4
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
