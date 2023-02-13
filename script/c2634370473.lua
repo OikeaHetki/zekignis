@@ -1,4 +1,6 @@
 --ハーピィの羽根帚
+--Gryphon's Feather Duster
+--zekpro version, HFD alias
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,18 +8,17 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(s.cost)
+	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.costfilter(c)
-	return c:IsRace(RACE_WINGEDBEAST) and c:IsAttribute(ATTRIBUTE_WIND)
+s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS}
+function s.cfilter(c)
+	return c:IsFaceup() and c:IsCode(CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS)
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil) end
-	local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil)
-	Duel.Release(sg,REASON_COST)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,3,nil)
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
@@ -32,3 +33,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,e:GetHandler())
 	Duel.Destroy(sg,REASON_EFFECT)
 end
+

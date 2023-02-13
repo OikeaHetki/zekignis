@@ -55,10 +55,10 @@ function s.spcon(e)
 end
 ---
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x64) and c:GetCode()~=id and c:GetOriginalCode()~=id
+	return c:IsFaceup() and c:IsSetCard(0x64) and c:GetCode()~=06924874
 end
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x64) and c:GetCode()~=id and c:GetOriginalCode()~=id
+	return c:IsFaceup() and c:IsSetCard(0x64) and c:GetCode()~=06924874
 end
 function s.adcon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,2,nil)

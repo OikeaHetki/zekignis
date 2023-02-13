@@ -49,7 +49,7 @@ end
 s.listed_names={40240595}
 --limit attack
 function s.tg(e,c)
-	return c:IsFaceup() and c:GetCode()~=id and not c:IsRace(RACE_INSECT)
+	return c:IsFaceup() and c:GetCode()~=14141448 and not c:IsRace(RACE_INSECT)
 end
 --corrosive scales
 function s.atkval(e,c)

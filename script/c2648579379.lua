@@ -87,7 +87,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 --limit attack
 function s.tg(e,c)
-	return c:IsFaceup() and c:GetCode()~=id and not c:IsRace(RACE_INSECT)
+	return c:IsFaceup() and c:GetCode()~=48579379 and not c:IsRace(RACE_INSECT)
 end
 --corrosive scales
 function s.atkval(e,c)
@@ -109,5 +109,5 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 end
 --dis
 function s.distg(e,c)
-	return c:GetCounter(0x1045)>0 and c:GetCode()~=id
+	return c:GetCounter(0x1045)>0 and c:GetCode()~=48579379
 end

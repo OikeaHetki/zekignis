@@ -34,13 +34,13 @@ end
 s.listed_series={0x12}
 s.listed_names={id}
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:GetCode()~=id or c:GetOriginalCode()~=id
+	return c:IsFaceup() and c:GetCode()~=46239604
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c)
-	return c:IsSetCard(0x12) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(0x12) and not c:IsCode(46239604) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil) end

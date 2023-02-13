@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e1b:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1b:SetRange(LOCATION_SZONE)
 	e1b:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e1b:SetCondition(s.inworcon)
 	e1b:SetTarget(s.papar)
 	e1b:SetValue(1)
 	c:RegisterEffect(e1b)
@@ -30,6 +31,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(0,LOCATION_MZONE+LOCATION_GRAVE)
 	e2:SetCode(EFFECT_CHANGE_RACE)
 	e2:SetValue(RACE_INSECT)
+	e2:SetCondition(s.inworcon)
 	e2:SetTarget(s.tg)
 	c:RegisterEffect(e2)
 	--summon limit
@@ -39,6 +41,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(1,1)
+	e3:SetCondition(s.inworcon)
 	e3:SetTarget(s.sumlimit)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
@@ -84,6 +87,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --insect world!
+function s.ffilter(c)
+	return c:IsFaceup() and c:IsCode(27911549)
+end
+function s.inworcon(e)
+	return Duel.IsExistingMatchingCard(s.ffilter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
+end
 function s.tg(e,c)
 	if c:GetFlagEffect(1)==0 then
 		c:RegisterFlagEffect(1,0,0,0)
