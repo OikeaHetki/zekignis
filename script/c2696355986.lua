@@ -32,7 +32,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		local rec=tc:GetAttack()
+	local atk=tc:GetAttack()
+	local def=tc:GetDefense()
+	local rec=(atk+def)*1/2
 		Duel.Recover(tp,rec,REASON_EFFECT)
 	end
 	if c:IsSSetable(true) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
