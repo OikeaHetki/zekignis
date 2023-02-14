@@ -39,7 +39,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(e:GetLabel(),1000,REASON_EFFECT)
 end
 function s.tg(e,c)
-	return c:IsType(TYPE_MONSTER)
+	return c:IsType(TYPE_MONSTER) and c:GetEquipCount()>0
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsType(TYPE_SPELL)
