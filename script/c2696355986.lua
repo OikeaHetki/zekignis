@@ -29,6 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local rec=tc:GetAttack()

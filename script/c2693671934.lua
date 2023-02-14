@@ -29,8 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	e:SetLabel(eg:GetFirst():GetControler())
-	return rp==tp true
+	return rp==tp
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
