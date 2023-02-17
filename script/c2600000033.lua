@@ -3,6 +3,7 @@
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
+	c:SetUniqueOnField(1,0,2600000033)
 	--Activate
 	local e1a=Effect.CreateEffect(c)
 	e1a:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DAMAGE+CATEGORY_TOHAND)
