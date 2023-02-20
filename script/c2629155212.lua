@@ -3,14 +3,28 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
+	c:SetUniqueOnField(1,0,29155212)
+	--untargetable
+	local e11=Effect.CreateEffect(c)
+	e11:SetType(EFFECT_TYPE_SINGLE)
+	e11:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e11:SetRange(LOCATION_MZONE)
+	e11:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
+	e11:SetCondition(s.atkcon)
+	e11:SetValue(aux.imval1)
+	c:RegisterEffect(e11)
+	local e12=e11:Clone()
+	e12:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e12:SetValue(aux.tgoval)
+	c:RegisterEffect(e12)
 	-- summon with no tribute
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,0))
-	e5:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetCode(EFFECT_SUMMON_PROC)
-	e5:SetCondition(s.ntcon)
-	c:RegisterEffect(e5)
+	local e0=Effect.CreateEffect(c)
+	e0:SetDescription(aux.Stringid(id,0))
+	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_SUMMON_PROC)
+	e0:SetCondition(s.ntcon)
+	c:RegisterEffect(e0)
 	--atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -54,9 +68,6 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseEvent(Group.CreateGroup(),id,e,REASON_EFFECT,Duel.GetTurnPlayer(),Duel.GetTurnPlayer(),0)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE)
-end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,e:GetHandler())
 	local tc=g:GetFirst()
@@ -74,4 +85,10 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()~=tp then return end
 	Duel.Hint(HINT_CARD,0,id)
 	s.atkop(e,tp,eg,ep,ev,re,r,rp)
+end
+function s.cfilter(c)
+	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE)
+end
+function s.atkcon(e)
+	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
