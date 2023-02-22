@@ -23,6 +23,18 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_BATTLE_DESTROYED)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
+	--Direct attack
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_DIRECT_ATTACK)
+	c:RegisterEffect(e3)
+	--Reduce damage
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e4:SetCondition(s.rdcon)
+	e4:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
+	c:RegisterEffect(e4)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
@@ -62,4 +74,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	tc:RegisterEffect(e2)
+end
+function s.rdcon(e)
+	local c,tp=e:GetHandler(),e:GetHandlerPlayer()
+	return Duel.GetAttackTarget()==nil and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
