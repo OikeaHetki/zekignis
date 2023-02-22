@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
-	e2:SetRange(LOCATION_SZONE)
+	e2:SetRange(LOCATION_FZONE)
 	e2:SetOperation(s.chkop)
 	c:RegisterEffect(e2)
 	--damage
@@ -28,19 +28,32 @@ function s.initial_effect(c)
 	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
-	--special summon
+	--damage
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetProperty(EFFECT_FLAG_BOTH_SIDE)
+	e4:SetDescription(aux.Stringid(id,0))
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e4:SetRange(LOCATION_FZONE)
+	e4:SetCategory(CATEGORY_DAMAGE)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_BOTH_SIDE)
+	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetCountLimit(1)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCondition(s.condition)
-	e4:SetTarget(s.target)
-	e4:SetOperation(s.operation)
+	e4:SetCondition(s.epcon)
+	e4:SetTarget(s.eptg)
+	e4:SetOperation(s.epop)
 	c:RegisterEffect(e4)
+	--special summon
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,1))
+	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e5:SetType(EFFECT_TYPE_IGNITION)
+	e5:SetProperty(EFFECT_FLAG_BOTH_SIDE)
+	e5:SetCountLimit(1)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetTarget(s.target)
+	e5:SetOperation(s.operation)
+	c:RegisterEffect(e5)
 end
+--acrec
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,PLAYER_ALL,600)
@@ -49,6 +62,7 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,600,REASON_EFFECT)
 	Duel.Recover(1-tp,600,REASON_EFFECT)
 end
+--chkdmg
 function s.chkop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.GetAttacker() then return end
 	Duel.RaiseSingleEvent(e:GetHandler(),id,e,r,rp,Duel.GetAttacker():GetControler(),0)
@@ -67,11 +81,24 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
+--epdmg
+function s.epcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp and Duel.GetActivityCount(tp,ACTIVITY_ATTACK)==0
 end
+function s.eptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetParam(100)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,100)
+end
+function s.epop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Damage(p,d,REASON_EFFECT)
+end
+--sp
 function s.filter(c,e,sp)
-	return c:IsSummonablecard() and c:IsCanBeSpecialSummoned(e,0,sp,false,false) and c:IsLevelBelow(4)
+	return c:IsSummonableCard() and c:IsCanBeSpecialSummoned(e,0,sp,false,false) and c:IsLevelBelow(4)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
