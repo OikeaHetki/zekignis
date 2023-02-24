@@ -17,17 +17,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
-	--destroy
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1)
-	e2:SetTarget(s.destg)
-	e2:SetOperation(s.desop)
-	c:RegisterEffect(e2)
 end
 --sp
 function s.rescon(sg,e,tp,mg)
@@ -39,11 +28,6 @@ end
 function s.spfilter1(c,att)
 	return c:IsAttribute(att) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
-function s.spcon1(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-end
-
 function s.spcon1(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
@@ -58,7 +42,6 @@ function s.spcon1(e,c)
 	and ct==Duel.GetMatchingGroupCount(Card.IsAttribute,tp,LOCATION_GRAVE,0,nil,ATTRIBUTE_DARK)
 	and aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0)
 end
-
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,c)
 	local c=e:GetHandler()
 	local g=nil
@@ -76,22 +59,4 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp,c)
 	if not g then return end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	g:DeleteGroup()
-end
---des and banish
-function s.tgfilter(c)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e)
-end
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,tp) end
-	if chk==0 then return eg:IsExists(s.tgfilter,1,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=eg:FilterSelect(tp,s.filter,1,1,nil,e,tp)
-	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
-end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		Duel.Destroy(tc,REASON_EFFECT,LOCATION_REMOVED)
-	end
 end

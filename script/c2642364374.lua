@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 function s.bugcon(e)
 	local c=e:GetHandler()
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_INSECT),c:GetControler(),LOCATION_MZONE,0,1,c) and not c:IsCode(42364374)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_INSECT),c:GetControler(),LOCATION_MZONE,0,1,c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
