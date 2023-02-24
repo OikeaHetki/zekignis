@@ -17,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if not d then return false end
 	if d:IsControler(tp) or a:IsControler(1-tp) then return false end
-	return a:IsCode(10979723) and a:IsRelateToBattle() and d:IsLocation(LOCATION_ONFIELD)
+	return a:IsSetCard(0x4) and a:IsRelateToBattle() and d:IsLocation(LOCATION_ONFIELD)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()

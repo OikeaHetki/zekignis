@@ -56,11 +56,11 @@ end
 --acrec
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,PLAYER_ALL,600)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,PLAYER_ALL,1000)
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Recover(tp,600,REASON_EFFECT)
-	Duel.Recover(1-tp,600,REASON_EFFECT)
+	Duel.Recover(tp,1000,REASON_EFFECT)
+	Duel.Recover(1-tp,1000,REASON_EFFECT)
 end
 --chkdmg
 function s.chkop(e,tp,eg,ep,ev,re,r,rp)
@@ -68,14 +68,14 @@ function s.chkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseSingleEvent(e:GetHandler(),id,e,r,rp,Duel.GetAttacker():GetControler(),0)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,100) end
-	Duel.PayLPCost(tp,100)
+	if chk==0 then return Duel.CheckLPCost(tp,300) end
+	Duel.PayLPCost(tp,300)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
-	Duel.SetTargetParam(100)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,100)
+	Duel.SetTargetParam(300)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,300)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
@@ -88,8 +88,8 @@ end
 function s.eptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(100)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,100)
+	Duel.SetTargetParam(300)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,300)
 end
 function s.epop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
