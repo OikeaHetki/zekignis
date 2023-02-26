@@ -66,6 +66,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e8)
 end
 s.listed_names={40240595}
+s.counter_list={0x1045}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,14141448)

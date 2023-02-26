@@ -47,6 +47,7 @@ function s.initial_effect(c)
 		c:RegisterEffect(e7)
 end
 s.listed_names={40240595}
+s.counter_list={0x1045}
 --limit attack
 function s.tg(e,c)
 	return c:IsFaceup() and c:GetCode()~=14141448 and not c:IsRace(RACE_INSECT)

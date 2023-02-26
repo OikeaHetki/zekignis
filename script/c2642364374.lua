@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.bugcon)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
-	e2:SetCode(EFFECT_SET_DEFENSE)
+	e2:SetCode(EFFECT_SET_BASE_DEFENSE)
 	c:RegisterEffect(e2)
 	--disable
 	local e3=Effect.CreateEffect(c)
