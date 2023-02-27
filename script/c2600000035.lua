@@ -33,7 +33,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsRace(RACE_WARRIOR) and
+	if tc:IsRelateToEffect(e) and tc:IsSetCard(0x4) and tc:IsAbleToHand() and tc:IsType(TYPE_MONSTER) and
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
