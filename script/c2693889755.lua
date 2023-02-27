@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (c:GetPreviousPosition()&POS_ATTACK)~=0 and c:IsFaceup() and c:IsDefensePos()
+	return (c:GetPreviousPosition()&POS_FACEUP_DEFENSE)~=0 and c:IsFaceup() and c:IsAttackPos()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
