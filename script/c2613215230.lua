@@ -1,6 +1,6 @@
 --ドリーム・ピエロ
 --Dream Clown
---zekpro version (LIGHT Spellcaster)
+--zekpro version (LIGHT Warrior)
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
