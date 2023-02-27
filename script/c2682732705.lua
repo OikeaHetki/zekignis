@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 function s.aclimit(e,re,tp)
 	local loc=re:GetActivateLocation()
-	return (loc==LOCATION_EXTRA or (loc==LOCATION_MZONE and re:IsInExtraMZone())) and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return (loc==LOCATION_EXTRA or (loc==LOCATION_MZONE and c:IsFaceup())) and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
