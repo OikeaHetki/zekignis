@@ -41,12 +41,12 @@ function s.valcon(e,re,r,rp)
 end
 --special summon from the hand
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	if tp==ep or not Duel.IsChainDisablable(ev) then return false end
+	if tp==ep then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-#tg>0
 end
 function s.spcfilter(c,tp)
-	return Duel.GetMZoneCount(tp,c)>0
+	return Duel.GetMZoneCount(tp,c)>0 and c:IsCode(30243636)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.spcfilter,1,false,nil,nil,tp) end
