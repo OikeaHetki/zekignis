@@ -19,5 +19,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.target(e,c)
-	return c:IsFaceup() and (c:IsLevelBelow(4) or c:IsRankBelow(4) or c:GetLink()<5)
+	return c:IsFaceup() and (c:IsLevelBelow(4) or c:IsRankBelow(3))
 end

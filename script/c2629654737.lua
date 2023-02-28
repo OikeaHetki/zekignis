@@ -36,6 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tg=g:FilterSelect(tp,Card.IsMonster,1,1,nil)
 		if #tg>0 then
 			Duel.SendtoHand(tg,tp,REASON_EFFECT)
+			Duel.ConfirmCards(tg,1-tp)
 		end
 		Duel.ShuffleDeck(1-tp)
 	end
