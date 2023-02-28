@@ -17,11 +17,12 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Ritual Summon 1 "Hungry Burger"
+	--Do this with "Hungry Burger"
 	local e2=Ritual.CreateProc(c,RITPROC_GREATER,aux.FilterBoolFunction(Card.IsCode,30243636),nil,aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
+	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) end)
 	c:RegisterEffect(e2)
 	--indes
@@ -37,7 +38,7 @@ end
 s.listed_names={30243636}
 --indes
 function s.valcon(e,re,r,rp)
-	return (r&REASON_EFFECT)~=0 and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return (r&REASON_EFFECT)~=0
 end
 --special summon from the hand
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -64,4 +65,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
 	end
 end
---negate and protect
