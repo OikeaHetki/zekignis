@@ -1,6 +1,6 @@
 --異次元からの帰還
 --Return from the Different Dimension
---zekpro version
+--zekpro version (summons face-down and locks extra deck)
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
