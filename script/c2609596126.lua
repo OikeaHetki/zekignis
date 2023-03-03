@@ -3,8 +3,6 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
-	--there can only be one
-	c:SetUniqueOnField(1,0,09596126)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Special summon procedure (from hand)
@@ -21,7 +19,7 @@ function s.initial_effect(c)
 	--destroy and banish (on field)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE)
+	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
@@ -41,7 +39,7 @@ end
 function s.spfilter1(c,att)
 	return c:IsAttribute(att) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
-function s.spcon1(e,c) --now also requires an equal number of LIGHT/DARK in GY
+function s.spcon1(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
 	local rg1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ATTRIBUTE_LIGHT)
@@ -49,11 +47,7 @@ function s.spcon1(e,c) --now also requires an equal number of LIGHT/DARK in GY
 	local rg=rg1:Clone()
 	rg:Merge(rg2)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=Duel.GetMatchingGroupCount(Card.IsAttribute,tp,LOCATION_GRAVE,0,nil,ATTRIBUTE_LIGHT)
-	return ft>-2 and #rg1>0 and #rg2>0
-	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and ct>0 
-	and ct==Duel.GetMatchingGroupCount(Card.IsAttribute,tp,LOCATION_GRAVE,0,nil,ATTRIBUTE_DARK)
-	and aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0)
+	return ft>-2 and #rg1>0 and #rg2>0 and aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,c)
 	local c=e:GetHandler()
@@ -74,9 +68,16 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 --Target 1 face-up monster; destroy it, and if you do, banish it
+function s.costfilter(c)
+	return c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetAttackAnnouncedCount()==0 end
+	if chk==0 then return c:GetAttackAnnouncedCount()==0 and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	--cannot atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
@@ -96,6 +97,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.Destroy(tc,REASON_EFFECT,LOCATION_REMOVED)
+		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
