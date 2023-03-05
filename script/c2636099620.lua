@@ -66,7 +66,7 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(ep,0x5,2,REASON_EFFECT)
 end
 --set
-function s.condtion(e,tp,eg,ep,ev,re,r,rp)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetPreviousLocation()==LOCATION_DECK
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
