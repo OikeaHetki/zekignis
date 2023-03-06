@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_names={25955164,62340868,98434877}
+s.listed_names={CARDS_SANGA_KAZEJIN_SUIJIN}
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),25955164,62340868,98434877)
 end
@@ -54,7 +54,7 @@ function s.spcon(e,c)
 	local g=g1:Clone()
 	g:Merge(g2)
 	g:Merge(g3)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #g1>0 and #g2>0 and #g3>0 
+	return #g1>0 and #g2>0 and #g3>0 
 		and aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
