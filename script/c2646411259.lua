@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetLabel(0)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -16,28 +17,14 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
-	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0
-	end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(s.splimit)
-	e1:SetLabelObject(e)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,0),nil)
-end
-function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return se~=e:GetLabelObject()
 end
 function s.filter1(c,e,tp)
+	local code=tc:GetCode()
 	local lv=c:GetLevel()
-	return lv>0 and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,lv,e,tp,c)
+	return lv>0 and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,lv,e,tp,c) and c:IsType(TYPE_FUSION)
 end
 function s.filter2(c,lv,e,tp,mc)
-	return c:IsType(TYPE_FUSION) and c:GetLevel()==lv and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_FUSION) and c:GetLevel()==lv and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(code)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -51,9 +38,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local code=tc:GetCode()
 	local lv=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,lv,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,code,lv,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

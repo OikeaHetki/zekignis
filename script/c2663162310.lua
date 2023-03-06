@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
+	e4:SetCondition(s.tgcon)
 	e4:SetValue(s.tgval)
 	c:RegisterEffect(e4)
 	--change pos
@@ -47,6 +48,9 @@ function s.dircon(e)
 	local p=1-e:GetHandlerPlayer()
 	local seq=4-e:GetHandler():GetSequence()
 	return Duel.GetFieldCard(p,LOCATION_MZONE,seq)==nil
+end
+function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_LABYRINTH_WALL),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.tgval(e,c)
 	return e:GetHandler():GetSequence()+c:GetSequence()~=4
