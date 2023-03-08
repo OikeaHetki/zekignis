@@ -47,7 +47,7 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp)
+	local rg=Duel.GetMatchingGroup(tp)
 	local g1=rg:Filter(Card.IsCode,nil,25955164)
 	local g2=rg:Filter(Card.IsCode,nil,62340868)
 	local g3=rg:Filter(Card.IsCode,nil,98434877)
@@ -58,7 +58,7 @@ function s.spcon(e,c)
 		and aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp)
+	local rg=Duel.GetMatchingGroup(tp)
 	local g1=rg:Filter(Card.IsCode,nil,25955164)
 	local g2=rg:Filter(Card.IsCode,nil,62340868)
 	local g3=rg:Filter(Card.IsCode,nil,98434877)
