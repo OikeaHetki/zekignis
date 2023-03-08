@@ -17,7 +17,7 @@ end
 s.listed_names=CARDS_SANGA_KAZEJIN_SUIJIN
 s.listed_series={SET_GATE_GUARDIAN}
 function s.costfilter(c)
-	return c:IsSetCard(SET_GATE_GUARDIAN) and not c:IsPublic()
+	return c:IsSetCard(SET_GATE_GUARDIAN) and not c:IsPublic() and c:IsType(TYPE_MONSTER)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
