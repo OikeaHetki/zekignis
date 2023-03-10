@@ -3,7 +3,6 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,53569894)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -24,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	e3:SetOperation(s.leave)
 	c:RegisterEffect(e3)
-	--summon limit
+	--summon limit (DIVINE, Divine-Beast, Creator God)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetRange(LOCATION_SZONE)
@@ -42,21 +41,14 @@ function s.initial_effect(c)
 	local e7=e4:Clone()
 	e7:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	c:RegisterEffect(e7)
-	--spsummon
+	--Banish all Monster Cards on the field whose original Type is Divine-Beast
 	local e8=Effect.CreateEffect(c)
-	e8:SetDescription(aux.Stringid(id,0))
-	e8:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
-	e8:SetType(EFFECT_TYPE_QUICK_O)
-	e8:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e8:SetCode(EVENT_FREE_CHAIN)
-	e8:SetRange(LOCATION_SZONE)
-	e8:SetHintTiming(0,TIMING_END_PHASE)
-	e8:SetCost(s.drcost)
-	e8:SetTarget(s.drtg)
-	e8:SetOperation(s.drop)
+	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_ADJUST)
+	e8:SetRange(LOCATION_SZONE) 
+	e8:SetOperation(s.banop)
 	c:RegisterEffect(e8)
 end
-s.listed_names={53569894}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(15013468,51402177)
 end
@@ -73,30 +65,12 @@ function s.leave(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sumlimit(e,c,tp,sumtp)
-	return sumtp&SUMMON_TYPE_TRIBUTE==SUMMON_TYPE_TRIBUTE and (c:IsRace(RACE_DIVINE) or c:IsAttribute(ATTRIBUTE_DIVINE) or c:IsRace(RACE_CREATORGOD))
+	return c:IsRace(RACE_DIVINE) or c:IsAttribute(ATTRIBUTE_DIVINE) or c:IsRace(RACE_CREATORGOD)
 end
-function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+function s.filter(c)
+	return c:IsFaceup() and c:IsOriginalRace(RACE_DIVINE) and c:IsAbleToRemove()
 end
-function s.tdfilter(c)
-	return c:ListsCode(53569894) and c:IsAbleToDeck()
-end
-function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE,0,2,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE,0,2,2,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-end
-function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local tg=Duel.GetTargetCards(e)
-	if #tg<=0 then return end
-	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
-	Duel.ShuffleDeck(tp)
-	Duel.BreakEffect()
-	Duel.Draw(tp,1,REASON_EFFECT)
+function s.banop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 end

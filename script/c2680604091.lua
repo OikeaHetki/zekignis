@@ -28,11 +28,11 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (tn==tp and Duel.IsMainPhase()) or (tn~=tp and Duel.IsBattlePhase())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
+	if chk==0 then return Duel.CheckLPCost(tp,500) end
 	if e:GetHandler():GetFlagEffect(id)==0 then
 		e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1,Duel.GetMatchingGroupCount(Card.CanSummonOrSet,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,true,nil))
 	end
-	Duel.PayLPCost(tp,1000)
+	Duel.PayLPCost(tp,500)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

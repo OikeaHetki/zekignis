@@ -22,25 +22,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc==tg end
 	if chk==0 then return tg:IsOnField() and tg:IsCanBeEffectTarget(e) end
 	Duel.SetTargetCard(tg)
-	local atk=tg:GetAttack()
-	local def=tg:GetDefense()
-	local rec=(atk+def)*1/2
+	local rec=tg:GetAttack()
 	Duel.SetTargetParam(rec)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-	local atk=tc:GetAttack()
-	local def=tc:GetDefense()
-	local rec=(atk+def)*1/2
-		Duel.Recover(tp,rec,REASON_EFFECT)
-	end
-	if c:IsSSetable(true) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
-		Duel.BreakEffect()
-		c:CancelToGrave()
-		Duel.ChangePosition(c,POS_FACEDOWN)
-		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
+		local rec=tc:GetAttack()
+		Duel.Recover(tp,2*rec,REASON_EFFECT)
 	end
 end

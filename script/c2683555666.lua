@@ -29,7 +29,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.Destroy(tc,REASON_EFFECT)~=0 then
-		local atk=tc:GetAttack()
+		local atk=tc:GetTextAttack()
 		if atk<0 then atk=0 end
 		local val=Duel.Damage(tp,atk,REASON_EFFECT)
 		if Duel.GetLP(tp)>0 then

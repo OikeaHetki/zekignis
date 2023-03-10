@@ -34,10 +34,16 @@ function s.initial_effect(c)
 	e6:SetValue(1)
 	e6:SetCondition(s.actcon)
 	c:RegisterEffect(e6)
+	--summon
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_SINGLE)
+	e7:SetCode(EFFECT_CANNOT_DISABLE_SUMMON)
+	e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	c:RegisterEffect(e7)
 end
 s.listed_series={0x45}
 function s.tlimit(e,c)
-	return not c:IsRace(RACE_FIEND) or c:IsAttribute(ATTRIBUTE_FIRE)
+	return not c:IsRace(RACE_FIEND)
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(s.chlimit1)
