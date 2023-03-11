@@ -1,6 +1,6 @@
 --異次元からの帰還
 --Return from the Different Dimension
---zekpro version (summons face-down and locks extra deck)
+--zekpro version (summons face-down for both players)
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -26,16 +26,28 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<=0 then return end
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
+	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if ft1<=0 then return end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft1=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_REMOVED,0,ft,ft,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_REMOVED,0,ft1,ft1,nil,e,tp)
 	if #g>0 then
 		local fid=e:GetHandler():GetFieldID()
 		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+		end
+	local ft2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	if ft2<=0 then return end
+	if Duel.IsPlayerAffectedByEffect(1-tp,CARD_BLUEEYES_SPIRIT) then ft2=1 end
+	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(1-tp,s.filter,1-tp,LOCATION_REMOVED,0,ft2,ft2,nil,e,1-tp)
+	if #g>0 then
+		local fid=e:GetHandler():GetFieldID()
+		local tc=g:GetFirst()
+		for tc in aux.Next(g) do
+			Duel.SpecialSummonStep(tc,0,1-tp,1-tp,false,false,POS_FACEDOWN_DEFENSE)
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
 		end
 		Duel.SpecialSummonComplete()
@@ -47,37 +59,24 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
 		e1:SetLabel(fid)
 		e1:SetLabelObject(g)
-		e1:SetCondition(s.rmcon)
-		e1:SetOperation(s.rmop)
+		e1:SetCondition(s.tdcon)
+		e1:SetOperation(s.tdop)
 		Duel.RegisterEffect(e1,tp)
 	end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetTargetRange(1,0)
-	e1:SetValue(s.actlimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
 end
-function s.rmfilter(c,fid)
+function s.tdfilter(c,fid)
 	return c:GetFlagEffectLabel(id)==fid
 end
-function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
+function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
-	if not g:IsExists(s.rmfilter,1,nil,e:GetLabel()) then
+	if not g:IsExists(s.tdfilter,1,nil,e:GetLabel()) then
 		g:DeleteGroup()
 		e:Reset()
 		return false
 	else return true end
 end
-function s.rmop(e,tp,eg,ep,ev,re,r,rp)
+function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
-	local tg=g:Filter(s.rmfilter,nil,e:GetLabel())
+	local tg=g:Filter(s.tdfilter,nil,e:GetLabel())
 	Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
-end
-function s.actlimit(e,re,rp)
-	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER)
 end
