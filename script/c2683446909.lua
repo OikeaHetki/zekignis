@@ -12,16 +12,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sumtg)
 	e1:SetOperation(s.sumop)
 	c:RegisterEffect(e1)
-	--tograve
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_TOGRAVE)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e2:SetCode(EVENT_REMOVE)
-	e2:SetTarget(s.tgtg)
-	e2:SetOperation(s.tgop)
-	c:RegisterEffect(e2)
 	--atk,def
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -53,18 +43,4 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_THUNDER),c:GetControler(),LOCATION_MZONE,0,e:GetHandler())*500
-end
-function s.tgfilter(c)
-	return c:IsRace(RACE_THUNDER) and not c:IsCode(id) and not c:IsOriginalCode(id) and c:IsAbleToGrave()
-end
-function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-end
-function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 then
-		Duel.SendtoGrave(g,REASON_EFFECT)
-	end
 end

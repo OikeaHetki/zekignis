@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x12}
+s.listed_names={10456559}
 function s.indes(e,c)
 	return c:IsSetCard(0x12)
 end
