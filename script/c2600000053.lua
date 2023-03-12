@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.filter2(c,mc)
-	return (c:IsCode(87997872) or c:ListsCode(53569894)) and c:IsAbleToHand()
+	return (c:IsCode(87997872) or (c:ListsCode(53569894) and c:IsType(TYPE_MONSTER)) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
