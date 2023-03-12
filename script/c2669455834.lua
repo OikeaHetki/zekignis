@@ -33,7 +33,7 @@ function s.ntcon(e,c)
 		and Duel.IsExistingMatchingCard(s.ffilter,e:GetHandlerPlayer(),LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and (c:ListsCode(59197169) or c:IsCode(62121) or c:IsCode(59197169)) and c:IsAbleToHand() and not (c:IsCode(id) or c:IsOriginalCode(id))
+	return (c:IsType(TYPE_MONSTER) and (c:ListsCode(59197169) or c:IsCode(62121))) or c:IsCode(59197169) and c:IsAbleToHand() and not (c:IsCode(id) or c:IsOriginalCode(id))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
