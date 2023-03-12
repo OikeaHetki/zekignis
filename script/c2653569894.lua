@@ -67,10 +67,10 @@ end
 function s.sumlimit(e,c,tp,sumtp)
 	return c:IsRace(RACE_DIVINE) or c:IsAttribute(ATTRIBUTE_DIVINE) or c:IsRace(RACE_CREATORGOD)
 end
-function s.filter(c)
+function s.godfilter(c)
 	return c:IsFaceup() and c:IsOriginalRace(RACE_DIVINE) and c:IsAbleToRemove()
 end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(s.godfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 end
