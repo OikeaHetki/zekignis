@@ -21,7 +21,6 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
 	e3:SetCondition(s.mkcon)
-	e3:SetTarget(s.mktg)
 	e3:SetOperation(s.mkop)
 	c:RegisterEffect(e3)
 	--Direct attack
