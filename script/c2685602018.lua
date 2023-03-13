@@ -20,7 +20,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,2000)
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsAttackBelow(1500) 
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsAttackBelow(1500)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tgfilter(chkc) end
