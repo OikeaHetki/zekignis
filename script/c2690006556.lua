@@ -25,22 +25,17 @@ function s.initial_effect(c)
 	e2:SetTarget(s.ddtg)
 	e2:SetOperation(s.ddop)
 	c:RegisterEffect(e2)
-	--direct
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_DIRECT_ATTACK)
-	c:RegisterEffect(e3)
 	--pilfer
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,2))
-	e4:SetCategory(CATEGORY_TOHAND)
-	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCountLimit(1)
-	e4:SetCost(s.pilcost)
-	e4:SetTarget(s.piltg)
-	e4:SetOperation(s.pilop)
-	c:RegisterEffect(e4)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetCategory(CATEGORY_TOHAND)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1)
+	e3:SetCost(s.pilcost)
+	e3:SetTarget(s.piltg)
+	e3:SetOperation(s.pilop)
+	c:RegisterEffect(e3)
 end
 --Dash 1R
 function s.spcon(e,c)
@@ -48,14 +43,14 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    e1:SetCode(EVENT_PHASE+PHASE_END)
-    e1:SetRange(LOCATION_MZONE)
-    e1:SetCountLimit(1)
-    e1:SetOperation(s.thop)
-    e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
-    c:RegisterEffect(e1)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
+	e1:SetOperation(s.thop)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+	c:RegisterEffect(e1)
 	--res
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -70,9 +65,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e3:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	local e4=e3:Clone()
-	e4:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
-	c:RegisterEffect(e4)
+	local e3=e3:Clone()
+	e3:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+	c:RegisterEffect(e3)
 	local e5=e3:Clone()
 	e5:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
 	c:RegisterEffect(e5)
@@ -88,7 +83,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:RegisterEffect(e7)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
+	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 end
 ---Combat Damage
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
@@ -108,17 +103,19 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetDecktopGroup(1-tp,1)
 	Duel.DisableShuffleCheck()
-	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,2000,4,RACE_ROCK,ATTRIBUTE_LIGHT) then 		
+	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,2000,4,RACE_ROCK,ATTRIBUTE_LIGHT) then		
 	local token=Duel.CreateToken(tp,id+1)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
 --pilfer
+function s.costfilter(c)
+	return c:IsCode(2690006557) and c:GetCode()~=id
+end
 function s.pilcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,c) end
-	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,c)
-	Duel.Release(g,REASON_COST)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil) end
+	local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil)
+	Duel.Release(sg,REASON_COST)
 end
 function s.pilfil(c)
 	return c:IsFaceup() and c:IsAbleToHand()
