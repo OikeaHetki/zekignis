@@ -34,7 +34,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then Duel.Destroy(tc,REASON_EFFECT)
-	if (tc:IsLocation(LOCATION_REMOVED) or tc:IsLocation(LOCATION_GRAVE) 
+	if (tc:IsLocation(LOCATION_REMOVED) or tc:IsLocation(LOCATION_GRAVE))
 	and tc:IsMonster() and tc:IsAttribute(ATTRIBUTE_DARK) then Duel.Damage(1-tp,1000,REASON_EFFECT)
 		end
 	end
