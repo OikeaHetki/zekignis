@@ -1,5 +1,5 @@
 --Attribute Fields
---A Legendary Ocean cycle
+--Rush Duels Cycle
 --WATER
 --zek
 local s,id=GetID()
@@ -23,34 +23,69 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
-	--spsummon
+	--summon success
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_TO_GRAVE)
-	e4:SetProperty(EFFECT_FLAG_DELAY)
-	e4:SetCondition(s.spcon)
-	e4:SetTarget(s.sptg)
-	e4:SetOperation(s.spop)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e4:SetRange(LOCATION_FZONE)
+	e4:SetCondition(s.sumcon)
+	e4:SetOperation(s.sumsuc)
 	c:RegisterEffect(e4)
+	--to grave
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetCategory(CATEGORY_TOGRAVE)
+	e5:SetType(EFFECT_TYPE_IGNITION)
+	e5:SetCountLimit(1)
+	e5:SetRange(LOCATION_FZONE)
+	e5:SetCost(s.cost)
+	e5:SetTarget(s.target)
+	e5:SetOperation(s.operation)
+	c:RegisterEffect(e5)
 end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+--sumsuc
+function s.limfilter(c)
+	return c:IsAttribute(att) and c:GetSummonType()==SUMMON_TYPE_NORMAL
+end
+function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.limfilter,1,nil)
+end
+function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.SetChainLimitTillChainEnd(s.elimit)
+end
+function s.elimit(re,rp,tp)
+	return not (re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE))
+end
+--active effect
+function s.costfilter(c)
+	return c:IsAttribute(att) and c:IsDiscardable()
+end
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST+REASON_DISCARD)
+end
+function s.filter(c)
+	return c:IsAttribute(att) and c:IsAbleToGrave()
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_FZONE) and rp~=tp
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
-function s.spfilter(c,e,tp)
-	return c:IsAttribute(att) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
-end
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
+	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) then
+		--Cannot Special Summon monsters with the same name
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(aux.Stringid(id,1))
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e1:SetTargetRange(1,0)
+		e1:SetTarget(function(e,c) return c:IsCode(e:GetLabel()) end)
+		e1:SetLabel(tc:GetCode())
+		e1:SetReset(RESET_PHASE|PHASE_END)
+		Duel.RegisterEffect(e1,tp)
 	end
 end
