@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x8}
 function s.filter(c)
-	return ((c:IsSetCard(0x8) and c:IsMonster() and not c:IsCode(id) or not c:IsOriginalCode(id)))
+	return ((c:IsSetCard(0x8) and c:IsMonster() and not c:IsCode(40044918)))
 		and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
