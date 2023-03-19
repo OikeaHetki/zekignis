@@ -131,5 +131,6 @@ function s.pilop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.SendtoHand(tc,tp,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,tc)
 	end
 end
