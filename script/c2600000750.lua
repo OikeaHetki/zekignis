@@ -19,7 +19,7 @@ function s.cfilter(c)
 	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x18)
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:GetCounter(0x1019)==0
+	return c:IsFaceup() and c:GetCounter(0x1019)>0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end

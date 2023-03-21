@@ -52,7 +52,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x8) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(0x8) and c:GetCode()~=40044918
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
