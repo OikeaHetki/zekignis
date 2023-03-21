@@ -5,40 +5,48 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_CHAINING)
+	e1:SetCode(EVENT_BECOME_TARGET)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.counter_place_list={0x1019}
 s.listed_series={0x18}
-function s.cfilter(c)
-	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x18)
-end
-function s.tgfilter(c)
-	return c:IsFaceup() and c:GetCounter(0x1019)>0
+s.counter_place_list={0x1019}
+function s.cfilter(c,ft)
+	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x18) and (ft>0 or c:GetSequence()<5)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
-	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
-	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return tg and #tg==1 and s.cfilter(tg:GetFirst()) and Duel.IsChainNegatable(ev)
+	return eg:IsExists(s.cfilter,1,nil,Duel.GetLocationCount(tp,LOCATION_MZONE))
+end
+function s.spfilter(c,e,tp,g)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not g or not g:IsContains(c)) and c:IsSetCard(0x18) and c:IsLevelBelow(5)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
-	end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chk==0 then return ft>-1 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	local g=eg:Filter(s.cfilter,nil,ft)
+	Duel.SetTargetCard(g)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.Destroy(eg,REASON_EFFECT)
+	local g=Duel.GetTargetCards(e)
+	if #g==0 then return end
+	Duel.SendtoHand(g,nil,REASON_EFFECT)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,g)
+	if sg:IsRelateToEffect(e) and Duel.SpecialSummonStep(sg,0,tp,tp,false,false,POS_FACEUP_ATTACK) then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(aux.Stringid(id,0))
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e1:SetCode(EFFECT_CANNOT_CHANGE_POS_E)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		sg:RegisterEffect(e1)
 	end
-	Duel.BreakEffect()
-	local g=Duel.GetMatchingGroup(s.tgfilter,tp,0,LOCATION_MZONE,nil)
-	Duel.Destroy(g,REASON_EFFECT)
+	Duel.SpecialSummonComplete()
+	sg:AddCounter(0x1019,1)
 end
