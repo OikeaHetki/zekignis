@@ -1,8 +1,9 @@
---Undercity Informant
+--地底街の密告人
+--[Undercity Informer]
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
-	--deckdes
+	--Mill cards until the player sends a land card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DECKDES+CATEGORY_TOGRAVE)
@@ -13,56 +14,28 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--Search 1 DARK Level 3 monster whose ATK is equal to its DEF
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetTarget(s.thtg)
-	e2:SetOperation(s.thop)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	c:RegisterEffect(e3)
 end
----search
-function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDefense(c:GetAttack()) and c:IsAttackAbove(0) and c:IsDefenseAbove(0)
-	and c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelBelow(4)
-	and c:IsRace(RACE_WARRIOR)
-end
-function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-end
-function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
-	end
-end
----balustrade spy
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil) end
 	local sg=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
 	Duel.Release(sg,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,1)
+	if chk==0 then return Duel.IsPlayerCanDiscardDeck(1-tp,1) or Duel.IsPlayerCanDiscardDeck(tp,1) end
+	local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
+	local p=(opt==0 and tp or 1-tp)
+	Duel.SetTargetPlayer(p)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,p,1)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_DECK,0,nil,TYPE_MONSTER)
-	local dcount=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
+	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+	local g=Duel.GetMatchingGroup(Card.IsType,p,0,LOCATION_DECK,nil,TYPE_MONSTER)
+	local dcount=Duel.GetFieldGroupCount(p,LOCATION_DECK,0)
 	if dcount==0 then return end
 	if #g==0 then
-		Duel.ConfirmDecktop(tp,dcount)
-		Duel.DiscardDeck(tp,dcount,REASON_EFFECT+REASON_REVEAL)
+		Duel.ConfirmDecktop(p,dcount)
+		Duel.DiscardDeck(p,dcount,REASON_EFFECT+REASON_REVEAL)
 		return
 	end
 	local seq=-1
@@ -74,10 +47,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			spcard=tc
 		end
 	end
-	Duel.ConfirmDecktop(tp,dcount-seq)
+	Duel.ConfirmDecktop(p,dcount-seq)
 	if spcard:IsAbleToGrave() then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoGrave(spcard,REASON_EFFECT)
-		Duel.DiscardDeck(tp,dcount-seq-1,REASON_EFFECT+REASON_REVEAL)
-	else Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT+REASON_REVEAL) end
+		Duel.DiscardDeck(p,dcount-seq-1,REASON_EFFECT+REASON_REVEAL)
+	else Duel.DiscardDeck(p,dcount-seq,REASON_EFFECT+REASON_REVEAL) end
 end

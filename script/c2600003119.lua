@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 	--draw
 	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(id,0))
+	e7:SetDescription(aux.Stringid(id,2))
 	e7:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
 	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e7:SetCode(EVENT_LEAVE_FIELD)

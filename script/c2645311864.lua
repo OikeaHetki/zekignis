@@ -35,13 +35,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,1200)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1200)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,800)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,800)
 end
 function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
-	Duel.Damage(1-tp,1200,REASON_EFFECT,true)
-	Duel.Recover(tp,1200,REASON_EFFECT,true)
+	Duel.Damage(1-tp,800,REASON_EFFECT,true)
+	Duel.Recover(tp,800,REASON_EFFECT,true)
 	Duel.RDComplete()
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
