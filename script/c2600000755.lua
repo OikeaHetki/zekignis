@@ -60,7 +60,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		local dam=c:GetEquipTarget():GetBaseAttack()
 		if Duel.Destroy(c:GetEquipTarget(),REASON_EFFECT)==0 then return end
-		Duel.Damage(tp,dam,REASON_EFFECT)
+		Duel.Damage(tp,2*dam,REASON_EFFECT)
 	end
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)

@@ -4,11 +4,11 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	c:RegisterEffect(e1)
+	local e0=Effect.CreateEffect(c)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	c:RegisterEffect(e0)
 	--summon with 3 tribute
 	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3)
 	local e2=aux.AddNormalSetProcedure(c)
@@ -27,6 +27,18 @@ function s.initial_effect(c)
 	e4:SetCondition(s.condition)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
+	--summon success
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e5:SetCode(EVENT_SUMMON_SUCCESS)
+	e5:SetOperation(s.sumsuc)
+	c:RegisterEffect(e5)
+	--summon
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_SINGLE)
+	e7:SetCode(EFFECT_CANNOT_DISABLE_SUMMON)
+	e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	c:RegisterEffect(e7)
 end
 function s.tlimit(e,c)
 	return not c:IsRace(RACE_DRAGON)
@@ -36,4 +48,10 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,0)
+end
+function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.SetChainLimitTillChainEnd(s.chlimit1)
+end
+function s.chlimit1(re,rp,tp)
+	return not re:GetHandler():IsTrap() or not re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end

@@ -38,15 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,g)
-	if sg:IsRelateToEffect(e) and Duel.SpecialSummonStep(sg,0,tp,tp,false,false,POS_FACEUP_ATTACK) then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(aux.Stringid(id,0))
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e1:SetCode(EFFECT_CANNOT_CHANGE_POS_E)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		sg:RegisterEffect(e1)
-	end
-	Duel.SpecialSummonComplete()
+	if sg:IsRelateToEffect(e) then Duel.SpecialSummonStep(sg,0,tp,tp,false,false,POS_FACEUP_ATTACK) 
 	sg:AddCounter(0x1019,1)
+	Duel.SpecialSummonComplete()
 end
