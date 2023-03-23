@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.addop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x18}
+s.listed_series={SET_CLOUDIAN}
 s.counter_place_list={0x1019}
 function s.sdcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)

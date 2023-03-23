@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x18}
+s.listed_series={SET_CLOUDIAN}
 s.counter_place_list={0x1019}
 function s.cfilter(c,ft)
 	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x18) and (ft>0 or c:GetSequence()<5)

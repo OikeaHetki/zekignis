@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.ctop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x18}
+s.listed_series={SET_CLOUDIAN}
 s.counter_place_list={0x1019}
 function s.filter(c)
 	return c:IsSetCard(0x18) and c:IsLevelBelow(4)
@@ -60,7 +60,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		local dam=c:GetEquipTarget():GetBaseAttack()
 		if Duel.Destroy(c:GetEquipTarget(),REASON_EFFECT)==0 then return end
-		Duel.Damage(tp,2*dam,REASON_EFFECT)
+		Duel.Damage(tp,dam,REASON_EFFECT)
 	end
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
