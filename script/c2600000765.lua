@@ -22,7 +22,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c,tp)
-	return (c:IsCode(55375684) or c:IsCode(2600000760) or (c:IsSetCard(SET_CLOUDIAN) and c:IsSpellTrap()) 
+	return (c:IsCode(55375684) or c:IsCode(2600000760) or (c:IsSetCard(SET_CLOUDIAN) and c:IsSpellTrap()))
 		and (c:IsAbleToHand() or c:GetActivateEffect():IsActivatable(tp,true,true))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -33,7 +33,6 @@ end
 function s.filter2(c,mc)
 	return c:IsMonster() and c:IsSetCard(SET_CLOUDIAN) and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD,0,1,nil)
-	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
