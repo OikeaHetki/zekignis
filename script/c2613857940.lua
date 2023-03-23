@@ -29,5 +29,5 @@ function s.initial_effect(c)
 end
 s.listed_names={89621922}
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),0,LOCATION_GRAVE,nil,TYPE_SPELL+TYPE_TRAP)*400
+	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),0,LOCATION_GRAVE+LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)*400
 end

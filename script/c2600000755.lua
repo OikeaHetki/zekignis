@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	--Atk Change
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetCode(EFFECT_SET_BASE_ATTACK)
+	e2:SetCode(EFFECT_SET_ATTACK)
 	e2:SetValue(s.value)
 	c:RegisterEffect(e2)
 	--counter on each face-up monster
