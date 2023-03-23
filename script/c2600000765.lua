@@ -16,9 +16,9 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_CLOUDIAN}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c,tp)
@@ -30,32 +30,24 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if not Duel.CheckPhaseActivity() then Duel.RegisterFlagEffect(tp,CARD_MAGICAL_MIDBREAKER,RESET_CHAIN,0,1) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
-function s.filter2(c,mc)
-	return c:IsMonster() and c:IsSetCard(SET_CLOUDIAN) and c:IsAbleToHand()
-		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD,0,1,nil)
-end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
 	aux.ToHandOrElse(tc,tp,function(c)
-					local te=tc:GetActivateEffect()
-					return te:IsActivatable(tp,true,true) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end,
-					function(c)
-						Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-						local te=tc:GetActivateEffect()
-						local tep=tc:GetControler()
-						local cost=te:GetCost()
-						if cost
-							then cost(te,tep,eg,ep,ev,re,r,rp,1)
-						end
-					end,
-					aux.Stringid(id,1))
-		local mg=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_GRAVE,0,nil)
-		if #mg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local sg=mg:Select(tp,1,1,nil)
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,sg)
+		local te=tc:GetActivateEffect()
+		return te:IsActivatable(tp,true,true) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end,
+			function(c)
+				Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+				local te=tc:GetActivateEffect()
+				local tep=tc:GetControler()
+				local cost=te:GetCost()
+				if cost
+					then cost(te,tep,eg,ep,ev,re,r,rp,1) 
 		end
+	end, aux.Stringid(id,1))
+	local g=Duel.GetDecktopGroup(tp,1)
+	if #g>0 then
+	Duel.DisableShuffleCheck()
+	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+	end
 end
