@@ -33,6 +33,7 @@ end
 function s.filter2(c,mc)
 	return c:IsMonster() and c:IsSetCard(SET_CLOUDIAN) and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD,0,1,nil)
+	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))

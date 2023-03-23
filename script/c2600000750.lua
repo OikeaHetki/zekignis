@@ -38,7 +38,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,g)
-	if sg:IsRelateToEffect(e) then Duel.SpecialSummonStep(sg,0,tp,tp,false,false,POS_FACEUP_ATTACK) 
+	if sg:IsRelateToEffect(e) then 
+	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_ATTACK) 
 	sg:AddCounter(0x1019,1)
-	Duel.SpecialSummonComplete()
+	end
 end
