@@ -25,7 +25,7 @@ end
 s.listed_series={SET_CLOUDIAN}
 s.counter_place_list={0x1019}
 function s.filter(c)
-	return c:IsSetCard(0x18) and c:IsLevelBelow(4)
+	return c:IsSetCard(SET_CLOUDIAN)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

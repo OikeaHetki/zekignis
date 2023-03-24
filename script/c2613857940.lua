@@ -13,11 +13,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--atk
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_CHAIN_SOLVED)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetValue(s.val)
+	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 	--add code
 	local e3=Effect.CreateEffect(c)
@@ -28,6 +27,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={89621922}
-function s.val(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),0,LOCATION_GRAVE+LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)*400
+function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsActiveType(TYPE_SPELL+TYPE_TRAP) then return end
+		Duel.Hint(HINT_CARD,0,id)
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(800)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	c:RegisterEffect(e1)
 end

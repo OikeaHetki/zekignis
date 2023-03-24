@@ -37,12 +37,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end
+	if chk==0 then return Duel.GetLP(tp)<Duel.GetLP(1-tp) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local rt=Duel.GetFieldGroupCount(tp,LOCATION_HAND,LOCATION_HAND)*800
+	local rec=Duel.GetLP(1-tp)-Duel.GetLP(tp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	Duel.Recover(p,rt,REASON_EFFECT)
+	Duel.Recover(p,rec,REASON_EFFECT)
 end
