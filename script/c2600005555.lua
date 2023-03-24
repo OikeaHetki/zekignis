@@ -10,7 +10,6 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -26,9 +25,6 @@ function s.initial_effect(c)
 end
 function s.incon(e)
 	return e:GetHandler():IsAttackPos()
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp==Duel.GetTurnPlayer() 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
