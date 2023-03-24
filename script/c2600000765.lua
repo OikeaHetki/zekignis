@@ -16,14 +16,17 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_CLOUDIAN}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c,tp)
 	return (c:IsCode(55375684) or c:IsCode(2600000760) or (c:IsSetCard(SET_CLOUDIAN) and c:IsSpellTrap()))
 		and (c:IsAbleToHand() or c:GetActivateEffect():IsActivatable(tp,true,true))
+end
+function s.filter2(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(SET_CLOUDIAN) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,tp) end
@@ -45,6 +48,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 					then cost(te,tep,eg,ep,ev,re,r,rp,1) 
 		end
 	end, aux.Stringid(id,1))
+		local mg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter2),tp,LOCATION_GRAVE,0,nil)
+		if #mg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local sg=mg:Select(tp,1,1,nil)
+			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,sg)
+		end
+	Duel.BreakEffect()
+	Duel.ShuffleDeck(tp)
 	local g=Duel.GetDecktopGroup(tp,1)
 	if #g>0 then
 	Duel.DisableShuffleCheck()
