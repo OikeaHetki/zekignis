@@ -44,5 +44,5 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rec=Duel.GetLP(1-tp)-Duel.GetLP(tp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	Duel.Recover(p,rec,REASON_EFFECT)
+	Duel.Recover(p,rec/2,REASON_EFFECT)
 end

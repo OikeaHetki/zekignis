@@ -61,6 +61,7 @@ function s.dredgetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,4)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
+	Duel.SetChainLimit(aux.FALSE)
 end
 function s.dredgeop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

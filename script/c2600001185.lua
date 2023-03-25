@@ -29,7 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local g=Duel.GetMatchingGroup(Card.IsType,p,0,LOCATION_DECK,nil,TYPE_MONSTER)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,p,LOCATION_DECK,0,nil)
 	local dcount=Duel.GetFieldGroupCount(p,LOCATION_DECK,0)
 	if dcount==0 then return end
 	if #g==0 then
@@ -38,9 +38,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		return
 	end
 	local seq=-1
-	local tc=g:GetFirst()
 	local spcard=nil
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		if tc:GetSequence()>seq then 
 			seq=tc:GetSequence()
 			spcard=tc

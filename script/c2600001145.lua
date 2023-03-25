@@ -32,16 +32,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--verify the starting deck possesses 60 cards
 	aux.GlobalCheck(s,function()
-    local ge1=Effect.CreateEffect(c)
-    ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    ge1:SetCode(EVENT_STARTUP)
-    ge1:SetOperation(s.checkop)
-    Duel.RegisterEffect(ge1,0) end)
+	local ge1=Effect.CreateEffect(c)
+	ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	ge1:SetCode(EVENT_STARTUP)
+	ge1:SetOperation(s.checkop)
+	Duel.RegisterEffect(ge1,0) end)
 end
 --60deckcheck
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-    local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
-    Duel.RegisterFlagEffect(tp,id,0,0,1,ct)
+	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
+	Duel.RegisterFlagEffect(tp,id,0,0,1,ct)
 end
 --atk
 function s.atkval(e,c)
@@ -91,6 +91,7 @@ function s.dredgetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,6)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
+	Duel.SetChainLimit(aux.FALSE)
 end
 function s.dredgeop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

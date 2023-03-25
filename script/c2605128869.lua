@@ -6,13 +6,13 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Fusion.AddProcCode2(c,CARD_NEOS,2678734259,false,false)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
-	--atk
+	--damage conversion
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_REVERSE_DAMAGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(s.atkval)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_NEOS}
@@ -26,7 +26,4 @@ function s.contactop(g,tp)
 end
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
-end
-function s.atkval(e,c)
-	return math.abs(Duel.GetLP(1)-Duel.GetLP(0))
 end

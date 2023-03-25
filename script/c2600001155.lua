@@ -12,15 +12,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--to defense
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1)
-	e2:SetCondition(s.poscon)
-	e2:SetOperation(s.posop)
-	c:RegisterEffect(e2)
 	--direct atk
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -66,16 +57,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
---tapped
-function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetAttackedCount()>0
-end
-function s.posop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsAttackPos() then
-		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
-	end
-end
 ---dredge 5
 function s.dredgecon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetDrawCount(tp)>0
@@ -99,6 +80,7 @@ function s.dredgetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,5)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
+	Duel.SetChainLimit(aux.FALSE)
 end
 function s.dredgeop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
