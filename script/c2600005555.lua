@@ -39,12 +39,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_IMMUNE_EFFECT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(s.efilter)
-		token:RegisterEffect(e1,true)
+	--Direct attack
+	local e4=Effect.CreateEffect(e:GetHandler())
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_DIRECT_ATTACK)
+	e4:SetCondition(s.drccon)
+	token:RegisterEffect(e4,true)
+	--Reduce damage
+	local e5=Effect.CreateEffect(e:GetHandler())
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e5:SetCondition(s.rdcon)
+	e5:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
+	token:RegisterEffect(e5,true)
 	else
 	local opt=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
 	if opt==0 then
@@ -52,6 +59,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+---dirattack
+function s.rdcon(e)
+	local c,tp=e:GetHandler(),e:GetHandlerPlayer()
+	return Duel.GetAttackTarget()==nil and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end

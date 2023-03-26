@@ -22,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,3)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,2)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -30,5 +30,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 		Duel.BreakEffect()
 	end
-	Duel.DiscardDeck(tp,3,REASON_EFFECT)
+	Duel.DiscardDeck(tp,2,REASON_EFFECT)
 end

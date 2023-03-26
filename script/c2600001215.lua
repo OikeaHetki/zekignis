@@ -1,3 +1,4 @@
+--大いなる苔犬
 --Golgari Guild Mossdog
 --zek
 local s,id=GetID()
@@ -47,10 +48,12 @@ function s.initial_effect(c)
 	ge1:SetOperation(s.checkop)
 	Duel.RegisterEffect(ge1,0) end)
 end
---55deckcheck
+--deckcheck
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
-	Duel.RegisterFlagEffect(tp,id,0,0,1,ct)
+	local ct1=Duel.GetFieldGroupCount(0,LOCATION_DECK,0)
+	Duel.RegisterFlagEffect(0,id,0,0,1,ct1)
+	local ct2=Duel.GetFieldGroupCount(1,LOCATION_DECK,0)
+	Duel.RegisterFlagEffect(1,id,0,0,1,ct2)
 end
 ---dredge 5
 function s.dredgecon(e,tp,eg,ep,ev,re,r,rp)
