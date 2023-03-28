@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 --Threshold
 function s.threshold(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>=7
+	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_GRAVE,0)>=7
 end
 --selfdes
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
