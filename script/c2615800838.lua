@@ -53,11 +53,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
 	end
 end
+--gy
 function s.cfilter(c,ft,tp)
 	return ft>0 or (c:IsControler(tp) or c:GetSequence()<5)
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffectLabel(tp,id)>=55
+	return Duel.GetFlagEffectLabel(tp,id)>=50
 end
 function s.gycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk) 
