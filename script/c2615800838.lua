@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCategory(CATEGORY_HANDES)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCondition(s.gycon)
 	e2:SetCost(s.gycost)
 	e2:SetTarget(s.target)
@@ -54,16 +55,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --gy
-function s.cfilter(c,ft,tp)
-	return ft>0 or (c:IsControler(tp) or c:GetSequence()<5)
-end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffectLabel(tp,id)>=50
 end
 function s.gycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk) 
-		and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,ft,tp) end
+		and Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil) end
 	aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,ft,tp)
-	Duel.Release(g,REASON_COST)
+	local sg=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
+	Duel.Release(sg,REASON_COST)
 end

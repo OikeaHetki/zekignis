@@ -1,5 +1,6 @@
 --レベル・スティーラー
 --level eater
+--zek
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -9,10 +10,16 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE+LOCATION_HAND)
-	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+	--cannot link material
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e2:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+	e2:SetValue(1)
+	c:RegisterEffect(e2)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetLevel()>=5
