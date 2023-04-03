@@ -38,7 +38,7 @@ function s.splimit(e,se,sp,st)
 	return st==(SUMMON_TYPE_SPECIAL+102) or st&SUMMON_TYPE_PENDULUM==SUMMON_TYPE_PENDULUM
 end
 function s.imcon(e)
-	return e:GetHandler():GetFlagEffect(29590752)>0
+	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.imfilter(e,te)
 	return te:IsActiveType(TYPE_TRAP)
@@ -52,7 +52,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,2,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return not c:IsCode(id) and c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,111,tp,false,false)
+	return not c:IsCode(29590752) and c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,102,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
-	if tc and Duel.SpecialSummon(tc,111,tp,tp,false,false,POS_FACEUP)>0 then
+	if tc and Duel.SpecialSummon(tc,102,tp,tp,false,false,POS_FACEUP)>0 then
 		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
 	end
 end
