@@ -105,7 +105,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.atkfilter(c)
-	return c:GetType()==TYPE_TRAP
+	return c:IsType(TYPE_TRAP)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*1000
