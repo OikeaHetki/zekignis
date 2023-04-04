@@ -3,17 +3,19 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
-	local fparams={c,s.fusfil,Card.IsAbleToDeck,s.fextra,Fusion.ShuffleMaterial,nil,nil,nil,0,nil,FUSPROC_NOTFUSION|FUSPROC_LISTEDMATS}
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,id)
 	e1:SetLabel(0)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x1f,0x3008}
+s.listed_names={CARD_NEOS}
 function s.tdfilter(c,sc,sc2,e,tp,ft)
 	local lv=c:GetLevel()
 	return c:IsSetCard(sc) and c:IsAbleToDeck() and (lv>0 or c:IsStatus(STATUS_NO_LEVEL)) and (not ft or ft>0 or c:GetSequence()<5)
@@ -57,19 +59,22 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local lv=dc:GetLevel()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,sc2,lv,e,tp)
-			if #sg>0 and Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP) 
-			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-			--Fusion Summon 1 HERO monster that lists "Neos"
+			if #sg>0 then Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+			end
 			Duel.BreakEffect()
-			fusop(e,tp,eg,ep,ev,re,r,rp)
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.hspfil,tp,LOCATION_HAND,0,1,nil,e,tp)
+		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local sg=Duel.SelectMatchingCard(tp,s.hspfil,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+		if #sg>0 then
+			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+				end
 			end
 		end
 	end
 end
---fusparams
-function s.fusfil(c)
-	return c:IsSetCard(0x3008) and c:ListsCodeAsMaterial(CARD_NEOS)
-end
-function s.fextra(e,tp,mg)
-	return Duel.GetMatchingGroup(aux.NecroValleyFilter(Fusion.IsMonsterFilter(Card.IsAbleToDeck)),tp,LOCATION_GRAVE,0,nil)
+function s.hspfil(c,e,tp)
+	return c:IsCode(CARD_NEOS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
