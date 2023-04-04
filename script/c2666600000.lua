@@ -24,8 +24,8 @@ function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x6008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
+	if chk==0 then return Duel.CheckLPCost(tp,1000) end
+	Duel.PayLPCost(tp,1000)
 end
 function s.selchk(tp)
 	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_DARK_FUSION)
@@ -54,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		--Cannot be destroyed by effect
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(3000)
+		e1:SetDescription(3001)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

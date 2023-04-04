@@ -42,14 +42,19 @@ function s.initial_effect(c)
 	e4:SetTarget(s.target3)
 	e4:SetOperation(s.activate3)
 	c:RegisterEffect(e4)
-	--lpchange
+	--Damage when leaving
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,1))
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e5:SetCode(EVENT_TO_GRAVE)
-	e5:SetTarget(s.lptg)
-	e5:SetOperation(s.lpop)
+	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e5:SetCode(EVENT_LEAVE_FIELD_P)
+	e5:SetOperation(s.checkop)
 	c:RegisterEffect(e5)
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e6:SetCode(EVENT_LEAVE_FIELD)
+	e6:SetLabelObject(e5)
+	e6:SetOperation(s.leave)
+	c:RegisterEffect(e6)
 end
 function s.condition1(...)
 	return not Duel.IsDuelType(DUEL_USE_TRAPS_IN_NEW_CHAIN) and s.condition2(...)
@@ -91,9 +96,14 @@ function s.activate3(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-function s.lptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)~=0 end
+function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsDisabled() or not c:IsStatus(STATUS_EFFECT_ENABLED) then
+		e:SetLabel(1)
+	else e:SetLabel(0) end
 end
-function s.lpop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetLP(tp,Duel.GetLP(tp)-1000)
+function s.leave(e,tp,eg,ep,ev,re,r,rp)
+	if e:GetLabelObject():GetLabel()==0 then
+		Duel.Damage(e:GetHandler():GetPreviousControler(),1000,REASON_EFFECT)
+	end
 end
