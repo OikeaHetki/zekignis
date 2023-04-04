@@ -35,8 +35,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x8}
+--spsum from GY
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function s.filter(c,e,tp)
 	return c:IsSummonableCard() and c:IsSetCard(0x8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -61,11 +62,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+--spsum from hand
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_MAIN1
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
