@@ -43,7 +43,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e4=Effect.CreateEffect(e:GetHandler())
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_DIRECT_ATTACK)
-	e4:SetCondition(s.drccon)
 	token:RegisterEffect(e4,true)
 	--Reduce damage
 	local e5=Effect.CreateEffect(e:GetHandler())
