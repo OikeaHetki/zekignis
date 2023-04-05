@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,25924653,aux.FilterBoolFunctionEx(Card.IsSetCard,0x19))
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x19),2)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--pierce
 	local e1=Effect.CreateEffect(c)
@@ -27,7 +27,6 @@ function s.initial_effect(c)
 end
 s.listed_series={0x19}
 s.material_setcode=0x19
-s.listed_names={25924653}
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(function(c) return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_ONFIELD,0,nil)
 end
@@ -47,7 +46,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,0,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return not c:IsCode(25924653) and c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,120,tp,false,false)
+	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,120,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

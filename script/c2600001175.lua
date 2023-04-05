@@ -65,7 +65,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(Card.IsDiscardable,tp,2,LOCATION_HAND,nil,REASON_EFFECT)
 		if #g>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
-			local sg=g:Select(1-tp,2,2,nil)
+			local sg=g:Select(1-tp,1,1,nil)
 			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
 			return false end
 	end
