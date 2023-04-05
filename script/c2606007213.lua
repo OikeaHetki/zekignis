@@ -54,9 +54,9 @@ function s.initial_effect(c)
 	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e6:SetCode(EVENT_PHASE+PHASE_END)
+	e6:SetProperty(EFFECT_FLAG_DELAY)
 	e6:SetRange(LOCATION_GRAVE)
 	e6:SetCountLimit(1)
-	e6:SetCondition(s.spcon2)
 	e6:SetCost(s.spcost2)
 	e6:SetTarget(s.sptg2)
 	e6:SetOperation(s.spop2)
@@ -126,9 +126,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsFacedown() and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
-end
-function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.cfilter(c,tp)
 	return c:IsType(TYPE_TRAP) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
