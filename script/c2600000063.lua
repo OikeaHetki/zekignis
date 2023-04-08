@@ -65,7 +65,28 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_CANNOT_MSET)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(aux.TRUE)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_CANNOT_SSET)
+	Duel.RegisterEffect(e2,tp)
+	local e3=e1:Clone()
+	e3:SetCode(EFFECT_CANNOT_TURN_SET)
+	Duel.RegisterEffect(e3,tp)
+	local e4=e1:Clone()
+	e4:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e4:SetTarget(s.sumlimit)
+	Duel.RegisterEffect(e4,tp)
 end
 function s.splimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_FIRE)
+end
+function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
+	return (sumpos&POS_FACEDOWN)>0
 end
