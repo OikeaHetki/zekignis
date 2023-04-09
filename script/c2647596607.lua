@@ -37,7 +37,7 @@ end
 s.listed_series={0x8}
 --spsum from GY
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.GetTurnPlayer()==tp
 end
 function s.spfilter(c,e,tp)
 	return c:IsSummonableCard() and c:IsSetCard(0x8) and c:IsLevelBelow(4)
