@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW+CATEGORY_HANDES)
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -23,7 +23,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_REMOVED,0,3,3,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
@@ -35,7 +34,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ct==3 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
-		Duel.ShuffleHand(tp)
-		Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD)
 	end
 end
