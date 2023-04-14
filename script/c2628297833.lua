@@ -42,12 +42,12 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,3,PLAYER_ALL,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,2,PLAYER_ALL,LOCATION_DECK)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g1=Duel.GetDecktopGroup(tp,3)
-	local g2=Duel.GetDecktopGroup(1-tp,3)
+	local g1=Duel.GetDecktopGroup(tp,2)
+	local g2=Duel.GetDecktopGroup(1-tp,2)
 	g1:Merge(g2)
 	Duel.DisableShuffleCheck()
 	Duel.Remove(g1,POS_FACEUP,REASON_EFFECT)
@@ -56,7 +56,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetValue(300)
+		e1:SetValue(200)
 		c:RegisterEffect(e1)
 	end
 end

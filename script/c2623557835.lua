@@ -3,17 +3,17 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
-	local e1=Fusion.CreateSummonEff(c,nil,aux.FALSE,s.fextra,Fusion.ShuffleMaterial,s.stage2)
+	local e1=Fusion.CreateSummonEff(c,nil,Fusion.OnFieldMat(Card.IsAbleToDeck),s.fextra,Fusion.ShuffleMaterial,nil,s.stage2)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(s.cost)
 	c:RegisterEffect(e1)
-end
-function s.fextra(e,tp,mg)
-	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsFaceup,Card.IsAbleToDeck),tp,LOCATION_REMOVED,0,nil)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,2000) end
 	Duel.PayLPCost(tp,2000)
+end
+function s.fextra(e,tp,mg)
+	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(aux.AND(Card.IsAbleToDeck,Card.IsFaceup)),tp,LOCATION_REMOVED,0,nil)
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then
@@ -30,3 +30,5 @@ end
 function s.atktg(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
+
+
