@@ -49,19 +49,21 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	local att=Duel.AnnounceRace(tp,1,ATTRIBUTE_ALL)
-	e:GetLabelObject():SetLabel(att)
-	e:GetHandler():SetHint(CHINT_ATTRIBUTE,att)
+	local rc=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL)
+	e:GetLabelObject():SetLabel(rc)
+	e:GetHandler():SetHint(CHINT_ATTRIBUTE,rc)
 end
-function s.filter(c)
+function s.filter(c,e)
+	local att=e:GetLabel()
 	return c:IsAttribute(att)
 end
 function s.jcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil,e)
 end
 function s.descon(e)
 	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)==0
 end
 function s.efilter(e,re,rp)
+	local att=e:GetLabel()
 	return re:GetHandler():IsAttribute(att)
 end

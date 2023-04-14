@@ -38,7 +38,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
@@ -48,7 +48,7 @@ end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE)
+		Duel.ChangePosition(e:GetHandler(),POS_FACEUP)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
