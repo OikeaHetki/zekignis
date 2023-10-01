@@ -82,5 +82,5 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(g)
-	Duel.SendtoDeck(g,nil,1,REASON_EFFECT)>0
+	Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
 end
