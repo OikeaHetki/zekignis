@@ -52,6 +52,11 @@ function s.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
 	e6:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	c:RegisterEffect(e6)
+	--Pierce
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_SINGLE)
+	e7:SetCode(EFFECT_PIERCE)
+	c:RegisterEffect(e7)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE)
