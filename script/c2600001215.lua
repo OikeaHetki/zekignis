@@ -3,31 +3,17 @@
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
-	--recover
+	--battle dam 0
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_RECOVER)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetTarget(s.rectg)
-	e1:SetOperation(s.recop)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e2)
-	local e3=e1:Clone()
-	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	c:RegisterEffect(e3)
-	--rec
+	--to grave
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetCategory(CATEGORY_RECOVER)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetCode(EVENT_DESTROYED)
-	e4:SetTarget(s.rectg)
-	e4:SetOperation(s.recop)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e4:SetCode(EVENT_BE_MATERIAL)
+	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4)
 	--Replace your normal draw with dredge 3
 	local e5=Effect.CreateEffect(c)
@@ -55,7 +41,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local ct2=Duel.GetFieldGroupCount(1,LOCATION_DECK,0)
 	Duel.RegisterFlagEffect(1,id,0,0,1,ct2)
 end
----dredge 5
+---dredge 3
 function s.dredgecon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetDrawCount(tp)>0
 		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>2
@@ -91,6 +77,23 @@ function s.dredgeop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --recdes
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local rc=e:GetHandler():GetReasonCard()
+	if r==REASON_SUMMON then
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,0))
+		e1:SetCategory(CATEGORY_RECOVER)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetCountLimit(1)
+		e1:SetRange(LOCATION_GRAVE)
+		e1:SetTarget(s.rectg)
+		e1:SetOperation(s.recop)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e1)
+	end
+end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
