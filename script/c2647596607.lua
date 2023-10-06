@@ -20,19 +20,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--draw
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_TODECK)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetRange(LOCATION_FZONE)
-	e3:SetProperty(EFFECT_FLAG_BOTH_SIDE)
-	e3:SetCode(EVENT_PHASE+PHASE_END)
-	e3:SetCountLimit(1)
-	e3:SetCondition(s.drcon)
-	e3:SetTarget(s.drtg)
-	e3:SetOperation(s.drop)
-	c:RegisterEffect(e3)
 end
 s.listed_series={0x8}
 --spsum from GY
@@ -61,26 +48,4 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
-end
---tower
-function s.cfilter(c)
-	return c:IsSetCard(0x8) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsType(TYPE_MONSTER)
-end
-function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
-end
-function s.filter(c)
-	return c:IsSetCard(0x8) and c:IsAbleToDeck() and not c:IsCode(id)
-end
-function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-end
-function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.HintSelection(g)
-	Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
 end
