@@ -18,6 +18,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.val(e,c)
-		local lv=GetLevel()+GetLink()+GetRank()
-		return lv*-100
+		return (c:GetLevel()*-100)+(c:GetLink()*-100)+(c:GetRank()*-100)
 end
