@@ -5,61 +5,39 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_TOHAND)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetCode(EVENT_DESTROYED)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x6008}
 s.listed_names={CARD_DARK_FUSION}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsRace,1,nil,RACE_FIEND)
+function s.filter1(c)
+	return c:IsCode(CARD_DARK_FUSION) and c:IsAbleToHand()
 end
-function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x6008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.filter2(c)
+	return (c:GetReason()&0x40008)==0x40008 and c:IsMonster() and c:IsAbleToHand() and c:IsSetCard(0x8)
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
-end
-function s.selchk(tp)
-	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_DARK_FUSION)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local loc=LOCATION_HAND
-	if s.selchk(tp) then loc=loc+LOCATION_GRAVE end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,loc,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,loc)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return false end
+	if chk==0 then return Duel.IsExistingTarget(s.filter1,tp,LOCATION_GRAVE,0,1,nil)
+		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_GRAVE,0,1,1,nil)
+	g1:Merge(g2)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g1,2,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if s.selchk(tp) and not Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) then
-		loc=LOCATION_GRAVE
-	else
-		if s.selchk(tp) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			loc=LOCATION_GRAVE
-		else
-			loc=LOCATION_HAND
-		end
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,loc,0,1,1,nil,e,tp)
-	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		--Cannot be destroyed by effect
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(3001)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		g:GetFirst():RegisterEffect(e1)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+	if #sg>0 then
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,sg)
 	end
 end
