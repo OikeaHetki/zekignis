@@ -18,7 +18,7 @@ function s.costfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil,c:GetAttribute(),e,tp,c)
 end
 function s.thfilter2(c,att)
-	return c:IsType(TYPE_NORMAL) and c:IsAttribute(att) and c:IsAbleToHand() and c:GetLevel()==7
+	return c:IsType(TYPE_NORMAL) and c:IsAttribute(att) and c:IsAbleToHand() and (c:GetLevel()==7 or c:GetLevel()==8) 
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
