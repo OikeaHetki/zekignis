@@ -17,6 +17,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	return at:GetControler()~=tp --and Duel.GetAttackTarget()==nil
+		and Duel.GetMatchingGroupCount(nil,tp,LOCATION_HAND,0,e:GetHandler())==0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
