@@ -15,9 +15,9 @@ function s.initial_effect(c)
 end
 function s.costfilter(c,e,tp)
 	return c:IsType(TYPE_EFFECT) and c:GetAttack()==1800 and c:GetDefense()==200 and not c:IsPublic()
-		and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil,c:GetAttribute(),e,tp,c)
+		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetAttribute())
 end
-function s.thfilter2(c,att)
+function s.thfilter(c,att)
 	return c:IsType(TYPE_NORMAL) and c:IsAttribute(att) and c:IsAbleToHand() and (c:GetLevel()==7 or c:GetLevel()==8) 
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -29,7 +29,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(g:GetFirst():GetAttribute())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.sumfilter(c)
@@ -37,7 +37,7 @@ function s.sumfilter(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
+	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
 	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.ConfirmCards(1-tp,g)
 			Duel.BreakEffect()
