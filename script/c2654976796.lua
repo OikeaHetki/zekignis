@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTarget(s.target)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetValue(POS_FACEUP_DEFENSE)
+	e2:SetValue(POS_FACEUP_ATTACK)
 	c:RegisterEffect(e2)
 end
 function s.target(e,c)
