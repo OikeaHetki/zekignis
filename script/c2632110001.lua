@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -17,7 +18,7 @@ function s.costfilter(c,tp)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetAttribute())
 end
 function s.thfilter(c,att)
-	return c:IsAttribute(att) and c:IsAbleToHand() and (c:GetLevel()==7 or c:GetLevel()==8) and (c:IsType(TYPE_TUNER) or c:IsType(TYPE_NORMAL))
+	return c:IsAttribute(att) and c:IsAbleToHand() and c:GetLevel()==7 and (c:IsType(TYPE_TUNER) or c:IsType(TYPE_NORMAL))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,tp) end
