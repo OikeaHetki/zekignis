@@ -6,7 +6,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(TIMING_STANDBY_PHASE,TIMING_STANDBY_PHASE+TIMINGS_CHECK_MONSTER)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.acttg)
 	c:RegisterEffect(e1)
@@ -47,20 +46,20 @@ function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	s[1]=0
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
-	local rc=s.getattribute(Duel.GetMatchingGroup(Card.IsFaceup,targetp or sump,LOCATION_MZONE,0,nil))
-	if rc==0 then return false end
-	return c:GetAttribute()~=rc
+	local at=s.getattribute(Duel.GetMatchingGroup(Card.IsFaceup,targetp or sump,LOCATION_MZONE,0,nil))
+	if at==0 then return false end
+	return c:GetAttribute()~=at
 end
-function s.getAttribute(g)
-	local arc=0
+function s.getattribute(g)
+	local aat=0
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
-		arc=(arc|tc:GetAttribute())
+		aat=(aat|tc:GetAttribute())
 	end
-	return arc
+	return aat
 end
-function s.rmfilter(c,rc)
-	return c:GetAttribute()==rc
+function s.rmfilter(c,at)
+	return c:GetAttribute()==at
 end
 function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	local phase=Duel.GetCurrentPhase()
@@ -70,27 +69,27 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if #g1==0 then s[tp]=0
 	else
-		local rac=s.getAttribute(g1)
-		if (rac&rac-1)~=0 then
-			if s[tp]==0 or (s[tp]&rac)==0 then
+		local att=s.getattribute(g1)
+		if (att&att-1)~=0 then
+			if s[tp]==0 or (s[tp]&att)==0 then
 				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
-				rac=Duel.AnnounceAttribute(tp,1,rac)
-			else rac=s[tp] end
+				att=Duel.AnnounceAttribute(tp,1,att)
+			else att=s[tp] end
 		end
-		g1:Remove(s.rmfilter,nil,rac)
-		s[tp]=rac
+		g1:Remove(s.rmfilter,nil,att)
+		s[tp]=att
 	end
 	if #g2==0 then s[1-tp]=0
 	else
-		local rac=s.getAttribute(g2)
-		if (rac&rac-1)~=0 then
-			if s[1-tp]==0 or (s[1-tp]&rac)==0 then
+		local att=s.getattribute(g2)
+		if (att&att-1)~=0 then
+			if s[1-tp]==0 or (s[1-tp]&att)==0 then
 				Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(id,0))
-				rac=Duel.AnnounceAttribute(1-tp,1,rac)
-			else rac=s[1-tp] end
+				att=Duel.AnnounceAttribute(1-tp,1,att)
+			else att=s[1-tp] end
 		end
-		g2:Remove(s.rmfilter,nil,rac)
-		s[1-tp]=rac
+		g2:Remove(s.rmfilter,nil,att)
+		s[1-tp]=att
 	end
 	g1:Merge(g2)
 	if #g1>0 then
