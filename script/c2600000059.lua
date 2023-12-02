@@ -16,6 +16,7 @@ s.listed_names={CARD_NEOS}
 function s.cfilter(c,tp)
 	return c and c:IsReason(REASON_DESTROY) and c:IsLocation(LOCATION_GRAVE) 
 	and c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:IsCode(CARD_NEOS)
+	and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
