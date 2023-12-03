@@ -1,4 +1,4 @@
---
+--ファイヤー・ジェスター
 --Fire Jester
 --zek
 local s,id=GetID()

@@ -1,3 +1,4 @@
+--エレメント・マスタリー
 --Attribute Mastery
 --zek, corrections by Naim
 local s,id=GetID()

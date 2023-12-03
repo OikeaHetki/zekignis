@@ -1,4 +1,4 @@
---
+--マジェスティック・マスターバースト
 --Majestic Masterburst
 --zekpro version
 local s,id=GetID()
