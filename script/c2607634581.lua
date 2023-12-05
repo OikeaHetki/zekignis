@@ -39,10 +39,10 @@ function s.value(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)*1000
 end
 function s.efilter(e,c)
-	return c:IsType(TYPE_NORMAL) and c:GetLevel()==4 and not c:IsType(TYPE_PENDULUM)
+	return c:IsType(TYPE_NORMAL)
 end
 function s.cfilter(c,tp)
-	return (c:GetPreviousTypeOnField()&TYPE_NORMAL)~=0 and c:IsPreviousControler(tp) and not c:IsType(TYPE_PENDULUM)
+	return (c:GetPreviousTypeOnField()&TYPE_NORMAL)~=0 and c:IsPreviousControler(tp) and c:IsLocation(LOCATION_GRAVE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

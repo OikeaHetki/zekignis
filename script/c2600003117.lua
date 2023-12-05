@@ -30,11 +30,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.activate)
 	c:RegisterEffect(e3)
-	--Piercing damage
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetCode(EFFECT_PIERCE)
-	c:RegisterEffect(e6)
 end
 ---summon procedure
 function s.sprfilter(c)

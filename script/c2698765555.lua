@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_DESTROYED)
+	e1:SetCode(EVENT_CHAINING)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
@@ -15,33 +15,40 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x23}
+s.listed_names={37115575,27564031}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x23) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x23)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) or not Duel.IsChainDisablable(ev) or not Duel.IsEnvironment(27564031) then return false end
+	if not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) 
+		then return false end
+	if tp==ep or not Duel.IsChainNegatable(ev) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
-	return ex and tg and tc>0
+	return ex and tg~=nil and tc>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.PayLPCost(tp,Duel.GetLP(tp)/2)
 end
-function s.filter(c,e,tp)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0x13)
+	end
+end
+function s.spfilter(c,e,tp)
 	return c:IsCode(37115575) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,0x13,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0x13)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateEffect(ev)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,0x13,0,1,1,nil,e,tp)
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and
+		Duel.Destroy(eg,REASON_EFFECT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>=0 and Duel.IsEnvironment(27564031) 
+	and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,0x13,0,1,1,nil,e,tp)
 	local tc=g
 	if tc:GetCount()>0 then
-	Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP)
+			Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP)
+		end
+	end
 end

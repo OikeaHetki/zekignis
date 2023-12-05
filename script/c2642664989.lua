@@ -12,11 +12,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)<2
+	return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)<3
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct1=2-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	local ct2=2-Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
+	local ct1=3-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+	local ct2=3-Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
 	if chk==0 then return ct1>0 and Duel.IsPlayerCanDraw(tp,ct1)
 		and ct2>0 and Duel.IsPlayerCanDraw(1-tp,ct2) end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct1)
@@ -24,12 +24,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ht=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	if ht<2 then 
-		Duel.Draw(tp,2-ht,REASON_EFFECT)
+	if ht<3 then 
+		Duel.Draw(tp,3-ht,REASON_EFFECT)
 	end
 	ht=Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)
-	if ht<2 then 
-		Duel.Draw(1-tp,2-ht,REASON_EFFECT)
+	if ht<3 then 
+		Duel.Draw(1-tp,3-ht,REASON_EFFECT)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)

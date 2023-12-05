@@ -16,17 +16,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--indes
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetTargetRange(LOCATION_ONFIELD,0)
-	e2:SetTarget(s.indtg)
-	e2:SetValue(1)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	c:RegisterEffect(e3)
+--	local e2=Effect.CreateEffect(c)
+--	e2:SetType(EFFECT_TYPE_FIELD)
+--	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+--	e2:SetRange(LOCATION_MZONE)
+--	e2:SetTargetRange(LOCATION_ONFIELD,0)
+--	e2:SetTarget(s.indtg)
+--	e2:SetValue(1)
+--	c:RegisterEffect(e2)
+--	local e3=e2:Clone()
+--	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+--	c:RegisterEffect(e3)
 	--search
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
@@ -41,9 +41,9 @@ function s.initial_effect(c)
 end
 s.listed_series={0xf}
 s.listed_names={id}
-function s.indtg(e,c)
-	return c:IsSetCard(0xf) and not c:IsCode(id)
-end
+--function s.indtg(e,c)
+--	return c:IsSetCard(0xf) and not c:IsCode(id)
+--end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)

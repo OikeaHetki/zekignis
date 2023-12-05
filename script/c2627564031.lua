@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_PREDRAW)
-	e2:SetProperty(EFFECT_FLAG_BOTH_SIDE)
+	e2:SetProperty(EFFECT_FLAG_EVENT_PLAYER+EFFECT_FLAG_BOTH_SIDE)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target)
@@ -33,7 +33,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x23}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
+	local tp=Duel.GetTurnPlayer()
+	return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
 		and Duel.GetDrawCount(tp)>0
 end
 function s.filter(c)
