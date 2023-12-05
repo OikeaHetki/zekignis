@@ -28,17 +28,17 @@ function s.initial_effect(c)
 	e2:SetCondition(s.descon)
 	c:RegisterEffect(e2)
 	--Decrease ATK/DEF
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_UPDATE_ATTACK)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.atkcon)
-	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetValue(-500)
-	c:RegisterEffect(e3)
-	local e4=e3:Clone()
-	e4:SetCode(EFFECT_UPDATE_DEFENSE)
-	c:RegisterEffect(e4)
+--  local e3=Effect.CreateEffect(c)
+--  e3:SetType(EFFECT_TYPE_FIELD)
+--  e3:SetCode(EFFECT_UPDATE_ATTACK)
+--  e3:SetRange(LOCATION_MZONE)
+--  e3:SetCondition(s.atkcon)
+--  e3:SetTargetRange(0,LOCATION_MZONE)
+--  e3:SetValue(s.atkval)
+--  c:RegisterEffect(e3)
+--  local e4=e3:Clone()
+--  e4:SetCode(EFFECT_UPDATE_DEFENSE)
+--  c:RegisterEffect(e4)
 end
 s.material={74509280}
 s.listed_names={74509280,27564031}
@@ -47,31 +47,41 @@ s.listed_series={0x23}
 function s.descon(e)
 	return not Duel.IsEnvironment(27564031)
 end
---lose ATK while other Synchro
-function s.atkfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsMonster() and not c:IsSetCard(0x23)
-end
-function s.atkcon(e,tp,ev,ep,eg,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
-end
+--lose ATK while other Synchro on the field
+--function s.atkfilter(c)
+--  return c:IsFaceup() and c:IsType(TYPE_SYNCHRO)
+--end
+--function s.atkcon(e,tp,ev,ep,eg,re,r,rp)
+--	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+--end
+--function s.atkval(e,c)
+--	local tatk=0
+--	local g=Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,e:GetHandler())
+--	local tc=g:GetFirst()
+--	while tc do
+--		tatk=tatk+tc:GetAttack()
+--		tc=g:GetNext()
+--	end
+--	return -tatk
+--end
 --sp on synchro summon
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,true,true)
+	return c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and s.spfilter(chkc,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and s.spfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil,e,tp) end
+		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SpecialSummon(tc,SUMMON_TYPE_SYNCHRO,tp,tp,true,true,POS_FACEUP)
+		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
 	end
 end

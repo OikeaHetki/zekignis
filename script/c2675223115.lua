@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(1,1)
 	e2:SetRange(LOCATION_SZONE)
 	c:RegisterEffect(e2)
-	--Set 1 "Rank-Up-Magic" Spell
+	--Set 1 "Malefic" Spell
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -60,15 +60,15 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsReason(REASON_EFFECT)
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x23) and c:IsType(TYPE_SPELL) and c:IsSSetable()
-	and not c:IsOriginalCode(id) or c:IsCode(id)
+	return c:IsSetCard(0x23) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	and not (c:IsOriginalCode(id) or c:IsCode(id))
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.setfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.setfilter),tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SSet(tp,g)
 	end
