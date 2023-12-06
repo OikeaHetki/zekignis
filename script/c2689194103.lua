@@ -33,14 +33,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x35}
-function s.indescon(e,tp,eg,ep,ev,re,r,rp)
+function s.indescon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)==0
 end
 function s.cfcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>=2 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 and tp==Duel.GetTurnPlayer()
 end
 function s.cfop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetDecktopGroup(1-tp,1)
+	local g=Duel.GetDecktopGroup(tp,1)
 	Duel.ConfirmCards(tp,g)
 	local tc=g:GetFirst()
 	local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
