@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x35}
 function s.indescon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
+	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)==0
 end
 function s.cfcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>=2 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 and tp==Duel.GetTurnPlayer()
