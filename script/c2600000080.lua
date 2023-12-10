@@ -18,8 +18,20 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
+	--atk & def
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_UPDATE_ATTACK)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetValue(s.adval)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x35}
+function s.adval(e,c)
+	local tp=c:GetControler()
+	return Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,TYPE_TUNER)*100
+end
 function s.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
 end

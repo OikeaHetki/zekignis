@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--scrying effect
 	local e3=Effect.CreateEffect(c)
