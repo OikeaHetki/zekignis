@@ -53,8 +53,8 @@ function s.val(e)
 	return e:GetHandler():GetCounter(0x3)*100
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x3,6,REASON_COST) end
-	Duel.RemoveCounter(tp,1,0,0x3,6,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x3,2,REASON_COST) end
+	Duel.RemoveCounter(tp,1,0,0x3,2,REASON_COST)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x3d) and c:IsAbleToHand()
