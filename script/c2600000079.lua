@@ -32,7 +32,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
 end
 function s.spfilter(c,e,tp)
-	return (not c:IsType(TYPE_EFFECT)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return (not c:IsType(TYPE_EFFECT)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsType(TYPE_MONSTER)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
