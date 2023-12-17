@@ -27,18 +27,23 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_BATTLE_DESTROY_REDIRECT)
 	e4:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e4)
-end
-function s.nsfilter(c)
-	return c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_GRAVE) and ((aux.SpElimFilter(c,true)) or (c:IsLocation(LOCATION_ONFIELD) and c:IsFaceup() and c:IsType(TYPE_MONSTER))))
+	--Add DARK attribute
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e5:SetCode(EFFECT_ADD_ATTRIBUTE)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetValue(ATTRIBUTE_DARK)
+	c:RegisterEffect(e5)
 end
 function s.nscon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
-	local rg=Duel.GetMatchingGroup(s.nsfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #rg>6 and aux.SelectUnselectGroup(rg,e,tp,7,7,aux.ChkfMMZ(1),0)
 end
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.nsfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	local g=aux.SelectUnselectGroup(rg,e,tp,7,7,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()
