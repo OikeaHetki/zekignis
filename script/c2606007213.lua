@@ -48,19 +48,26 @@ function s.initial_effect(c)
 	e5:SetTarget(s.destg)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
-	--Special summon itself from GY
+	--Register the fact it was destroyed and sent to GY
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(id,1))
-	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e6:SetCode(EVENT_PHASE+PHASE_END)
-	e6:SetProperty(EFFECT_FLAG_DELAY)
-	e6:SetRange(LOCATION_GRAVE)
-	e6:SetCountLimit(1)
-	e6:SetCost(s.spcost2)
-	e6:SetTarget(s.sptg2)
-	e6:SetOperation(s.spop2)
+	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e6:SetCode(EVENT_TO_GRAVE)
+	e6:SetOperation(s.regop)
 	c:RegisterEffect(e6)
+	--Special summon itself from GY
+	local e7=Effect.CreateEffect(c)
+	e7:SetDescription(aux.Stringid(id,1))
+	e7:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e7:SetCode(EVENT_PHASE+PHASE_END)
+	e7:SetProperty(EFFECT_FLAG_DELAY)
+	e7:SetRange(LOCATION_GRAVE)
+	e7:SetCountLimit(1)
+	e7:SetCost(s.spcost2)
+	e7:SetTarget(s.sptg2)
+	e7:SetOperation(s.spop2)
+	c:RegisterEffect(e7)
 end
 function s.spfilter(c,tp)
 	return c:IsType(TYPE_TRAP) and c:IsAbleToGraveAsCost()
@@ -125,6 +132,15 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFacedown() and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
+	end
+end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local pos=c:GetPreviousPosition()
+	if c:IsReason(REASON_BATTLE+REASON_EFFECT) then pos=c:GetBattlePosition() end
+	if rp~=tp and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY)
+		and c:IsPreviousLocation(LOCATION_ONFIELD) and (pos&POS_FACEUP)~=0 then
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function s.cfilter(c,tp)
