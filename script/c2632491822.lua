@@ -3,6 +3,7 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
+	c:SetUniqueOnField(1,0,32491822)
 	c:EnableReviveLimit()
 	--Cannot be special summoned
 	local e1=Effect.CreateEffect(c)

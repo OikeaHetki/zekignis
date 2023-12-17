@@ -4,6 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
+	c:SetUniqueOnField(1,0,69890967)
 	--Cannot be Special Summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -35,26 +36,19 @@ function s.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e4)
-	--Increase ATK
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,1))
-	e5:SetCategory(CATEGORY_ATKCHANGE)
-	e5:SetType(EFFECT_TYPE_QUICK_O)
-	e5:SetCode(EVENT_FREE_CHAIN)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetCountLimit(2)
-	e5:SetCost(s.atcost)
-	e5:SetOperation(s.atop)
+	local e5=e3:Clone()
+	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
-	--Add to hand
+	--Increase ATK
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(id,2))
-	e6:SetCategory(CATEGORY_TOHAND)
-	e6:SetType(EFFECT_TYPE_IGNITION)
-	e6:SetRange(LOCATION_GRAVE)
-	e6:SetCost(s.thcost)
-	e6:SetTarget(s.thtg)
-	e6:SetOperation(s.thop)
+	e6:SetDescription(aux.Stringid(id,1))
+	e6:SetCategory(CATEGORY_ATKCHANGE)
+	e6:SetType(EFFECT_TYPE_QUICK_O)
+	e6:SetCode(EVENT_FREE_CHAIN)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetCountLimit(2)
+	e6:SetCost(s.atcost)
+	e6:SetOperation(s.atop)
 	c:RegisterEffect(e6)
 end
 s.listed_names={69890968}
@@ -84,7 +78,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep~=tp and eg:IsExists(Card.IsControler,1,nil,1-tp)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -124,19 +118,5 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(e:GetLabel())
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
-	end
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil) end
-	local sg=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
-	Duel.Release(sg,REASON_COST)
-end
-function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToHand() end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
-end
-function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 	end
 end
