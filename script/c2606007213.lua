@@ -48,26 +48,6 @@ function s.initial_effect(c)
 	e5:SetTarget(s.destg)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
-	--Register the fact it was destroyed and sent to GY
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e6:SetCode(EVENT_TO_GRAVE)
-	e6:SetOperation(s.regop)
-	c:RegisterEffect(e6)
-	--Special summon itself from GY
-	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(id,1))
-	e7:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e7:SetCode(EVENT_PHASE+PHASE_END)
-	e7:SetProperty(EFFECT_FLAG_DELAY)
-	e7:SetRange(LOCATION_GRAVE)
-	e7:SetCountLimit(1)
-	e7:SetCost(s.spcost2)
-	e7:SetTarget(s.sptg2)
-	e7:SetOperation(s.spop2)
-	c:RegisterEffect(e7)
 end
 function s.spfilter(c,tp)
 	return c:IsType(TYPE_TRAP) and c:IsAbleToGraveAsCost()
@@ -132,33 +112,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFacedown() and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
-	end
-end
-function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local pos=c:GetPreviousPosition()
-	if c:IsReason(REASON_BATTLE+REASON_EFFECT) then pos=c:GetBattlePosition() end
-	if rp~=tp and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY)
-		and c:IsPreviousLocation(LOCATION_ONFIELD) and (pos&POS_FACEUP)~=0 then
-		c:RegisterFlagEffect(06007213,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-	end
-end
-function s.cfilter(c,tp)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
-		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
-end
-function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
-end
-function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,1,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-end
-function s.spop2(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.SpecialSummon(e:GetHandler(),1,tp,tp,false,false,POS_FACEUP)
 	end
 end
