@@ -60,9 +60,9 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	--Opponent can discard 2 cards to negate this effect
+	--Opponent can discard 1 card to negate this effect
 	if Duel.IsChainDisablable(0) then
-		local g=Duel.GetMatchingGroup(Card.IsDiscardable,tp,2,LOCATION_HAND,nil,REASON_EFFECT)
+		local g=Duel.GetMatchingGroup(Card.IsDiscardable,1-tp,1,LOCATION_HAND,nil,REASON_EFFECT)
 		if #g>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
 			local sg=g:Select(1-tp,1,1,nil)

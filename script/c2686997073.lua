@@ -29,18 +29,20 @@ function s.initial_effect(c)
 	e3:SetCondition(s.damcon2)
 	e3:SetOperation(s.damop2)
 	c:RegisterEffect(e3)
-	--to hand
+	--Increase ATK/DEF
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_DESTROYED)
-	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e4:SetCondition(s.thcon2)
-	e4:SetTarget(s.thtg2)
-	e4:SetOperation(s.thop2)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetCode(EFFECT_UPDATE_ATTACK)
+	e4:SetRange(LOCATION_FZONE)
+	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_MACHINE))
+	e4:SetValue(200)
 	c:RegisterEffect(e4)
+	local e5=e4:Clone()
+	e5:SetCode(EFFECT_UPDATE_DEFENSE)
+	c:RegisterEffect(e5)
 end
-s.listed_series={SET_MEKLORD,SET_MEKLORD_ARMY}
+s.listed_series={SET_MEKLORD}
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -56,15 +58,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	if #g>0 and
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 and g:IsSetCard(SET_MEKLORD_ARMY) then
-		--ATK up
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-		tc:RegisterEffect(e1)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function s.cfilter(c)
@@ -77,24 +72,4 @@ function s.damop2(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetTurnPlayer()
 		Duel.Hint(HINT_CARD,0,95100782)
 		Duel.Damage(p,100,REASON_EFFECT)
-end
-function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT)
-		and c:IsPreviousLocation(LOCATION_SZONE) and c:GetPreviousSequence()==5
-end
-function s.thfilter2(c)
-	return c:IsSetCard(SET_MEKLORD) and c:IsAbleToHand()
-end
-function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-end
-function s.thop2(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
-	end
 end
