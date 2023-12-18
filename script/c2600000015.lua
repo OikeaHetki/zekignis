@@ -1,4 +1,6 @@
+--
 --Mask of Shine & Dark
+--zek
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

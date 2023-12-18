@@ -1,3 +1,4 @@
+--
 --Gate Guardian Ritual
 --zekpro
 local s,id=GetID()
