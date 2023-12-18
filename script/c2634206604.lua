@@ -1,6 +1,6 @@
 --魔導サイエンティスト
 --Magical Scientist
-
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 6 or lower fusion monster from extra deck
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	return c:IsType(TYPE_FUSION) and not c:IsType(TYPE_EFFECT) and c:GetLevel()<=6 and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
+	return c:IsType(TYPE_FUSION) and not c:IsType(TYPE_EFFECT) and c:GetLevel()<=6 and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) --and c:CheckFusionMaterial()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
@@ -30,7 +30,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
-	if tc and Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)~=0 then
+	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		--Cannot attack directly
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3207)
