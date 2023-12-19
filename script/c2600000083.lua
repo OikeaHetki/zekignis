@@ -24,6 +24,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.dredgetg)
 	e2:SetOperation(s.dredgeop)
 	c:RegisterEffect(e2)
+	--verify the starting deck possesses 40+ cards
+	aux.GlobalCheck(s,function()
+	local ge1=Effect.CreateEffect(c)
+	ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	ge1:SetCode(EVENT_STARTUP)
+	ge1:SetOperation(s.checkop)
+	Duel.RegisterEffect(ge1,0) end)
 end
 --deckcheck
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)

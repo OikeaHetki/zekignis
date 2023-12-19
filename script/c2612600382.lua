@@ -28,17 +28,21 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
 	e3:SetCode(EVENT_DAMAGE_STEP_END)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(s.neccon)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x40,0xde}
 --necross gy condition
-function s.neccon(e,tp,eg,ep,ev,re,r,rp)
+function s.necfilter(c)
+	return c:IsSetCard(0x40|0xde) and c:IsMonster()
+end
+function s.neccon(e,c)
 	if c==nil then return true end
-	local tp=c:GetControler()
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x40|0xde),tp,LOCATION_GRAVE,0,nil)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetClassCount(Card.GetCode)>=5
-		
+	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)<=0 then return false end
+	local g=Duel.GetMatchingGroup(s.necfilter,c:GetControler(),LOCATION_GRAVE,0,nil)
+	local ct=g:GetClassCount(Card.GetCode)
+	return ct>4
 end
 --necross atkup
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -49,6 +53,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-	e1:SetValue(500)
+	e1:SetValue(1000)
 	c:RegisterEffect(e1)
 end

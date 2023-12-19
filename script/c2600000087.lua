@@ -50,7 +50,7 @@ end
 function s.zmop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,800,800,1,RACE_ZOMBIE,ATTRIBUTE_DARK) then
 		local token=Duel.CreateToken(tp,id+1)
-		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
 --Banish Self
