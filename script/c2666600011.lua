@@ -1,3 +1,4 @@
+--スキル・サイフォン
 --Skill Siphon
 --zek
 local s,id=GetID()

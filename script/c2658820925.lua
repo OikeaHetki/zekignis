@@ -1,3 +1,4 @@
+--ギャラクシーアイズ・アンチマター・アビス・ドラゴン
 --Number C95: Galaxy-Eyes Antimatter Abyss Dragon
 --zek
 local s,id=GetID()

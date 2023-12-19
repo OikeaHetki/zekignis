@@ -1,3 +1,4 @@
+--ゴースト・フード - レイ＆ザ・ランド
 --Ghost Food - Ray & the Land
 --zek
 local s,id=GetID()

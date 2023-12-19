@@ -1,3 +1,4 @@
+--両生類の天使 - カエル・ハエル
 --Amphibian Angel - Frog-Hael
 --zekpro version
 local s,id=GetID()

@@ -1,4 +1,4 @@
---
+--ヘージー・スペル
 --Hazy Spell
 --zek
 local s,id=GetID()

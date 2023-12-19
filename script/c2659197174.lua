@@ -1,3 +1,4 @@
+--宇宙
 --Outer Space
 --zekpro version
 local s,id=GetID()

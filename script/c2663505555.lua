@@ -1,3 +1,4 @@
+--ヘイジー・フレイム・フェニックス
 --Hazy Flame Phoenix
 --zek
 local s,id=GetID()

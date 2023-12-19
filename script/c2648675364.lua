@@ -1,3 +1,4 @@
+--おじゃま犬
 --Ojama Dog
 --zekpro
 local s,id=GetID()

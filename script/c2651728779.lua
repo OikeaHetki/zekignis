@@ -1,3 +1,4 @@
+--オジャマ・インディゴ
 --Ojama Indigo
 --zek
 local s,id=GetID()
@@ -57,19 +58,19 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --  function s.spfilter(c)
---	  return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and (c:GetPreviousRaceOnField()&RACE_BEAST)~=0
+--	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and (c:GetPreviousRaceOnField()&RACE_BEAST)~=0
 --  end
 --  function s.spcon(e,tp,eg,ep,ev,re,r,rp)
---	  return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.spfilter,1,nil)
+--	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.spfilter,1,nil)
 --  end
 --  function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
---	  if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
---		  and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
---	  Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+--	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+--		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+--	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 --  end
 --  function s.spop(e,tp,eg,ep,ev,re,r,rp)
 --  
---	  if c:IsRelateToEffect(e) then
---	  Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
---	  end
+--	if c:IsRelateToEffect(e) then
+--	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+--	end
 --  end

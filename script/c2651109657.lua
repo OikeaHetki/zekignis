@@ -1,5 +1,6 @@
+--ルート・ランサム・ウイルス
 --Root Ransom Virus
---zekpro
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -84,7 +85,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.rmcon(chk)
-	return	function(e,tp,eg,ep,ev,re,r,rp)
+	return  function(e,tp,eg,ep,ev,re,r,rp)
 				return Duel.GetTurnPlayer()==1-tp and (chk==1 or Duel.GetTurnCount()~=e:GetLabel())
 			end
 end

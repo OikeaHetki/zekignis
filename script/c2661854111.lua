@@ -1,3 +1,4 @@
+--伝説の剣
 --Legendary Sword
 --zekpro version
 local s,id=GetID()

@@ -1,4 +1,6 @@
 --凡人の施し
+--Common Charity
+--zekpro version (is a spell card)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

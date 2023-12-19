@@ -1,3 +1,4 @@
+--リリカル・ルシニア・バードソング
 --Lyrilusc - Bird Song
 --zekpro
 local s,id=GetID()

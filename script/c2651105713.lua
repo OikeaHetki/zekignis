@@ -1,3 +1,4 @@
+--現在の汚職ウイルス
 --Current Corruption Virus 
 --scripted by GameMaster(GM)
 --cleaned up and fixed by MLD

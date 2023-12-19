@@ -1,3 +1,4 @@
+--ハーピーのローズ・ホイップ
 --Harpie's Rose Whip
 --zek
 local s,id=GetID()

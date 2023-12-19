@@ -1,3 +1,4 @@
+--ウィンドウィッチ・リボーン
 --Windwitch Reborn
 --zek
 local s,id=GetID()

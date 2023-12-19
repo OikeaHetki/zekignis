@@ -1,3 +1,4 @@
+--フォローウインド
 --Follow Wind
 --zekpro version
 local s,id=GetID()

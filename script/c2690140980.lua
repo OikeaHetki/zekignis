@@ -1,3 +1,4 @@
+--おじゃまキング
 --Ojamachine King
 --zek
 local s,id=GetID()

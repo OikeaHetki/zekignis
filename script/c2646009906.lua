@@ -1,3 +1,4 @@
+--獣の牙
 --Beast Fangs
 --zekpro version
 local s,id=GetID()

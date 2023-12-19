@@ -1,3 +1,4 @@
+--下劣な細菌
 --Vile Germs
 --zekpro version
 local s,id=GetID()

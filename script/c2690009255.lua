@@ -1,4 +1,5 @@
---Ｓｉｎ Force
+--Sin シンフォース
+--Malefic Force
 --zekpro card
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,4 +1,5 @@
---Number C95: Galaxy-Eyes Abyss Dragon of the Dark Antimatter
+--No. S95 - ギャラクシーアイズ・アビス 暗黒反物質の竜
+--Number S95: Galaxy-Eyes Void Lightning Dragon
 --zek
 local s,id=GetID()
 function s.initial_effect(c)

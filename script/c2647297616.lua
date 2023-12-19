@@ -1,3 +1,4 @@
+--ゴースト・ビーフ＆マイルド・ターキー
 --Ghost Beef & Mild Turkey
 --zekpro
 local s,id=GetID()

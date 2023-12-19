@@ -1,4 +1,5 @@
---Phantom of Fury
+--怒りのファンタズム
+--Phantasm of Fury
 --Zek
 local s,id=GetID()
 function s.initial_effect(c)

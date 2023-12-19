@@ -1,3 +1,4 @@
+--エレクトロ・ウィップ
 --Electro-Whip
 --zekpro version
 local s,id=GetID()

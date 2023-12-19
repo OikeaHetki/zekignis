@@ -1,3 +1,4 @@
+--神秘の月
 --Mystical Moon
 --zekpro version
 local s,id=GetID()

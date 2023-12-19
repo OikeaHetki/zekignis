@@ -1,3 +1,4 @@
+--ファイヤー・リーパー
 --Fire Reaper
 --zekpro version
 local s,id=GetID()

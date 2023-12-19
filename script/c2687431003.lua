@@ -1,3 +1,4 @@
+--エレメンタルカオス
 --Elemental Chaos
 --zekpro version
 local s,id=GetID()

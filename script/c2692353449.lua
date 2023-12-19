@@ -1,3 +1,4 @@
+--サガンの合流点
 --Sagan's Confluence
 --zek
 local s,id=GetID()

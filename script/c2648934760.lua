@@ -1,3 +1,4 @@
+--爆破された風景 - 土地の終焉
 --Blasted Landscape - The Land's Demise
 --zek
 local s,id=GetID()

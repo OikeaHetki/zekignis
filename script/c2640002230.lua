@@ -1,6 +1,6 @@
+--ノリトシ、『ダーケスト・レインメント』にて
 --Noritoshi, in Darkest Rainment
 --zekpro version
---zek 
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

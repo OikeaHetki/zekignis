@@ -1,3 +1,4 @@
+--フラッファーモンキー
 --Fluffal Monkey
 --zek
 local s,id=GetID()
@@ -18,17 +19,17 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 	--sirius
-    local e3=Effect.CreateEffect(c)
-    e3:SetDescription(aux.Stringid(id,1))
-    e3:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
-    e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-    e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-    e3:SetCode(EVENT_BE_MATERIAL)
-    e3:SetCountLimit(1,{id,1})
-    e3:SetCondition(s.tdcon)
-    e3:SetTarget(s.tdtg)
-    e3:SetOperation(s.tdop)
-    c:RegisterEffect(e3)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e3:SetCode(EVENT_BE_MATERIAL)
+	e3:SetCountLimit(1,{id,1})
+	e3:SetCondition(s.tdcon)
+	e3:SetTarget(s.tdtg)
+	e3:SetOperation(s.tdop)
+	c:RegisterEffect(e3)
 end
 s.listed_series={0xa9,0xc3,0xad}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -50,8 +51,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    return c:IsLocation(LOCATION_GRAVE) and r==REASON_FUSION and c:GetReasonCard():IsOriginalSetCard(0xad)
+	local c=e:GetHandler()
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_FUSION and c:GetReasonCard():IsOriginalSetCard(0xad)
 end
 function s.filter(c)
 	return (c:IsSetCard(0xad) or c:IsSetCard(0xc3)) and c:IsMonster() and c:IsAbleToDeck()

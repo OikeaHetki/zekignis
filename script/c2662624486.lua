@@ -1,3 +1,4 @@
+--M・HERO 彗星鬼
 --Masked HERO Comet Fiend
 --zek
 local s,id=GetID()

@@ -1,5 +1,6 @@
 --神の通告
 --Solemn Strike
+--zek
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)

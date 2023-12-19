@@ -1,3 +1,4 @@
+--埋葬魔法のカード
 --Card of Burial Magic
 --zek
 local s,id=GetID()

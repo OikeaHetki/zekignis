@@ -1,3 +1,4 @@
+--崇高な峰々
 --Sublime Peaks
 --zekpro version
 local s,id=GetID()

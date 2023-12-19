@@ -1,3 +1,4 @@
+--海神の力
 --Power of Kaishin
 --zekpro version
 local s,id=GetID()

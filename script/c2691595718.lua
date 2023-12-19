@@ -1,3 +1,4 @@
+--秘術の書
 --Book of Secret Arts
 --zekpro version
 local s,id=GetID()

@@ -1,3 +1,4 @@
+--オジャマ・ゴールド
 --Ojama Gold
 --zek
 local s,id=GetID()

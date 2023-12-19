@@ -1,4 +1,5 @@
---Lyrilusc - Twinkle Starlight
+--リリカル・ルシニア - トゥインクル・ブルージェイ
+--Lyrilusc - Twinkle Bluejay
 --zek
 local s,id=GetID()
 function s.initial_effect(c)

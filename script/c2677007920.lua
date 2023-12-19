@@ -1,3 +1,4 @@
+--キャノン砲付きインセクト・アーマー
 --Insect Armor with Cannon
 --zekpro version
 local s,id=GetID()

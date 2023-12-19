@@ -1,3 +1,4 @@
+--デッキ破壊ウイルス
 --Deck Destruction Virus
 --zekpro
 local s,id=GetID()

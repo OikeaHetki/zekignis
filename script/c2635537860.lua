@@ -1,3 +1,4 @@
+--闇への招き
 --Beckon to the Darkness
 --zek
 local s,id=GetID()

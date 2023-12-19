@@ -1,3 +1,4 @@
+--体温を上げる
 --Raise Body Heat
 --zekpro version
 local s,id=GetID()

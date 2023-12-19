@@ -1,3 +1,4 @@
+--エリア33
 --Area 33
 --zekpro version
 local s,id=GetID()

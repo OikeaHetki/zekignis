@@ -1,3 +1,4 @@
+--ガママスター
 --Toad Master
 --zekpro version
 local s,id=GetID()

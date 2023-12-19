@@ -1,3 +1,4 @@
+--キューピッドの壺
 --Pot of Cupidity
 --zekpro
 local s,id=GetID()
