@@ -1,4 +1,5 @@
---Possessed Confectionary
+--祟り菓子
+--Rezurrected Confectionary
 --zek
 local s,id=GetID()
 function s.initial_effect(c)

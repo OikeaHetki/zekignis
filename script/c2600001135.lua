@@ -1,3 +1,4 @@
+--イコリドゾンビ
 --Ichorid
 --zek
 local s,id=GetID()

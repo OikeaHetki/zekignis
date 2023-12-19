@@ -1,4 +1,4 @@
---
+--Golgari Necroplasm
 --Golgari Necroplasm
 --zek
 local s,id=GetID()

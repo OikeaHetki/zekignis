@@ -1,3 +1,4 @@
+--腐れ縁
 --Putrid Imp
 --zek
 local s,id=GetID()

@@ -1,5 +1,5 @@
 --地底街の密告人
---Undercity Informer
+--Shien's Informer
 --zek
 local s,id=GetID()
 function s.initial_effect(c)

@@ -10,7 +10,6 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.neccon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
@@ -18,7 +17,6 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(s.neccon)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--atkup
@@ -28,19 +26,27 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
 	e3:SetCode(EVENT_DAMAGE_STEP_END)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.neccon)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
+	--selfdes
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCode(EFFECT_SELF_DESTROY)
+	e4:SetCondition(s.descon)
+	c:RegisterEffect(e4)
 end
 s.listed_series={0x40,0xde}
---necross gy condition
-function s.necfilter(c)
-	return (c:IsSetCard(0x40) or c:IsSetCard(0xde)) and c:IsMonster()
-end
-function s.neccon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.necfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,nil,0)
-	local ct=g:GetClassCount(Card.GetCode)
-	return ct>4
+s.listed_names={8124921,44519536,70903634,7902349,33396948}
+--selfdes
+function s.descon(e)
+	local p=e:GetHandlerPlayer()
+	return not Duel.IsExistingMatchingCard(Card.IsCode,p,LOCATION_GRAVE,0,1,nil,8124921)
+		or not Duel.IsExistingMatchingCard(Card.IsCode,p,LOCATION_GRAVE,0,1,nil,44519536)
+		or not Duel.IsExistingMatchingCard(Card.IsCode,p,LOCATION_GRAVE,0,1,nil,70903634)
+		or not Duel.IsExistingMatchingCard(Card.IsCode,p,LOCATION_GRAVE,0,1,nil,7902349)
+		or not Duel.IsExistingMatchingCard(Card.IsCode,p,LOCATION_GRAVE,0,1,nil,33396948)
 end
 --necross atkup
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

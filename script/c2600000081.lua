@@ -1,4 +1,4 @@
---
+--金色の魔術師エルドリッヒ
 --Eldlich the Gilded Sorcerer
 --zek
 local s,id=GetID()

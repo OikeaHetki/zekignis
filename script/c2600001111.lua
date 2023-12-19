@@ -1,5 +1,6 @@
--- Skyfaring Doomcastle
--- zek
+--黒い森の天空城
+--Skyfaring Castle of the Black Forest
+--zek
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

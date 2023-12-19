@@ -1,3 +1,4 @@
+--No. 1 - 感染バズキング
 --Number 1: Infection Buzz King
 --zek
 local s,id=GetID()

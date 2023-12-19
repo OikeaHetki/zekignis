@@ -1,3 +1,4 @@
+--光のピラミッドの呪い
 --Curse of the Pyramid of Light
 --zek
 local s,id=GetID()

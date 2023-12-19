@@ -1,3 +1,4 @@
+--リバース・リボーン
 --Reverse Reborn
 --zekpro version
 local s,id=GetID()

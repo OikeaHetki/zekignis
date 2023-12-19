@@ -1,3 +1,4 @@
+--ダーク・エレメント
 --Dark Element
 --zekpro version
 local s,id=GetID()
