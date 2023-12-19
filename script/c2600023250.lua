@@ -1,4 +1,5 @@
 --六武衆－S e i m o n
+--Six Samurai Rabblemaster - Seimon
 --zek
 local s,id=GetID()
 function s.initial_effect(c)

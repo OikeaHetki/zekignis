@@ -14,10 +14,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e2:SetCode(EFFECT_IMMUNE_EFFECT)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetValue(1)
+	e2:SetValue(s.efilter)
 	c:RegisterEffect(e2)
 	--atkup
 	local e3=Effect.CreateEffect(c)
@@ -39,6 +39,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x40,0xde}
 s.listed_names={8124921,44519536,70903634,7902349,33396948}
+--immune
+function s.efilter(e,te)
+	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+end
 --selfdes
 function s.descon(e)
 	local p=e:GetHandlerPlayer()

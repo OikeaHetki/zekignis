@@ -1,3 +1,4 @@
+--パロディアス・インアクション・ユニット
 --Parodious Inaction Unit
 --zek
 local s,id=GetID()

@@ -1,4 +1,5 @@
---Itsu Support Spell Card
+--統一
+--Itsunification
 --scripted by zek
 local s,id=GetID()
 function s.initial_effect(c)

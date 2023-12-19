@@ -1,3 +1,4 @@
+--ムークタイド・リージェント
 --Murktide Regent
 --Zekpro
 local s,id=GetID()

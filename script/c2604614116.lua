@@ -1,3 +1,4 @@
+--ダーク・エネルギー
 --Dark Energy
 --zekpro version
 local s,id=GetID()

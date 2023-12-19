@@ -1,3 +1,4 @@
+--フライトファーゴリラ
 --Frightfur Gorilla
 --zek
 local s,id=GetID()

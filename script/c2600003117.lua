@@ -1,4 +1,5 @@
---Science Dragon Tzolkkein
+--サイエンス・ドラゴン テスラ＝ワット
+--Science Dragon Tesla-Watt
 --zekpro
 local s,id=GetID()
 function s.initial_effect(c)

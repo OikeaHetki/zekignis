@@ -1,4 +1,6 @@
---Khimaera the King of Beasts (ZekPro)
+--獣の王キマイラ
+--Khimaera the King of Beasts
+--zekpro version
 local s,id=GetID()
 function c2616527200.initial_effect(c)
 	 --synchro summon

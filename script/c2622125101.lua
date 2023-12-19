@@ -1,4 +1,5 @@
---Tribrigade Nes the Vile Vanquisher
+--トライ・ブリゲード・ネス・ザ・フェティッド・ファング
+--Tri-Brigade Nes the Fetid Fang
 --zek
 local s,id=GetID()
 function s.initial_effect(c)

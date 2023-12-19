@@ -1,3 +1,4 @@
+--ドロン
 --Doron
 --zekpro version
 local s,id=GetID()

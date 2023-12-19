@@ -1,3 +1,4 @@
+--スカイドラゴンの力
 --Power of the Sky Dragon
 --ZekPro
 local s,id=GetID()

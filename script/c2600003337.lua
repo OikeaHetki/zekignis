@@ -1,3 +1,4 @@
+--ジュラシック・フューリー
 --Jurassic Fury
 --zekpro version
 local s,id=GetID()

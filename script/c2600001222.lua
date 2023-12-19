@@ -1,4 +1,5 @@
---Sanctity of Dragon (ZekPro)
+--ドラゴンの聖性
+--Sanctity of Dragon
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,3 +1,4 @@
+--シュレディンガー・パラドックス・ドラゴン
 --Schrodinger Paradox Dragon
 --zek
 local s,id=GetID()

@@ -1,4 +1,6 @@
 --リバイバルスライム
+--Revival Jam
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--reborn preparation
@@ -26,8 +28,8 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 --function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
---	if chk==0 then return Duel.CheckLPCost(tp,800) end
---	Duel.PayLPCost(tp,800)
+--  if chk==0 then return Duel.CheckLPCost(tp,800) end
+--  Duel.PayLPCost(tp,800)
 --end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)

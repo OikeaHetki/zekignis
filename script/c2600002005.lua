@@ -1,3 +1,4 @@
+--ワイルド・キッチン
 --Attribute Fields
 --Rush Duels Cycle
 --zek

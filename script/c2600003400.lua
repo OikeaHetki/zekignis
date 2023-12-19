@@ -1,3 +1,4 @@
+--トレモーブレード
 --Tremorblade
 --zekpro version
 local s,id=GetID()

@@ -1,4 +1,5 @@
---Science Dragon of FIRE
+--コペルニクスのフレア・ドラゴン
+--Copernicus' Flare Dragon
 --zek
 local s,id=GetID()
 function s.initial_effect(c)

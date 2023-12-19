@@ -1,3 +1,4 @@
+--覆面ヒーロー リキメタル
 --Masked HERO Liquimetal
 --zek
 local s,id=GetID()

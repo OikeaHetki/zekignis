@@ -1,4 +1,5 @@
 --禁断の異本
+--Forbidden Apocrypha
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)

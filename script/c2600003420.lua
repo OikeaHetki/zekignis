@@ -1,3 +1,4 @@
+--シェイド、影の竜支配者
 --Shade, Dragon Ruler of  Shadows
 --zek
 local s,id=GetID()

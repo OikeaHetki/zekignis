@@ -1,4 +1,6 @@
---Protector of the Sanctuary (ZekPro)
+--聖域の守護者
+--Protector of the Sanctuary
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--to defense

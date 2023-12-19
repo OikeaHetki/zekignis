@@ -1,3 +1,4 @@
+--きらめくスクレーパー
 --Shimmering Scraper
 --zekpro version
 local s,id=GetID()

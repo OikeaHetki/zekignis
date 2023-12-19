@@ -1,4 +1,5 @@
---ojama snake
+--オジャマヘビ
+--Ojama Snake
 --zek
 local s,id=GetID()
 function s.initial_effect(c)

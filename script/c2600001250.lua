@@ -1,4 +1,4 @@
---
+--ゴルガリ・ブラウンスケール
 --Golgari Brownscale
 --zek
 local s,id=GetID()

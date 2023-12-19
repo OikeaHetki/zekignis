@@ -1,3 +1,4 @@
+--フレイトファー 愛らしいゼクの魔人
 --Frightfur Chibi Zek
 --zek
 local s,id=GetID()

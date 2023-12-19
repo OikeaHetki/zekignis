@@ -1,3 +1,4 @@
+--フィッシュ・ブースター
 --Fish Booster
 --zekpro version
 local s,id=GetID()

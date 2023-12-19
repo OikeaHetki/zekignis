@@ -1,3 +1,4 @@
+--輝け、光線の竜支配者
 --Shine, Dragon Ruler of Rays
 --zek
 local s,id=GetID()

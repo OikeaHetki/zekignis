@@ -1,3 +1,4 @@
+--ジャム＆スライムの王様
 --King of Jams & Slimes
 --zek
 local s,id=GetID()

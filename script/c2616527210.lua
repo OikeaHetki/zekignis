@@ -1,4 +1,6 @@
---Amatsu (ZekPro)
+--ミストバレーのアマツ
+--Amatsu of Mist Valley
+--zekpro version
 local s,id=GetID()
 function c2616527210.initial_effect(c)
 	--synchro summon

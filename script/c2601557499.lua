@@ -1,3 +1,4 @@
+--銀の弓矢
 --Silver Bow and Arrow
 --zekpro version
 local s,id=GetID()

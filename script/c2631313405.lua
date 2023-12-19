@@ -1,3 +1,4 @@
+--革命の鉄夜行騎士
 --Iron Night Train Knight of Revolution 
 --zekpro
 local s,id=GetID()

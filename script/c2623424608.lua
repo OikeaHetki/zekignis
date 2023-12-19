@@ -1,3 +1,4 @@
+--アポカリプス・ゾーン
 --Apocalypse Zone
 --zekpro version
 local s,id=GetID()

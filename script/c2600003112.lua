@@ -1,4 +1,5 @@
---Science Dragon of Water
+--クストーの波龍
+--Cousteau's Wave Dragon
 --zek
 local s,id=GetID()
 function s.initial_effect(c)

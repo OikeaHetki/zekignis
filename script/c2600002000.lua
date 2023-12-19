@@ -1,3 +1,4 @@
+--ダーケスト・ナイト
 --Attribute Fields
 --Rush Duels Cycle
 --zek

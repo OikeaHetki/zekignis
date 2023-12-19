@@ -1,3 +1,4 @@
+--トラプリン
 --Traplin
 --zekpro version
 local s,id=GetID()

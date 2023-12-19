@@ -1,3 +1,4 @@
+--機械変換工場
 --Machine Conversion Factory
 --zekpro version
 local s,id=GetID()

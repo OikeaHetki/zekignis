@@ -1,5 +1,6 @@
 --竜巻竜
 --Tornado Dragon
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz Summon

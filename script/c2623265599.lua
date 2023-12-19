@@ -1,3 +1,4 @@
+--おじゃマシン ブラック
 --Ojamachine: Black
 --zek
 local s,id=GetID()

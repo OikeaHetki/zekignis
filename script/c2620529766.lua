@@ -1,4 +1,5 @@
---Batteryman Voltech Dragon
+--ハイパーサーキット・ドラゴン
+--Hypercircuit Dragon
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)

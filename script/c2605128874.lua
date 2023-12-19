@@ -1,3 +1,4 @@
+--E・HEROタイムネオス
 --E・HERO Time Neos
 --zek
 local s,id=GetID()

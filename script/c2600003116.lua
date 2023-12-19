@@ -1,3 +1,4 @@
+--フラックス・ドラゴン・ナイタイソン
 --Flux Dragon Nye-Tyson
 --zek
 local s,id=GetID()

@@ -1,4 +1,5 @@
---Science Dragon of Earth
+--ウェゲナーズ・プレート・ドラゴン
+--Wegener's Plate Dragon
 --zek
 local s,id=GetID()
 function s.initial_effect(c)

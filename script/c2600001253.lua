@@ -1,5 +1,6 @@
---Allix, Grand Summoner Magician
---zek
+--グランド・サモナー・マジシャン
+--Grand Summoner Magician
+--zek (designed by masterdicer)
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

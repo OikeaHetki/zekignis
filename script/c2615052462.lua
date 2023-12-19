@@ -1,3 +1,4 @@
+--バイオレット・クリスタル
 --Violet Krystal
 --zekpro version
 local s,id=GetID()

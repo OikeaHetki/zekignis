@@ -1,3 +1,4 @@
+--ハリケーンソード
 --Hurricane Sword
 --zekpro version
 local s,id=GetID()

@@ -1,3 +1,4 @@
+--サガンのコスモス・ドラゴン
 --Sagan's Cosmos Dragon
 --zek
 local s,id=GetID()

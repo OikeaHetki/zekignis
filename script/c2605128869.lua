@@ -1,3 +1,4 @@
+--E・HEROスカイネオス
 --E・HERO Sky Neos
 --zek
 local s,id=GetID()

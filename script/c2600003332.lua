@@ -1,3 +1,4 @@
+--イルカの宝物
 --Dolphin's Treasure
 --zekpro version
 local s,id=GetID()

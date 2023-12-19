@@ -1,3 +1,4 @@
+--ヘイジー・フレイム・ジャズ
 --Hazy Flame Jazs
 --zek
 local s,id=GetID()

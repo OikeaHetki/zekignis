@@ -1,3 +1,4 @@
+--偏見を呼び起こす
 --Invoke Prejudice
 --Zek
 local s,id=GetID()

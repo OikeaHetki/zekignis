@@ -1,6 +1,6 @@
 --星杯戦士ニンギルス
 --Star Grail Warrior Ningirsu
----zekpro version
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

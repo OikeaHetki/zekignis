@@ -1,4 +1,5 @@
---Science Dragon of Wind
+--ハドレーズ・セル・ドラゴン
+--Hadley's Cell Dragon
 --zek
 local s,id=GetID()
 function s.initial_effect(c)

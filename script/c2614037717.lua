@@ -1,3 +1,4 @@
+--本の精神
 --Spirit of the Books
 --zekpro version
 local s,id=GetID()

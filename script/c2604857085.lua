@@ -1,3 +1,4 @@
+--オメガ・ゴーグル
 --Omega Goggles
 --zekpro version
 local s,id=GetID()

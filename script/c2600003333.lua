@@ -1,3 +1,4 @@
+--秘儀の祭壇
 --Altar of Hidden Rites
 --zek
 local s,id=GetID()

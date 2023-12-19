@@ -1,3 +1,4 @@
+--フレイトファー・キーフ・コング
 --Frightfur Kief-Kong
 --zekpro card
 local s,id=GetID()

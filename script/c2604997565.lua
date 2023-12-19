@@ -1,6 +1,7 @@
 --No.3 地獄蝉王ローカスト・キング
 --Number 3: Cicada King
 --Scripted by Eerie Code
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

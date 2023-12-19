@@ -1,3 +1,4 @@
+--キネティック・ウィンズ
 --Attribute Fields
 --Rush Duels Cycle
 --zek

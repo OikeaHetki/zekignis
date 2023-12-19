@@ -1,3 +1,4 @@
+--ドラゴン・エッガー
 --Ryu-Ran
 --zekpro effect monster version with bad effect
 local s,id=GetID()

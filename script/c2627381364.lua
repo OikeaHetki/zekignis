@@ -1,3 +1,4 @@
+--ドラゴンファイアの呪い - ドラゴン・バースト
 --Curse of Dragonfire - Dragon Burst
 --zek
 local s,id=GetID()

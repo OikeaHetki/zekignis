@@ -1,4 +1,5 @@
---Evigishki Mind Augus (ZekPro)
+--エヴィジシキ・マインド・オーガス
+--Evigishki Mind Augus
 --zekpro version of busted card
 local s,id=GetID()
 function s.initial_effect(c)

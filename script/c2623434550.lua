@@ -1,3 +1,4 @@
+--メギストリック・マジサイエンティスト
 --Megistric Magiscientist
 --zekpro
 local s,id=GetID()

@@ -1,3 +1,4 @@
+--E・HERO トゥインクルネオス
 --E・HERO Twinkle Neos
 --zek
 local s,id=GetID()

@@ -1,3 +1,4 @@
+--部族の規制
 --Regulation of Tribe
 --Zekpro
 local s,id=GetID()

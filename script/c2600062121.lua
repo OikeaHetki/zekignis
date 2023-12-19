@@ -1,6 +1,6 @@
 --闇晦ましの城
 --Castle of Dark Illusion
---zekpro version with face-down attack position
+--zekpro version (face-down attack position)
 local s,id=GetID()
 function s.initial_effect(c)
 	--to defense

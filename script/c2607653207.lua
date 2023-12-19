@@ -1,3 +1,4 @@
+--ウイング・トランペッター
 --Winged Trumpeter
 --zekpro version
 local s,id=GetID()

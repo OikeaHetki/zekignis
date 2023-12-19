@@ -1,3 +1,4 @@
+--厳粛な権威
 --Solemn Authority
 --zekpro version
 local s,id=GetID()

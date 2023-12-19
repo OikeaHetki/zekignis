@@ -1,3 +1,4 @@
+--E・HERO ヴォイド・ネオス
 --E・HERO Void Neos
 --zek
 local s,id=GetID()

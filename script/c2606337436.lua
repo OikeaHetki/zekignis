@@ -1,4 +1,4 @@
---DRC
+--ドラゴンの怒りのチャネラー
 --Dragon's Rage Channeler
 --zek
 local s,id=GetID()

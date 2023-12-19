@@ -1,3 +1,4 @@
+--馬の王子のネクロズ
 --Nekroz of the Horse Prince
 --zek
 local s,id=GetID()

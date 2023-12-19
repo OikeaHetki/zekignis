@@ -1,3 +1,4 @@
+--デーモン・ソード
 --Fiend Sword
 --zekpro version
 local s,id=GetID()

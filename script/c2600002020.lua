@@ -1,3 +1,4 @@
+--明るい街並み
 --Attribute Fields
 --Rush Duels Cycle
 --zek

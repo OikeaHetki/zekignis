@@ -1,3 +1,4 @@
+--E・HERO インフェルノ ネオス
 --E・HERO Inferno Neos
 --zek
 local s,id=GetID()

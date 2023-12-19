@@ -1,3 +1,4 @@
+--闇の支配者ハヴォック
 --Havok, Dragon Ruler of Darkness
 --zek
 local s,id=GetID()

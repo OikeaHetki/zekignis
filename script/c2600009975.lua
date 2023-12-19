@@ -1,5 +1,5 @@
 --融合禁止エリア
---Non-Xyz Area
+--Non-Link Area
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)

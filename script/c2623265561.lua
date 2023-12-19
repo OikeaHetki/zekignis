@@ -1,3 +1,4 @@
+--おじゃマシン グリーン
 --Ojamachine: Green
 --zek
 local s,id=GetID()

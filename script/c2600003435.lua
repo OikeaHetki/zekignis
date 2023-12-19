@@ -1,3 +1,4 @@
+--光の龍、ソル
 --Sol, Dragon Ruler of Light
 --zek
 local s,id=GetID()

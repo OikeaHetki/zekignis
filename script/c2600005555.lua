@@ -1,3 +1,4 @@
+--秘密を掘り下げる者
 --Delver of Secrets
 --zek
 local s,id=GetID()

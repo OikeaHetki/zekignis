@@ -45,7 +45,7 @@ function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(tp,g)
 	local tc=g:GetFirst()
 	local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-	if opt==1 then
+	if opt==2 then
 		Duel.MoveSequence(tc,opt)
 	end
 end

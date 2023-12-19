@@ -2,7 +2,6 @@
 --Bujin Torifune
 --Logical Nonsense
 --zekpro version
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 2 "Bujin" monsters from gy

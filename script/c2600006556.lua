@@ -1,3 +1,4 @@
+--ジェムミラー
 --Gem-Mirror
 --zekpro version
 local s,id=GetID()

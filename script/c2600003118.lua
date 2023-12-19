@@ -1,3 +1,4 @@
+--チエッポのスタードラゴン
 --Chieppo's Star Dragon
 --zekpro
 local s,id=GetID()
@@ -21,13 +22,6 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--Cannot be destroyed
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetValue(1)
-	c:RegisterEffect(e3)
 	--Attack all monsters
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)

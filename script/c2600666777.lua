@@ -1,4 +1,5 @@
---Frightfur Chibi Xela
+--フレイトファー・エッジインプ・アドラーブル・ゼ
+--Frightfur Edge-Imp Chibi Xela
 --zek
 local s,id=GetID()
 function s.initial_effect(c)

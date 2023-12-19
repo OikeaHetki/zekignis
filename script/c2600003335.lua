@@ -1,3 +1,4 @@
+--炎の壁
 --Flame Wall
 --zekpro version
 local s,id=GetID()

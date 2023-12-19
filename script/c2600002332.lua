@@ -1,3 +1,4 @@
+--サイバー・スラッシュ・ハーピー・シスターズ
 --Cyber Slash Harpie Sisters
 --zek
 local s,id=GetID()

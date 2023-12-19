@@ -1,3 +1,4 @@
+--オジャマ・デルタ・ワーピング
 --Ojama Delta Warping
 --zek
 local s,id=GetID()

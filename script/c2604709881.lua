@@ -1,3 +1,4 @@
+--フロッグ・ザ・ジャマジン
 --Frog the Jamazin'!
 --zekpro
 local s,id=GetID()

@@ -1,4 +1,6 @@
---Stardust Divinity (ZekPro)
+--スターダスト・ディヴィニティ
+--Stardust Divinity
+--zekpro version
 local s,id=GetID()
 function c2616527195.initial_effect(c)
 	--synchro summon

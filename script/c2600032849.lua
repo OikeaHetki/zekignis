@@ -1,4 +1,5 @@
----Hazy Diagrama
+--栄光の霞がかかった紋章
+--Hazy Crest of Glory
 --zek
 local s,id=GetID()
 function s.initial_effect(c)

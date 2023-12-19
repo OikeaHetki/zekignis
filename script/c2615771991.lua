@@ -2,7 +2,6 @@
 --Guardian Slime
 --Logical Nonsense
 --zekpro version
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon from hand
