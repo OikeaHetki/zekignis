@@ -1,4 +1,4 @@
---
+--人形遣いの儀式
 --Puppeteer Ritual
 --zek
 local s,id=GetID()

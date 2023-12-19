@@ -1,4 +1,4 @@
---
+--シャイン＆ダークのマスク
 --Mask of Shine & Dark
 --zek
 local s,id=GetID()

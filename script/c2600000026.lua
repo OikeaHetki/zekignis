@@ -1,3 +1,4 @@
+--ネオスエネルギー
 --Neos Energy
 --zek
 local s,id=GetID()

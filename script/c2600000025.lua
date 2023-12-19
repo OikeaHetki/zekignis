@@ -1,3 +1,4 @@
+--待ち伏せシールド
 --Ambush Shield
 --zekpro version
 local s,id=GetID()

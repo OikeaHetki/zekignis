@@ -35,12 +35,10 @@ end
 s.listed_series={0x40,0xde}
 --necross gy condition
 function s.necfilter(c)
-	return c:IsSetCard(0x40|0xde) and c:IsMonster()
+	return (c:IsSetCard(0x40) or c:IsSetCard(0xde)) and c:IsMonster()
 end
-function s.neccon(e,c)
-	if c==nil then return true end
-	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)<=0 then return false end
-	local g=Duel.GetMatchingGroup(s.necfilter,c:GetControler(),LOCATION_GRAVE,0,nil)
+function s.neccon(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(s.necfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,nil,0)
 	local ct=g:GetClassCount(Card.GetCode)
 	return ct>4
 end

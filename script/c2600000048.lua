@@ -1,4 +1,4 @@
---
+--ダーク・バード
 --Dark Bard
 --zek
 local s,id=GetID()

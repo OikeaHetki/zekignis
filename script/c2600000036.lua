@@ -1,4 +1,5 @@
---Amazoness Mirror of Life
+--アマゾネスの命の鏡
+--Amazoness Magic Mirror
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-    e1:SetCondition(s.actcon)
+	e1:SetCondition(s.actcon)
 	c:RegisterEffect(e1)
 	--Change the battle position of the attack target
 	local e2=Effect.CreateEffect(c)
@@ -32,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x4}
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x4),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x4),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

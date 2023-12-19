@@ -1,3 +1,4 @@
+--インファナルヴァニア
 --Infernalvania
 --zekpro version
 local s,id=GetID()

@@ -1,3 +1,4 @@
+--寸法 Uターン
 --Dimension U-Turn
 --zek
 local s,id=GetID()

@@ -1,4 +1,4 @@
---
+--マスク契約
 --Contract of Mask
 --zek
 local s,id=GetID()

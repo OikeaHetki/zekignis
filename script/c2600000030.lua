@@ -1,5 +1,6 @@
+--難攻不落の仮面
 --Mask of Impregnability
---zekpro
+--zek
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

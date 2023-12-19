@@ -1,3 +1,4 @@
+--マスカレード
 --Masquerade
 --zek
 local s,id=GetID()

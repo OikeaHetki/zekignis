@@ -1,6 +1,6 @@
+--屍生まれのグリムグリン
 --Grimgrin, the Corpse-Born
---zek
---designed by cedrik
+--zek (designed by bougewah)
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

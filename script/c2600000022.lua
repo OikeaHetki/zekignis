@@ -1,3 +1,4 @@
+--ヴェンディリオン徒党
 --Vendillion Clique
 --zek
 local s,id=GetID()

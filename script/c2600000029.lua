@@ -1,3 +1,4 @@
+--仮面ドール
 --Masked Doll
 --zekpro version
 local s,id=GetID()

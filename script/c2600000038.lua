@@ -1,3 +1,4 @@
+--アマゾネスの躾
 --Amazoness Discipline
 --zek
 local s,id=GetID()

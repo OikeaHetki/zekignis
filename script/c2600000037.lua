@@ -1,3 +1,4 @@
+--アマゾネスの呪いの鏡
 --Amazoness Curse Mirror
 --zek
 local s,id=GetID()

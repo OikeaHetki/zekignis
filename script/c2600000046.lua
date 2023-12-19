@@ -1,3 +1,4 @@
+--寸法復帰
 --Dimension Reversion
 --zek
 local s,id=GetID()

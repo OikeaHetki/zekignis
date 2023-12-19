@@ -1,3 +1,4 @@
+--アマゾネス・カウンターチャーム
 --Amazoness Countercharm
 --zek
 local s,id=GetID()

@@ -1,4 +1,4 @@
---
+--サイコ・パペット
 --Psycho Puppet
 --zek
 local s,id=GetID()

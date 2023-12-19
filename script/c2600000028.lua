@@ -1,4 +1,4 @@
---
+--ゲートガーディアンの儀式
 --Gate Guardian Ritual
 --zekpro
 local s,id=GetID()

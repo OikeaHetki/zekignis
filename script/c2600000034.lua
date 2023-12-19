@@ -1,3 +1,4 @@
+--アマゾネス・アリーナ
 --Amazoness Arena
 --zekpro version
 local s,id=GetID()

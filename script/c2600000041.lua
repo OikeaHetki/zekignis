@@ -1,3 +1,4 @@
+--蛾の帰還
 --Return of the Moth
 --zek
 local s,id=GetID()
