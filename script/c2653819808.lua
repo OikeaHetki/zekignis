@@ -57,7 +57,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RemoveCounter(tp,1,0,0x3,2,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x3d) and c:IsAbleToHand()
+	return c:IsSetCard(0x3d) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

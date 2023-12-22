@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_ONFIELD,0)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.indescon)
-	e2:SetTarget(function(e,c) return c~=e:GetHandler() end)
+	e2:SetTarget(s.indestg)
 	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
 end
@@ -55,4 +55,7 @@ end
 --personal effects
 function s.indescon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(27564031)
+end
+function s.indestg(e,c)
+	return c:IsSetCard(0x23) and c~=e:GetHandler()
 end

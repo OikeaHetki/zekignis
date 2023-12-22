@@ -27,7 +27,7 @@ function s.gfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_GRAVE)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.gfilter,1,nil,tp) and Duel.GetTurnPlayer()~=tp
+	return eg:IsExists(s.gfilter,1,nil,tp) and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

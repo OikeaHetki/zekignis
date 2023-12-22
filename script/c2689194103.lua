@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(LOCATION_ONFIELD,0)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.indescon)
-	e1:SetTarget(function(e,c) return c~=e:GetHandler() end)
+	e1:SetTarget(s.indestg)
 	e1:SetValue(aux.indoval)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
@@ -36,6 +36,9 @@ end
 s.listed_series={0x35}
 function s.indescon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)==0
+end
+function s.indestg(e,c)
+	return c:IsSetCard(0x35) and c~=e:GetHandler()
 end
 function s.cfcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>=2 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 and tp==Duel.GetTurnPlayer()

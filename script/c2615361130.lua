@@ -18,7 +18,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetAttacker()
-	if chk==0 then return tg:IsOnField() and tg:IsAttackBelow(2000) end
+	if chkc then return chkc==tg end
+	if chk==0 then return tg:IsOnField() and tg:IsAttackBelow(2000) and tg:IsCanBeEffectTarget(e) end
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
 end
