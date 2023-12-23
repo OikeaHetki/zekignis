@@ -48,6 +48,25 @@ function s.initial_effect(c)
 	e5:SetTarget(s.destg)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
+	--reborn preparation
+	local e6=Effect.CreateEffect(c)
+	e6:SetDescription(aux.Stringid(id,0))
+	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e6:SetCode(EVENT_BATTLE_DESTROYED)
+	e6:SetCondition(s.spcon2)
+	e6:SetCost(s.spcost2)
+	e6:SetOperation(s.spop2)
+	c:RegisterEffect(e6)
+	--reborn
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e7:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e7:SetRange(LOCATION_GRAVE)
+	e7:SetCountLimit(1)
+	e7:SetCondition(s.spcon3)
+	e7:SetOperation(s.spop3)
+	c:RegisterEffect(e7)
 end
 function s.spfilter(c,tp)
 	return c:IsType(TYPE_TRAP) and c:IsAbleToGraveAsCost()
@@ -113,4 +132,25 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsFacedown() and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
+end
+function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
+end
+function s.costfilter(c)
+	return c:IsSpell() and c:IsDiscardable()
+end
+function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST+REASON_DISCARD)
+end
+function s.spop2(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+end
+function s.spcon3(e,tp,eg,ep,ev,re,r,rp)
+	return tp==Duel.GetTurnPlayer() and e:GetHandler():GetFlagEffect(id)>0
+end
+function s.spop3(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	c:ResetFlagEffect(id)
+	Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)
 end
