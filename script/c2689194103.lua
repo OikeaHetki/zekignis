@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.indescon)
 	e1:SetTarget(s.indestg)
-	e1:SetValue(aux.indoval)
+	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -48,7 +48,7 @@ function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(tp,g)
 	local tc=g:GetFirst()
 	local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-	if opt==2 then
+	if opt==1 then
 		Duel.MoveSequence(tc,opt)
 	end
 end
