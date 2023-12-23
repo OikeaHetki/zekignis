@@ -1,4 +1,4 @@
---
+--呪い破り
 --Cursebreaker (NOT De-Spell)
 --zek
 local s,id=GetID()
