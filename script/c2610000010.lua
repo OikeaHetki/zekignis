@@ -64,7 +64,7 @@ function s.initial_effect(c)
 	e10:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e10:SetRange(LOCATION_MZONE)
 	e10:SetCode(EFFECT_ADD_RACE)
-	e10:SetValue(RACE_DRAGON)
+	e10:SetValue(RACE_WINGEDBEAST)
 	c:RegisterEffect(e10)
 	--One Turn Kill
 	local e11=Effect.CreateEffect(c)
