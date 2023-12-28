@@ -42,7 +42,7 @@ function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil) then
-		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP_ATTACK)
+		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
