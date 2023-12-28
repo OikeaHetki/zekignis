@@ -1,6 +1,6 @@
 --N・ティンクル・モス
 --Neo-Spacian Twinkle Moss
---zekpro verison
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -28,24 +28,31 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_ADD_CODE)
 	e3:SetValue(17732278)
 	c:RegisterEffect(e3)
-	--direct attack
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_DIRECT_ATTACK)
-	c:RegisterEffect(e4)
 end
-s.listed_names={17732278}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker() or e:GetHandler()==Duel.GetAttackTarget()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return end
+	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	Duel.Draw(tp,1,REASON_EFFECT)
-	if c:IsFaceup() and c:IsRelateToEffect(e) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		Duel.ChangePosition(c,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
+	if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
+	local tc=Duel.GetOperatedGroup():GetFirst()
+	Duel.ConfirmCards(1-tp,tc)
+	if tc:IsMonster() then
+		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+	elseif tc:IsSpell() then
+		if c==Duel.GetAttacker() and not c:IsHasEffect(EFFECT_CANNOT_DIRECT_ATTACK)
+			and c:IsRelateToEffect(e) and c:IsFaceup() and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			Duel.ChangeAttackTarget(nil)
+		end
+	else
+		if c:IsRelateToEffect(e) and c:IsFaceup() then
+			Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
+		end
 	end
+	Duel.ShuffleHand(tp)
 end
