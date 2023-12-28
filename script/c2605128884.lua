@@ -9,7 +9,8 @@ function s.initial_effect(c)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 end
 s.listed_names={CARD_NEOS}
-s.material_setcode={0x8,0x3008,0x9,0x1f}function s.condition(e,tp,eg,ep,ev,re,r,rp)
+s.material_setcode={0x8,0x3008,0x9,0x1f}
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker() or e:GetHandler()==Duel.GetAttackTarget()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

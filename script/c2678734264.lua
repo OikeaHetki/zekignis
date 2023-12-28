@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e3:SetCode(EFFECT_ADD_CODE)
+	e3:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e3:SetValue(80344569)
 	c:RegisterEffect(e3)
 end
