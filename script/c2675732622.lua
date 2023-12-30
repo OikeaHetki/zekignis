@@ -26,7 +26,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	for i=1,2 do
 		local token=Duel.CreateToken(tp,75732623)
-		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		--Cannot be tributed for a tribute summon
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3304)
