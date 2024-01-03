@@ -50,9 +50,9 @@ function s.initial_effect(c)
 	local e6=e5:Clone()
 	e6:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e6)
-	local e7=e5:Clone()
-	e7:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e7)
+	--local e7=e5:Clone()
+	--e7:SetCode(EVENT_SPSUMMON_SUCCESS)
+	--c:RegisterEffect(e7)
 end
 s.listed_series={0x45}
 s.roll_dice=true
