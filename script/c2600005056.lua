@@ -1,5 +1,5 @@
---粘着テープの家
---House of Adhesive Tape
+--酢酸トラップの穴
+--Acetic Trap Hole
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,13 +20,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if not eg then return false end
 	local tc=eg:GetFirst()
 	if chkc then return chkc==tc end
-	if chk==0 then return ep~=tp and tc:IsFaceup() and tc:GetDefense()<=1000 and tc:IsOnField() and tc:IsCanBeEffectTarget(e) end
+	if chk==0 then return ep~=tp and tc:IsFaceup() and tc:GetDefense()>=1000 and tc:IsOnField() and tc:IsCanBeEffectTarget(e) end
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:GetDefense()<=1000 then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:GetDefense()>=1000 then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
