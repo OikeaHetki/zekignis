@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsControlerCanBeChanged() and c:IsFaceup() and c:IsSummonableCard()
+	return c:IsControlerCanBeChanged() and (c:IsFaceup() and c:IsSummonableCard()) or c:IsFacedown()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end

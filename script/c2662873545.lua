@@ -13,7 +13,6 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetProperty(EFFECT_FLAG_DELAY)
-	e0:SetCountLimit(1,id)
 	e0:SetLabel(0)
 	e0:SetCondition(s.descon)
 	e0:SetTarget(s.destg)
@@ -42,6 +41,13 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
+	--spsummon condition
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e4:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e4:SetValue(aux.fuslimit)
+	c:RegisterEffect(e4)
 end
 s.listed_names={23995346,5405694}
 s.material_setcode={0x10cf,0xcf,0xdd}
@@ -57,12 +63,12 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and e:GetLabel()==1
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_SZONE)
 	if chk==0 then return #g>0 end
 	e:SetLabel(0)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_SZONE)
 	if #g>0 then Duel.Destroy(g,REASON_EFFECT) end
 end
