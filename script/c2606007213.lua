@@ -53,7 +53,7 @@ function s.initial_effect(c)
 	e6:SetDescription(aux.Stringid(id,0))
 	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e6:SetCode(EVENT_DESTROYED)
+	e6:SetCode(EVENT_TO_GRAVE)
 	e6:SetCondition(s.spcon2)
 	e6:SetCost(s.spcost2)
 	e6:SetOperation(s.spop2)
@@ -134,7 +134,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsLocation(LOCATION_GRAVE) and aux.dogcon
+	return e:GetHandler():IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_DESTROY) and rp==1-tp
 end
 function s.costfilter(c)
 	return c:IsTrap() and c:IsDiscardable()

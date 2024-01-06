@@ -1,5 +1,6 @@
 --WW－クリスタル・ベル
 --Windwitch - Crystal Bell
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

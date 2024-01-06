@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 and aux.dogcon
+	return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 and c:IsReason(REASON_DESTROY) and rp==1-tp
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
@@ -36,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tg=g:FilterSelect(tp,Card.IsMonster,1,1,nil)
 		if #tg>0 then
 			Duel.SendtoHand(tg,tp,REASON_EFFECT)
-			Duel.ConfirmCards(tg,1-tp)
+			Duel.ConfirmCards(1-tp,tg)
 		end
 		Duel.ShuffleDeck(1-tp)
 	end
