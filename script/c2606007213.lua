@@ -134,7 +134,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_DESTROY) and rp==1-tp
+	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_DESTROY) and rp==1-tp
 end
 function s.costfilter(c)
 	return c:IsTrap() and c:IsDiscardable()
