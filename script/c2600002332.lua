@@ -14,10 +14,18 @@ function s.initial_effect(c)
 	e1:SetValue(2)
 	c:RegisterEffect(e1)
 	--Pierce
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_PIERCE)
-	c:RegisterEffect(e2)
+	--local e2=Effect.CreateEffect(c)
+	--e2:SetType(EFFECT_TYPE_SINGLE)
+	--e2:SetCode(EFFECT_PIERCE)
+	--c:RegisterEffect(e2)
+	--Name becomes "Harpie Lady Sisters" while on the field or in the GY
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetCode(EFFECT_CHANGE_CODE)
+	e3:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e3:SetValue(CARD_HARPIE_LADY_SISTERS)
+	c:RegisterEffect(e3)
 	--tohand
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,2))
@@ -40,7 +48,7 @@ function s.contactop(g)
 	Duel.Release(g,REASON_COST+REASON_MATERIAL)
 end
 function s.thfilter(c)
-	return c:IsCode(CARD_HARPIE_LADY) or c:IsCode(CARD_HARPIE_LADY_SISTERS) and c:IsAbleToHand()
+	return c:IsCode(CARD_HARPIE_LADY) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

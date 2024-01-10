@@ -18,8 +18,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
+	if chk==0 then return Duel.CheckLPCost(tp,2000) end
+	Duel.PayLPCost(tp,2000)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()
@@ -28,10 +28,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():CancelToGrave(false)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_DECK)
+	local g=Duel.GetFieldGroup(1-tp,0,LOCATION_DECK)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,Card.IsSpell,tp,LOCATION_DECK,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(1-tp,Card.IsSpellTrap,1-tp,LOCATION_DECK,0,1,1,nil)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end

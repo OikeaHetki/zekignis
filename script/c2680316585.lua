@@ -1,3 +1,4 @@
+--ハーピィ・レディ・ＳＢ
 --Cyber Harpie Lady
 --Zekpro Version
 local s,id=GetID()
@@ -18,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetValue(CARD_HARPIE_LADY)
 	c:RegisterEffect(e2)
 end
+s.listed_names={CARD_HARPIE_LADY}
 function s.atcost(e,c,tp)
 	return Duel.IsExistingMatchingCard(Card.IsAbleToHandAsCost,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end
