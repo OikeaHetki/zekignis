@@ -22,19 +22,19 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCode(EVENT_DESTROYED)
+	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x20f2}
+s.listed_series={0x20f2,0x98}
 function s.dbcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function s.dbfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsRace(RACE_SPELLCASTER) and c:GetFlagEffect(id)==0
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x98) and c:GetFlagEffect(id)==0
 end
 function s.dbtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.dbfilter(chkc) end
@@ -63,7 +63,7 @@ function s.damcon(e)
 	return e:GetHandler():GetBattleTarget()~=nil
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return r&REASON_EFFECT+REASON_BATTLE~=0
+	return (e:GetHandler():GetReason()&0x41)==0x41
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x20f2) and c:IsAbleToHand()

@@ -1,6 +1,6 @@
 --ドラゴニックD
---True Draco Diagram
---Zek
+--True Draconic Diagram
+--Zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -41,15 +41,15 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 	--cannot be target
-	local e02=Effect.CreateEffect(c)
-	e02:SetType(EFFECT_TYPE_FIELD)
-	e02:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e02:SetRange(LOCATION_FZONE)
-	e02:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e02:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e02:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xf9))
-	e02:SetValue(aux.tgoval)
-	c:RegisterEffect(e02)
+	--local e02=Effect.CreateEffect(c)
+	--e02:SetType(EFFECT_TYPE_FIELD)
+	--e02:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	--e02:SetRange(LOCATION_FZONE)
+	--e02:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	--e02:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	--e02:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xf9))
+	--e02:SetValue(aux.tgoval)
+	--c:RegisterEffect(e02)
 end
 s.listed_series={0xf9}
 function s.indtg(e,c)
