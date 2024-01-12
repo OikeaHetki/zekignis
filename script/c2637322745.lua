@@ -22,14 +22,14 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	e3:SetValue(300)
 	c:RegisterEffect(e3)
-	--damage
+	--recover
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_RECOVER)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetProperty(EFFECT_FLAG_BOTH_SIDE)
-	e4:SetRange(LOCATION_SZONE)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetRange(LOCATION_FZONE)
 	e4:SetCondition(s.reccon)
 	e4:SetTarget(s.rectg)
 	e4:SetOperation(s.recop)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e5:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e5:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_BOTH_SIDE)
+	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetRange(LOCATION_FZONE)
 	e5:SetCode(EVENT_CHAIN_NEGATED)
 	e5:SetCondition(s.condition)
@@ -69,13 +69,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetFirst():IsSummonType(SUMMON_TYPE_SYNCHRO) and eg:GetFirst():IsControler(tp)
+	return eg:GetFirst():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetPlayer(eg:GetFirst():GetSummonPlayer())
 	Duel.SetTargetParam(800)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,0,0,1-tp,800)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,0,0,eg:GetFirst():GetSummonPlayer(),800)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
