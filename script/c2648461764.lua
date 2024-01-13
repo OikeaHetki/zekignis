@@ -62,7 +62,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return (e:GetHandler():GetReason()&0x41)==0x41
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsFaceup() end

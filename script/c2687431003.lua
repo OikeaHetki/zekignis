@@ -25,6 +25,6 @@ end
 function s.val(e,c)
 	local r=c:GetRace()
 	if (r&RACE_AQUA+RACE_PYRO+RACE_ROCK+RACE_THUNDER)>0 then return 300
-	elseif (r&RACE_PSYCHIC)>0 then return -300
+	elseif (r&RACE_PSYCHIC+RACE_ILLUSION)>0 then return -300
 	else return 0 end
 end
