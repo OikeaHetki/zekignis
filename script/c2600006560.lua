@@ -23,17 +23,18 @@ function s.initial_effect(c)
 	--remove counter
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_TOGRAVE)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e4:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_FIELD)
+	e4:SetRange(LOCATION_MZONE)
 	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e4:SetTarget(s.rcttg)
-	e4:SetOperation(s.rctop)
+	e4:SetCountLimit(1)
+	e4:SetCondition(s.rcon)
+	e4:SetOperation(s.rcop)
 	c:RegisterEffect(e4)
 	--special summon
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,2))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_TO_GRAVE)
 	e5:SetCondition(s.condition)
 	e5:SetTarget(s.target)
@@ -41,6 +42,7 @@ function s.initial_effect(c)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
 end
+--add counters
 function s.addct(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,3,0,0x1)
@@ -50,22 +52,19 @@ function s.addc(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():AddCounter(0x1,3)
 	end
 end
-function s.rcttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if not e:GetHandler():IsCanRemoveCounter(tp,0x1,1,REASON_EFFECT) then
-		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,0,0)
-	end
+--remove counters
+function s.rcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetCounter(0x1)>0
 end
-function s.rctop(e,tp,eg,ep,ev,re,r,rp)
+function s.rcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		if c:IsCanRemoveCounter(tp,0x1,1,REASON_EFFECT) then
-			c:RemoveCounter(tp,0x1,1,REASON_EFFECT)
-		else
-			Duel.SendToGrave(c,REASON_EFFECT)
-		end
+	if c:IsFaceup() and c:IsRelateToEffect(e) and
+		c:RemoveCounter(tp,0x1,1,REASON_EFFECT)
+		and c:GetCounter(0x1)==0 then
+			Duel.SendtoGrave(c,REASON_EFFECT)
 	end
 end
+--spsummon other copies
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)) 
 		or (e:GetHandler():IsReason(REASON_EFFECT) and e:GetHandler():IsLocation(LOCATION_GRAVE) and re==e:GetLabelObject())
