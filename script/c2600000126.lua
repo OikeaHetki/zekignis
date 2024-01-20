@@ -1,4 +1,6 @@
-
+--グレーター・サンドヴルム
+--Greater Sandwurm 
+--zek
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk

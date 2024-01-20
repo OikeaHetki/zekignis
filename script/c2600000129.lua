@@ -1,4 +1,4 @@
---
+--サンド・ドゥードゥルバグ
 --Sand Doodlebug
 --zek
 local s,id=GetID()
