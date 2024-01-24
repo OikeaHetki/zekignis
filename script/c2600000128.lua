@@ -27,16 +27,18 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.filter(c,tp)
-	return c:IsCode(23424603) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
+	return c:IsCode(23424603) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local dg=Duel.GetFieldGroup(0,LOCATION_FZONE,LOCATION_FZONE)
 	Duel.Destroy(dg,REASON_EFFECT)
-	local fg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-	if #fg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-		local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
-		Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,nil,tp)
+		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+			local sc=g:Select(tp,1,1,nil):GetFirst()
+			Duel.ActivateFieldSpell(sc,e,tp,eg,ep,ev,re,r,rp)
 		end
 	--Cannot attack
 	local e1=Effect.CreateEffect(c)

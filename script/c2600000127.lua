@@ -20,11 +20,10 @@ end
 s.listed_names={10080320,23424603}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
+	Duel.DiscardDeck(tp,1,REASON_COST)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--Requirement
-	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	--atk change
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -39,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tg=aux.SelectUnselectGroup(sg,1,tp,1,ft,s.rescon,1,tp)
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tg)
-	end	
+	end 
 end
 function s.sfilter(c)
 	return c:IsCode(10080320,23424603) and c:IsAbleToHand()

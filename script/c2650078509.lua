@@ -1,5 +1,5 @@
 --デモンズ・チェーン
---fiendish chain
+--Fiendish Chain
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)

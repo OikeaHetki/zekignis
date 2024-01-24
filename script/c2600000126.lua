@@ -22,6 +22,6 @@ function s.initial_effect(c)
 end
 s.listed_names={23424603}
 --personal effects
-function s.con(e,tp,eg,ep,ev,re,r,rp)
+function s.wcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(23424603)
 end
