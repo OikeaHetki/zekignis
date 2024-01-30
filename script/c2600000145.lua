@@ -13,8 +13,10 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_COUNTER)
-	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetCountLimit(1)
 	e2:SetCost(s.ctcost)
 	e2:SetTarget(s.cttg)
 	e2:SetOperation(s.ctop)
@@ -61,11 +63,8 @@ end
 function s.filter2(c)
 	return c:IsFaceup() and c:IsMonster() and c:IsAttribute(ATTRIBUTE_WATER)
 end
-function s.cfilter(c)
-	return Duel.GetMatchingGroupCount(s.filter2,c:GetControler(),LOCATION_REMOVED,0,nil)
-end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=eg:FilterCount(s.cfilter,nil)
+	local ct=Duel.GetMatchingGroupCount(s.filter2,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
 	if ct>0 then
 		e:GetHandler():AddCounter(0x1015,ct,true)
 	end
@@ -111,9 +110,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Summon(tp,tc,true,nil)
 	end
 end
-function s.operation(e,c,minc)
+function s.ntcon(e,c)
 	if c==nil then return true end
-	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 --recover
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
@@ -130,5 +129,9 @@ end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local rec=Duel.GetFieldGroupCount(tp,LOCATION_REMOVED,0)*300
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.Recover(p,rec,REASON_EFFECT)
+	for tc in g:Iter() do
+		tc:AddCounter(0x1015,1)
+	end
 end

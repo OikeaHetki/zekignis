@@ -1,9 +1,10 @@
+--黒魔術ゴルゴン
 --Gorgon of Dark Magic
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,511018031,511018032,511018033)
+	Fusion.AddProcMix(c,true,true,2600000144,2600000146,2600000147)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit,aux.TRUE,1)
 	--extra attack
 	local e1=Effect.CreateEffect(c)
