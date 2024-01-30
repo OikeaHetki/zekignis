@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon [companion]
-	Xyz.AddProcedure(c,s.matfilter,3,2,s.ovfilter,aux.Stringid(id,0),99,s.xyzop)
+	Xyz.AddProcedure(c,s.matfilter,3,3,s.ovfilter,aux.Stringid(id,0),99,s.xyzop)
 	c:EnableReviveLimit()
 	--lifelink
 	local e1=Effect.CreateEffect(c)
@@ -27,13 +27,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
 	--cannot be target
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetValue(1)
-	c:RegisterEffect(e3)
+	--local e3=Effect.CreateEffect(c)
+	--e3:SetType(EFFECT_TYPE_SINGLE)
+	--e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	--e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	--e3:SetRange(LOCATION_MZONE)
+	--e3:SetValue(1)
+	--c:RegisterEffect(e3)
 end
 --
 function s.matfilter(c,xyz,sumtype,tp)
