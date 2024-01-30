@@ -98,7 +98,7 @@ function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsAbleToRemove() and c:IsType(TYPE_EFFECT)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.tgfilter(chkc) end
