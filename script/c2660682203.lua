@@ -13,7 +13,6 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 
-	and not Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_ONFIELD,0,1,nil)
 	and not Duel.CheckPhaseActivity()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
