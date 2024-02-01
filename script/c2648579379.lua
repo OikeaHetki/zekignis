@@ -60,7 +60,7 @@ function s.initial_effect(c)
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_FIELD)
 	e8:SetRange(LOCATION_MZONE)
-	e8:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e8:SetTargetRange(0,LOCATION_MZONE)
 	e8:SetCode(EFFECT_DISABLE)
 	e8:SetTarget(s.distg)
 	c:RegisterEffect(e8)
@@ -110,5 +110,5 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 end
 --dis
 function s.distg(e,c)
-	return c:GetCounter(0x1045)>0 and c:GetCode()~=48579379
+	return c:GetCounter(0x1045)>0
 end
