@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e0:SetCode(EFFECT_SPSUMMON_PROC)
 	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e0:SetRange(LOCATION_HAND)
+	e0:SetTargetRange(POS_FACEUP_DEFENSE,0)
 	e0:SetCondition(s.spcon)
 	c:RegisterEffect(e0)
 	--at limit
