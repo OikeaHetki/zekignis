@@ -12,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.fit_monster={25833572}
+s.fit_monster={2625833573}
 s.listed_names=CARDS_SANGA_KAZEJIN_SUIJIN
 s.listed_series={SET_GATE_GUARDIAN}
 function s.filter(c,e,tp,m)
 	local cd=c:GetCode()
-	if cd~=25833572 or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false) then return false end
+	if cd~=2625833573 or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false) then return false end
 	if m:IsContains(c) then
 		m:RemoveCard(c)
 		result=m:IsExists(Card.IsCode,1,nil,25955164) and m:IsExists(Card.IsCode,1,nil,62340868) 

@@ -24,7 +24,7 @@ end
 --atkdef
 function s.val(e,c)
 	local r=c:GetRace()
-	if (r&RACE_DRAGON+RACE_WINGEDBEAST+RACE_THUNDER+RACE_PYRO+RACE_ROCK+RACE_WYRM)>0 then return 300
+	if (r&RACE_DRAGON+RACE_WINGEDBEAST+RACE_THUNDER+RACE_PYRO)>0 then return 300
 	elseif (r&RACE_WARRIOR+RACE_BEASTWARRIOR)>0 then return -300
 	else return 0 end
 end

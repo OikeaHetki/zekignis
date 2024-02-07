@@ -72,8 +72,8 @@ function s.sgfilter(c,p)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsControler(p)
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,0,nil)
-	local og=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD+LOCATION_HAND,0,nil)
+	local og=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD+LOCATION_HAND)
 	if chk==0 then return #g>0 and #og>0 end
 	local oc=#og
 	g:Merge(og)
@@ -81,7 +81,7 @@ function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,0,0,1-tp,oc*300)
 end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,0,nil)
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD+LOCATION_HAND,0,nil)
 	if #g==0 or Duel.SendtoGrave(g,REASON_EFFECT)==0 then return end
 	local oc=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
 	if oc==0 then return end
@@ -90,7 +90,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local og=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,oc,nil)
 	if Duel.SendtoGrave(og,REASON_EFFECT)>0 then
 		Duel.BreakEffect()
-		dc=dc+Duel.GetOperatedGroup():FilterCount(s.sgfilter,nil,1-tp)
+		dc=dc+oc+Duel.GetOperatedGroup():FilterCount(s.sgfilter,nil,1-tp)
 		Duel.Damage(1-tp,dc*300,REASON_EFFECT)
 	end
 end

@@ -52,6 +52,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.rmop)
 		Duel.RegisterEffect(e1,tp)
 	end
+	if g then Duel.ShuffleSetCard(g) end
 end
 function s.rmfilter(c,fid)
 	return c:GetFlagEffectLabel(id)==fid
