@@ -18,11 +18,11 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetOperation(s.sdop)
+	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
 function s.sdfilter(c)
-	return c:IsFaceup() and c:GetAttribute()~=ATTRIBUTE_DARK
+	return c:IsFaceup() and c:GetAttribute()==ATTRIBUTE_LIGHT
 end
 function s.sdcon(e)
 	return Duel.IsExistingMatchingCard(s.sdfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
