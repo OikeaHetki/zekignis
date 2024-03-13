@@ -31,27 +31,37 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_REMOVE)
-	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCountLimit(1)
+	--e4:SetCountLimit(1)
 	e4:SetCost(s.rmcost)
 	e4:SetTarget(s.rmtg)
 	e4:SetOperation(s.rmop)
 	c:RegisterEffect(e4)
+	--Add DARK attribute
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,1))
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e5:SetCode(EFFECT_ADD_ATTRIBUTE)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetValue(ATTRIBUTE_DARK)
+	c:RegisterEffect(e5)
 end
 --spsumcon
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.atchk1,1,nil,sg)
 end
-function s.atchk1(c,sg) --LIGHT Warrior
-	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_WARRIOR) and c:IsLevelAbove(5) and sg:FilterCount(s.cfilter,c)==1
+function s.atchk1(c,sg) --LIGHT
+	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevelAbove(5) and sg:FilterCount(s.cfilter,c)==1
 end
 function s.spfilter(c,att,race)
 	return c:IsAttribute(att) and c:IsRace(race) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
-function s.cfilter(c,sg) --DARK Dragon
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_DRAGON) and c:IsLevelAbove(5)
+function s.cfilter(c,sg) --DARK
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelAbove(5)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -92,9 +102,9 @@ function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsAbleToRemove() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
