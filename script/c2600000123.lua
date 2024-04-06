@@ -1,5 +1,5 @@
---
---
+--マゴシン・ネヘモス
+--Fabled Nehemoth
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
