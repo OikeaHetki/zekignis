@@ -10,6 +10,16 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
+	--remove
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e2:SetCode(EFFECT_TO_GRAVE_REDIRECT)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetTarget(s.rmtarget)
+	e2:SetTargetRange(0,0xff)
+	e2:SetValue(LOCATION_REMOVED)
+	c:RegisterEffect(e2)
 	--actlimit
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -20,16 +30,6 @@ function s.initial_effect(c)
 	e3:SetValue(s.aclimit)
 	e3:SetCondition(s.actcon)
 	c:RegisterEffect(e3)
-	--destroy
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetCategory(CATEGORY_DESTROY)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_BATTLE_START)
-	e4:SetCondition(s.descon)
-	e4:SetTarget(s.destg)
-	e4:SetOperation(s.desop)
-	c:RegisterEffect(e4)
 end
 s.listed_series={0x8}
 function s.aclimit(e,re,tp)
@@ -38,18 +38,6 @@ end
 function s.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler()
 end
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
-	return bc and bc:IsSummonType(SUMMON_TYPE_SPECIAL) and bc:GetSummonLocation(LOCATION_EXTRA)
-end
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler():GetBattleTarget(),1,0,0)
-end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local bc=e:GetHandler():GetBattleTarget()
-	if bc and bc:IsRelateToBattle() then
-		Duel.Destroy(bc,REASON_EFFECT)
-	end
+function s.rmtarget(e,c)
+	return not c:IsLocation(0x80) and not c:IsType(TYPE_MONSTER)
 end
