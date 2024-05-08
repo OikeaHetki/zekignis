@@ -3,7 +3,7 @@
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,80604091)
+	--c:SetUniqueOnField(1,0,80604091)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -28,11 +28,11 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (tn==tp and Duel.IsMainPhase()) or (tn~=tp and Duel.IsBattlePhase())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
+	if chk==0 then return Duel.CheckLPCost(tp,500) end
 	if e:GetHandler():GetFlagEffect(id)==0 then
 		e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1,Duel.GetMatchingGroupCount(Card.CanSummonOrSet,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,true,nil))
 	end
-	Duel.PayLPCost(tp,800)
+	Duel.PayLPCost(tp,500)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
