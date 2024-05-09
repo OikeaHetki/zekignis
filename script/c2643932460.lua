@@ -21,9 +21,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return e~=re and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
-			and rp==1-tp and re:GetActivateLocation()==LOCATION_MZONE
+	local tgp,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainDisablable(ev)
+		and tgp~=tp and re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE
 end
 function s.tgcheck(sg,e,tp)
 	return sg:IsExists(Card.IsType,1,nil,TYPE_MONSTER)

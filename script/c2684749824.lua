@@ -21,8 +21,8 @@ function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasCategory(CATEGORY_SPECIAL_SUMMON)
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,2500)
-	else Duel.PayLPCost(tp,2500) end
+	if chk==0 then return Duel.CheckLPCost(tp,2000)
+	else Duel.PayLPCost(tp,2000) end
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
