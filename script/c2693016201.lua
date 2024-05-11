@@ -30,24 +30,15 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target2)
 	e3:SetOperation(s.activate2)
 	c:RegisterEffect(e3)
-	--instant(chain)
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetType(EFFECT_TYPE_QUICK_O)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetProperty(EFFECT_FLAG_BOTH_SIDE)
-	e4:SetCode(EVENT_CHAINING)
-	e4:SetCondition(s.condition3)
-	e4:SetCost(s.cost3)
-	e4:SetTarget(s.target3)
-	e4:SetOperation(s.activate3)
-	c:RegisterEffect(e4)
 end
 function s.condition1(...)
 	return not Duel.IsDuelType(DUEL_USE_TRAPS_IN_NEW_CHAIN) and s.condition2(...)
 end
+function s.filter(c)
+	return (c:IsRankBelow(3) or c:IsLevelBelow(3) or c:IsLinkBelow(3)) 
+end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0
+	return Duel.GetCurrentChain()==0 and eg:IsExists(s.filter,1,nil)
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,2000) end
@@ -62,24 +53,4 @@ function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.NegateSummon(eg)
 	Duel.Destroy(eg,REASON_EFFECT)
-end
-function s.condition3(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasCategory(CATEGORY_SPECIAL_SUMMON) and Duel.IsChainDisablable(ev)
-end
-function s.cost3(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,2000) end
-	Duel.PayLPCost(tp,2000)
-end
-function s.target3(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
-	end
-end
-function s.activate3(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.Destroy(eg,REASON_EFFECT)
-	end
 end
