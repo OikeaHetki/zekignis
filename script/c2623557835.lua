@@ -26,7 +26,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
 	and Duel.CheckLPCost(tp,2000) end
 	Duel.PayLPCost(tp,2000)
-	--Cannot Special Summon from the Extra Deck, except Fusion and Synchro Monsters
+	--Cannot Special Summon from the Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -36,8 +36,6 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTarget(function(_,c) return c:IsLocation(LOCATION_EXTRA) end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	--Clock Lizard check
-	aux.addTempLizardCheck(c,tp,function(_,c) return not c:IsOriginalType(TYPE_FUSION|TYPE_SYNCHRO) end)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return 
@@ -57,23 +55,13 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 			local tc=g:GetFirst()
 			while tc do
 				Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-				--local e1=Effect.CreateEffect(c)
-				--e1:SetType(EFFECT_TYPE_SINGLE)
-				--e1:SetCode(EFFECT_DISABLE)
-				--e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-				--tc:RegisterEffect(e1)
-				--local e2=Effect.CreateEffect(c)
-				--e2:SetType(EFFECT_TYPE_SINGLE)
-				--e2:SetCode(EFFECT_DISABLE_EFFECT)
-				--e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-				--tc:RegisterEffect(e2)
-				--local e3=Effect.CreateEffect(e:GetHandler())
-				--e3:SetType(EFFECT_TYPE_SINGLE)
-				--e3:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-				--e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-				--e3:SetReset(RESET_EVENT+RESETS_REDIRECT)
-				--e3:SetValue(LOCATION_DECKBOT)
-				--tc:RegisterEffect(e3)
+				--Prevent the activation of the effects
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_CANNOT_TRIGGER)
+				e1:SetRange(LOCATION_MZONE)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				tc:RegisterEffect(e1)
 				tc=g:GetNext()
 				count=count+1
 			end
