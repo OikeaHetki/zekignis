@@ -1,6 +1,6 @@
 --魔轟神ヴァルキュルス
 --Fabled Valkyrus
---zekpro version (can discard more things)
+--zekpro version (can discard more things and at qp speed)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetType(EFFECT_TYPE_IGNITION+EFFECT_TYPE_QUICK_O)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,{id,2})
 	e1:SetRange(LOCATION_MZONE)
