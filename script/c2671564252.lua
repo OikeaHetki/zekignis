@@ -1,4 +1,6 @@
 --ライオウ
+--Thunder King Rai-Oh
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable search
@@ -20,6 +22,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
+	--disable spsummon
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e3:SetTargetRange(LOCATION_DECK,LOCATION_DECK)
+	c:RegisterEffect(e3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and #eg==1 and Duel.GetCurrentChain()==0

@@ -35,7 +35,7 @@ function s.condition1(...)
 	return not Duel.IsDuelType(DUEL_USE_TRAPS_IN_NEW_CHAIN) and s.condition2(...)
 end
 function s.filter(c)
-	return (c:IsRankBelow(3) or c:IsLevelBelow(3) or c:IsLinkBelow(3)) 
+	return c:IsLevelBelow(4) and c:IsSummonableCard()
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain()==0 and eg:IsExists(s.filter,1,nil)
