@@ -1,6 +1,6 @@
 --邪帝ガイウス
 --Caius the Shadow Monarch
---zekpro version
+--zekpro version (doesn't banish)
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -19,10 +19,10 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) end
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
