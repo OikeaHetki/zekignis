@@ -33,6 +33,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(g1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	Duel.BreakEffect()
 	Duel.ShuffleDeck(tp)
-	Duel.Draw(tp,ct+1,REASON_EFFECT)
-	Duel.Recover(tp,ct*300,REASON_EFFECT)
+	Duel.Draw(tp,ct,REASON_EFFECT)
+	Duel.Recover(tp,ct*500,REASON_EFFECT)
 end
