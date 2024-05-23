@@ -1,6 +1,6 @@
 --ドル・ドラ
 --Twin-Headed Behemoth
---zekpro version (not once per duel, banishes when leaves field)
+--zekpro version (not once per duel, banishes when leaves field, original ATK/DEF are set by the effect)
 local s,id=GetID()
 function s.initial_effect(c)
 	--to grave
@@ -36,12 +36,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_SET_ATTACK)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(1000)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
-		e2:SetCode(EFFECT_SET_DEFENSE)
+		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
 		c:RegisterEffect(e2)
 		-- Banish it if it leaves the field
 		local e3=Effect.CreateEffect(c)

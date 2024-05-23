@@ -1,6 +1,6 @@
 --氷結界の龍 ブリューナク
 --Brionac, Dragon of the Ice Barrier
---zekpro version
+--zekpro version (can target any card on the field; hard opt)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
