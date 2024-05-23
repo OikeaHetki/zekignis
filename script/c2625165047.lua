@@ -110,4 +110,3 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		tc=g:GetNext()
 	end
 end
-end
