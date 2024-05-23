@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ARCHFIEND}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_ARCHFIEND) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and (c:IsSetCard(SET_ARCHFIEND) or (c:IsType(TYPE_NORMAL) and c:IsRace(RACE_FIEND)))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
