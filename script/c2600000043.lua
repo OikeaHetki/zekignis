@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev) and (re:GetActiveType()==TYPE_SPELL or re:GetActiveType()==TYPE_TRAP)
 end
 function s.rfilter(c,rc)
 	return c:IsSpellTrap() and c:IsAbleToRemoveAsCost()
