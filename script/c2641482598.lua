@@ -1,17 +1,21 @@
 --悪夢の蜃気楼
 --Mirage of Nightmare
---zekpro version
+--zekpro version (discards hand on activation, draws until 2, uses REASON_RULE)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,41482598)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_HANDES)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(s.clear)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--draw
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_SZONE)
@@ -20,31 +24,60 @@ function s.initial_effect(c)
 	e2:SetCondition(s.drcon)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
+	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
+	--discard
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetCategory(CATEGORY_HANDES)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetCountLimit(1)
+	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCondition(s.dccon)
+	e3:SetTarget(s.dctg)
+	e3:SetOperation(s.dcop)
+	e3:SetLabelObject(e1)
+	c:RegisterEffect(e3)
+end
+function s.clear(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	e:SetLabel(0)
+end
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+		local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+		if #g==0 then return end
+		Duel.SendtoGrave(g,REASON_RULE+REASON_DISCARD)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)<4
+	return Duel.GetTurnPlayer()~=tp and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)<2
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local ht=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,4-ht)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2-ht)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local ht=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	if ht<4 then
-		Duel.Draw(tp,4-ht,REASON_EFFECT)
-	end
-	local e3=Effect.CreateEffect(e:GetHandler())
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_PHASE+PHASE_END)
-	e3:SetCountLimit(1)
-	e3:SetReset(RESET_PHASE+PHASE_END)
-	e3:SetOperation(s.tgop)
-	Duel.RegisterEffect(e3,tp)
+	if ht<2 then
+		Duel.Draw(tp,2-ht,REASON_EFFECT)
+		e:GetLabelObject():SetLabel(2-ht)
+	else e:GetLabelObject():SetLabel(0) end
 end
-function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(e:GetOwnerPlayer(),LOCATION_HAND,0)
-	Duel.SendtoGrave(g,REASON_EFFECT)
+function s.dccon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp and e:GetLabelObject():GetLabel()~=0
+end
+function s.dctg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local de=e:GetLabelObject()
+	e:SetLabel(de:GetLabel())
+	de:SetLabel(0)
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,e:GetLabel())
+end
+function s.dcop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+	local sg=g:RandomSelect(tp,e:GetLabel())
+	Duel.SendtoGrave(sg,REASON_RULE+REASON_DISCARD)
 end

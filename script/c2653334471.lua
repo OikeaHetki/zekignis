@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
-	e1:SetCost(s.cost)
 	e1:SetTarget(s.acttg)
 	c:RegisterEffect(e1)
 	--adjust
@@ -35,6 +34,16 @@ function s.initial_effect(c)
 	local e6=e4:Clone()
 	e6:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
 	c:RegisterEffect(e6)
+	--maintain
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e7:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e7:SetRange(LOCATION_SZONE)
+	e7:SetCountLimit(1)
+	e7:SetCondition(s.mtcon)
+	e7:SetOperation(s.mtop)
+	c:RegisterEffect(e7)
 end
 s[0]=0
 s[1]=0
@@ -95,8 +104,15 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Readjust()
 	end
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,nil,1,nil) end
-	local rg=Duel.SelectReleaseGroup(tp,nil,1,1,nil)
-	Duel.Release(rg,REASON_COST)
+--sb phase
+function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp
+end
+function s.mtop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.CheckReleaseGroupCost(tp,Card.IsReleasable,1,false,nil,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		local g=Duel.SelectReleaseGroupCost(tp,Card.IsReleasable,1,1,false,nil,nil)
+		Duel.Release(g,REASON_COST)
+	else
+		Duel.Destroy(e:GetHandler(),REASON_COST)
+	end
 end
