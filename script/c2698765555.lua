@@ -23,7 +23,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) 
 		then return false end
 	if tp==ep or not Duel.IsChainNegatable(ev) then return false end
-	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
+	local (ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY) or ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_REMOVE))
 	return ex and tg~=nil and tc>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
