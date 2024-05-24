@@ -23,11 +23,11 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
-	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,#sg,PLAYER_ALL,LOCATION_REMOVED)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_REMOVED,1,nil) end
+	local sg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_REMOVED,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,#sg,0,LOCATION_REMOVED)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
+	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_REMOVED,nil)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

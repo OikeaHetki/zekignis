@@ -21,10 +21,10 @@ s.illegal=true
 function s.cfilter(c,tp)
 	local val=0
 	if c:GetFlagEffect(284)>0 then val=c:GetFlagEffectLabel(284) end
-	return c:IsControler(tp) and val>0 and c:GetAttack()<=0 and rp==1-tp
+	return c:IsControler(tp) and val>0 and c:GetAttack()<=0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp) 
+	return eg:IsExists(s.cfilter,1,nil,tp) and rp==1-tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)

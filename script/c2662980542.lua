@@ -28,6 +28,6 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetOperatedGroup()
 	local ct=g:FilterCount(s.filter,nil)
 	if ct>0 then
-		Duel.Damage(tp,ct*800,REASON_EFFECT)
+		Duel.Damage(tp,ct*200,REASON_EFFECT)
 	end
 end

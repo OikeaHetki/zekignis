@@ -1,6 +1,6 @@
 --明と宵の逆転
 --Exchange of Night and Day
---zekpro version
+--zekpro version (Chaos archetype, boosts LIGHT/DARK)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,30 +23,15 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target2)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	--atk
+	--Atk up
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
-	e3:SetTarget(s.pietg)
-	e3:SetValue(400)
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK+ATTRIBUTE_LIGHT))
+	e3:SetValue(300)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e4:SetTarget(s.pietg)
-	e4:SetValue(s.tglimit)
-	c:RegisterEffect(e4)
-end
-s.listed_names={CARD_GAIA_CHAMPION}
-function s.pietg(e,c)
-	return c:IsCode(6368038,16589042,CARD_GAIA_CHAMPION)
-end
-function s.tglimit(e,c)
-	return c and c:IsAttribute(ATTRIBUTE_DARK) or c:IsAttribute(ATTRIBUTE_LIGHT)
 end
 function s.tgfilter1(c,tp)
 	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_LIGHT)
