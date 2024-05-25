@@ -51,6 +51,14 @@ function s.initial_effect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
 	e7:SetCode(EFFECT_NECRO_VALLEY_IM)
 	c:RegisterEffect(e7)
+	--change name
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE)
+	e8:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e8:SetCode(EFFECT_CHANGE_CODE)
+	e8:SetRange(LOCATION_FZONE+LOCATION_GRAVE)
+	e8:SetValue(CARD_HARPIE_LADY)
+	c:RegisterEffect(e8)
 end
 s.listed_series={SET_GRAVEKEEPERS}
 --On destruction
