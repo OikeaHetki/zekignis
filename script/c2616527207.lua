@@ -1,9 +1,10 @@
 --軍神テュール
 --Tyr, the Vanquishing Warlord
 --zekpro version
+local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),aux.FilterBoolFunctionEx(Card.IsRace,RACE_FAIRY),aux.FilterBoolFunctionEx(Card.IsRace,RACE_WARRIOR)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),aux.FilterBoolFunctionEx(Card.IsRace,RACE_FAIRY),aux.FilterBoolFunctionEx(Card.IsRace,RACE_WARRIOR))
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

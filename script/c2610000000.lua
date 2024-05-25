@@ -69,7 +69,7 @@ function s.initial_effect(c)
 	--Soul Energy MAX
 	local e11=Effect.CreateEffect(c)
 	e11:SetDescription(aux.Stringid(id,1))
-	e11:SetCategory(CATEGORY_DESTROY)
+	e11:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e11:SetType(EFFECT_TYPE_IGNITION)
 	e11:SetRange(LOCATION_MZONE)
 	e11:SetCountLimit(1,id)
@@ -122,12 +122,14 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,4000)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 	Duel.BreakEffect()
+	Duel.Damage(1-tp,4000,REASON_EFFECT)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,nil,2,e:GetHandler()) end

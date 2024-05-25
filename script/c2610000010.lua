@@ -75,10 +75,10 @@ function s.initial_effect(c)
 	e11:SetProperty(EFFECT_FLAG_DELAY)
 	e11:SetOperation(s.atkop)
 	c:RegisterEffect(e11)
-	--destroy
+	--Holy Flame
 	local e12=Effect.CreateEffect(c)
 	e12:SetDescription(aux.Stringid(id,2))
-	e12:SetCategory(CATEGORY_DESTROY)
+	e12:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE)
 	e12:SetType(EFFECT_TYPE_IGNITION)
 	e12:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e12:SetRange(LOCATION_MZONE)
@@ -160,6 +160,6 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.Destroy(tc,REASON_EFFECT)
+		Duel.Destroy(tc,REASON_EFFECT,LOCATION_REMOVED)
 	end
 end

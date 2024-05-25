@@ -2,7 +2,7 @@
 --Stardust Divinity
 --zekpro version
 local s,id=GetID()
-function S.initial_effect(c)
+function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),1,1,Synchro.NonTunerEx(Card.IsRace,RACE_FAIRY),2,99)
 	c:EnableReviveLimit()
