@@ -1,5 +1,5 @@
---ウレボ
---Ulevo
+--レオニン・ラカンのスクナ
+--Skuna, the Leonine Rakan
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)

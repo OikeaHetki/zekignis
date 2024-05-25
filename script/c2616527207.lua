@@ -1,17 +1,15 @@
---星屑の巨神
---Stardust Divinity
+--軍神テュール
+--Tyr, the Vanquishing Warlord
 --zekpro version
-local s,id=GetID()
-function S.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),1,1,Synchro.NonTunerEx(Card.IsRace,RACE_FAIRY),2,99)
+function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--spsummon limit
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),aux.FilterBoolFunctionEx(Card.IsRace,RACE_FAIRY),aux.FilterBoolFunctionEx(Card.IsRace,RACE_WARRIOR)
+	--spsummon condition
 	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(aux.synlimit)
+	e1:SetValue(aux.fuslimit)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -38,7 +36,7 @@ function S.initial_effect(c)
 	e5:SetCode(EVENT_BATTLE_DAMAGE)
 	e5:SetCondition(s.condition)
 	e5:SetOperation(s.operation)
-	c:RegisterEffect(e5)	
+	c:RegisterEffect(e5)   
 end
 function s.condition(e)
 	return ep~=tp and Duel.GetAttackTarget()==nil

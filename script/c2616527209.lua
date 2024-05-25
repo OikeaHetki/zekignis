@@ -1,5 +1,5 @@
---ヴィクトリー・ドラゴン
---Victory Dragon
+--破は壊かい王おうゼクセクス
+--King of Destruction - Xexex
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	--c:RegisterEffect(e8)
 end
 function s.tlimit(e,c)
-	return not c:IsRace(RACE_DRAGON)
+	return not c:IsRace(RACE_FIEND)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttackTarget()==nil

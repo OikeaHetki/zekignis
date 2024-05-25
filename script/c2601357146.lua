@@ -23,12 +23,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 	--synchro limit
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
-	e3:SetValue(1)
-	c:RegisterEffect(e3)
+	--local e3=Effect.CreateEffect(c)
+	--e3:SetType(EFFECT_TYPE_SINGLE)
+	--e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	--e3:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+	--e3:SetValue(1)
+	--c:RegisterEffect(e3)
 end
 s.listed_series={0x12}
 function s.costfilter(c,ft)

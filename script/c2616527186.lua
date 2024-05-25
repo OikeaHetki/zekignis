@@ -1,11 +1,11 @@
 --革命の鉄夜行騎士
 --Iron Night Train Knight of Revolution 
---zekpro
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,s.matfilter,2)
+	Link.AddProcedure(c,s.matfilter,3)
 	aux.EnableCheckReincarnation(c)
 	-- Special Summon
 	local e1=Effect.CreateEffect(c)
@@ -39,7 +39,7 @@ function s.atkfilter(c)
 end
 function s.atkval(e,c)
 	local lg=c:GetLinkedGroup():Filter(s.atkfilter,nil)
-	return lg:GetSum(Card.GetLevel)*300
+	return lg:GetSum(Card.GetLevel)*100
 end
 --
 function s.spfilter(c,e,tp,zone)

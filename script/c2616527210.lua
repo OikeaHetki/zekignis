@@ -1,8 +1,8 @@
---ミストバレーのアマツ
---Amatsu of Mist Valley
+--音おん響きょう兵へい器きローレライ
+--Lorelei, the Symphonic Arsenal
 --zekpro version
 local s,id=GetID()
-function c2616527210.initial_effect(c)
+function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()  
