@@ -111,7 +111,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 then
 		local tpe=tc:GetType()
 		if (tpe&TYPE_TOKEN)~=0 then return end
-		local dg=Duel.GetMatchingGroup(Card.IsOriginalCodeRule,tc:GetControler(),LOCATION_DECK,0,nil,tc:GetOriginalCodeRule())
+		local dg=Duel.GetMatchingGroup(Card.IsOriginalCodeRule,tc:GetControler(),LOCATION_DECK+LOCATION_HAND+LOCATION_EXTRA,0,nil,tc:GetOriginalCodeRule())
 		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end

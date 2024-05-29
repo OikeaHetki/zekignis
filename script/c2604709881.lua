@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--link summon
 	Link.AddProcedure(c,s.matfilter,2,2)
 	c:EnableReviveLimit()
-	--Special Summon a Normal Plant
+	--Special Summon a L2 WATER Aqua
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -18,16 +18,16 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special Summon Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(s.cost)
-	e2:SetTarget(s.target)
-	e2:SetOperation(s.operation)
+	e2:SetCost(s.spcost)
+	e2:SetTarget(s.sptg2)
+	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x12}
@@ -57,22 +57,29 @@ end
 function s.cfilter(c,ft,tp)
 	return ft>0 or (c:IsControler(tp) and c:GetSequence()<5)
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,ft,tp) end
 	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,ft,tp)
 	Duel.Release(g,REASON_COST)
 end
-function s.filter(c,e,tp)
-	return (c:IsSetCard(0x12) or c:IsCode(68638985)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.spfilter(c,e,tp,zone)
+	return (c:IsSetCard(0x12) or c:IsCode(68638985))
+	and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then
+		local zone=e:GetHandler():GetLinkedZone(tp)
+		return zone~=0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,zone)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+function s.spop2(e,tp,eg,ep,ev,re,r,rp)
+	local zone=e:GetHandler():GetLinkedZone(tp)
+	if zone==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,zone)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,zone)
+	end
 end

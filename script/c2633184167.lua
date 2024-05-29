@@ -1,6 +1,6 @@
 --同族感染ウィルス
 --Tribe-Infecting Virus
---zekpro version (field opt reset, worse DEF)
+--zekpro version (field opt reset)
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY
+	return Duel.GetTurnPlayer()~=tp and Duel.GetCurrentPhase()==PHASE_STANDBY
 		and e:GetHandler():IsLocation(LOCATION_SZONE) and Duel.GetCurrentChain()==0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

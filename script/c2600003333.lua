@@ -1,6 +1,6 @@
---秘儀の祭壇
---Altar of Hidden Rites
---zek
+--霧の祭壇
+--Altar of Mist
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,60 +8,49 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
-	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-end
-function s.filter(c,tp)
-	return c:IsRitualSpell() and c:IsAbleToHand()
-end
-function s.filter2(c,mc)
-	return c:IsRitualMonster() and c:IsAbleToHand()
+	--indes
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e2:SetValue(1)
+	c:RegisterEffect(e2)
+	--remain field
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_REMAIN_FIELD)
+	c:RegisterEffect(e3)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_GRAVE)
+	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE) end
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCountLimit(1)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,2)
+	e1:SetOperation(s.tohand)
+	e1:SetLabel(0)
+	c:RegisterEffect(e1)
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
-		local mg=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_GRAVE,0,nil)
-		if #mg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local sg=mg:Select(tp,1,1,nil)
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,sg)
+function s.filter(c)
+	return c:IsRitualSpell() and c:IsAbleToHand()
+end
+function s.tohand(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetTurnPlayer()~=tp then return end
+	local ct=e:GetLabel()
+	e:GetHandler():SetTurnCounter(ct+1)
+	if ct==1 then
+		if Duel.SendtoGrave(e:GetHandler(),REASON_RULE)>0 then
+			local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil)
+			if #g>0 then
+				Duel.SendtoHand(g,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,g)
+			end
 		end
-	end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_CANNOT_SUMMON)
-	Duel.RegisterEffect(e2,tp)
-	local e3=e1:Clone()
-	e3:SetCode(EFFECT_CANNOT_MSET)
-	Duel.RegisterEffect(e3,tp)
-	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),nil)
-	--cannot special summon from Main Deck
-	local e4=Effect.CreateEffect(e:GetHandler())
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(CARD_EHERO_BLAZEMAN)
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetTargetRange(1,0)
-	e4:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e4,tp)
-end
-function s.splimit(e,c)
-	return not c:IsType(TYPE_RITUAL)
+	else e:SetLabel(ct+1) end
 end

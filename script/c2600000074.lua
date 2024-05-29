@@ -16,10 +16,10 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_POSITION)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_BE_BATTLE_TARGET)
 	e2:SetCondition(s.poscon)
+	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
@@ -45,10 +45,14 @@ function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsRelateToBattle() and c:IsAttackPos()
 end
+function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsAttackPos() end
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
+end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.ChangePosition(e:GetHandler(),POS_FACEUP)
+		Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

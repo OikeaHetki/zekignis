@@ -1,6 +1,6 @@
 --悪夢の蜃気楼
 --Mirage of Nightmare
---zekpro version (discards hand on activation, draws until 2, uses REASON_RULE)
+--zekpro version (discards hand on activation, draws until 2, tcobo)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,41482598)
@@ -47,7 +47,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 		if #g==0 then return end
-		Duel.SendtoGrave(g,REASON_RULE+REASON_DISCARD)
+		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)<2
@@ -79,5 +79,5 @@ function s.dcop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	local sg=g:RandomSelect(tp,e:GetLabel())
-	Duel.SendtoGrave(sg,REASON_RULE+REASON_DISCARD)
+	Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
 end

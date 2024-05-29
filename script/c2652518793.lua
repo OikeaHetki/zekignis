@@ -39,23 +39,13 @@ function s.initial_effect(c)
 	e5:SetTarget(s.desreptg)
 	e5:SetOperation(s.desrepop)
 	c:RegisterEffect(e5)
-	--search
-	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(id,1))
-	e6:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e6:SetType(EFFECT_TYPE_IGNITION)
-	e6:SetRange(LOCATION_FZONE)
-	e6:SetProperty(EFFECT_FLAG_BOTH_SIDE)
-	e6:SetCountLimit(1)
-	e6:SetCost(s.thcost)
-	e6:SetTarget(s.thtg)
-	e6:SetOperation(s.thop)
-	c:RegisterEffect(e6)
 end
 s.listed_series={0x19}
+--
 function s.atkval(e,c)
 	return e:GetHandler():GetCounter(0x7)*100
 end
+--
 function s.counterfil(c,tp)
 	return c:IsPreviousLocation(LOCATION_DECK)
 end
@@ -65,34 +55,13 @@ end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x7,1)
 end
+--
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsReason(REASON_REPLACE+REASON_RULE)
-		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_HAND,0,1,nil,0x19) end
-	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
+		and e:GetHandler():GetCounter(0x7)>=1 end
+	return true
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DiscardHand(tp,Card.IsSetCard,1,1,REASON_EFFECT+REASON_DISCARD,nil,0x19)
+	e:GetHandler():RemoveCounter(ep,0x7,1,REASON_EFFECT)
 end
-function s.cfilter(c)
-	return c:IsSpellTrap() and c:IsDiscardable()
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,nil)
-end
-function s.filter(c)
-	return c:IsSetCard(0x19) and c:IsMonster() and not c:IsCode(id) and not c:IsOriginalCode(id) and c:IsAbleToHand()
-end
-function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-end
-function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
-	end
-end
+--
