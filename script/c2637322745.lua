@@ -74,8 +74,8 @@ end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(eg:GetFirst():GetSummonPlayer())
-	Duel.SetTargetParam(800)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,0,0,eg:GetFirst():GetSummonPlayer(),800)
+	Duel.SetTargetParam(500)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,0,0,eg:GetFirst():GetSummonPlayer(),500)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then

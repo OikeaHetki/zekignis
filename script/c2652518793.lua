@@ -39,6 +39,19 @@ function s.initial_effect(c)
 	e5:SetTarget(s.desreptg)
 	e5:SetOperation(s.desrepop)
 	c:RegisterEffect(e5)
+	--The first time each turn you would take damage, you take no damage
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD)
+	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e6:SetCode(EFFECT_CHANGE_DAMAGE)
+	e6:SetRange(LOCATION_FZONE)
+	e6:SetTargetRange(1,0)
+	e6:SetCondition(s.damcon)
+	e6:SetValue(s.damval)
+	c:RegisterEffect(e6)
+	local e7=e6:Clone()
+	e7:SetCode(EFFECT_NO_EFFECT_DAMAGE)
+	c:RegisterEffect(e7)
 end
 s.listed_series={0x19}
 --
@@ -58,10 +71,24 @@ end
 --
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsReason(REASON_REPLACE+REASON_RULE)
-		and e:GetHandler():GetCounter(0x7)>=1 end
+		and e:GetHandler():GetCounter(0x7)>=2 end
 	return true
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RemoveCounter(ep,0x7,1,REASON_EFFECT)
+	e:GetHandler():RemoveCounter(ep,0x7,2,REASON_EFFECT)
 end
 --
+function s.damfilter(c)
+	return c:IsSetCard(0x19) and c:IsFaceup()
+end
+function s.damcon(e)
+	return not e:GetHandler():HasFlagEffect(id) and Duel.IsExistingMatchingCard(s.damfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+end
+function s.damval(e,re,val,r,rp,rc)
+	if r&(REASON_BATTLE|REASON_EFFECT)>0 then
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+		Duel.Hint(HINT_CARD,0,id)
+		return 0
+	end
+	return val
+end

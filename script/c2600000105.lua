@@ -21,9 +21,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local res=Duel.TossCoin(tp,1)
 	if res==COIN_HEADS then
 		Duel.Draw(tp,1,REASON_EFFECT)
-		Duel.Recover(tp,1200,REASON_EFFECT)
+		Duel.Recover(tp,1000,REASON_EFFECT)
 	elseif res==COIN_TAILS then
 		Duel.Draw(1-tp,1,REASON_EFFECT)
-		Duel.Recover(1-tp,1200,REASON_EFFECT)
+		Duel.Recover(1-tp,1000,REASON_EFFECT)
 	end
 end

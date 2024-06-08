@@ -1,6 +1,5 @@
 --Ｓｉｎ Ｔｅｒｒｉｔｏｒｙ
 --Malefic Territory
---Scripted by Eerie Code, credits to Cybercatman and edo9300 for the new Malefic filter
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +7,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--malefic change
@@ -25,7 +24,6 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_DESTROYED)
-	e3:SetCountLimit(1,{id,1})
 	e3:SetCondition(s.setcon)
 	e3:SetTarget(s.settg)
 	e3:SetOperation(s.setop)

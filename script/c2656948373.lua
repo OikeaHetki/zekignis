@@ -1,4 +1,6 @@
 --呪魂の仮面
+--Mask of the Accursed
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -15,13 +17,13 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
 	c:RegisterEffect(e2)
 	--atkbattle
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_EQUIP)
-	e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetValue(1)
-	c:RegisterEffect(e3)
+	--local e3=Effect.CreateEffect(c)
+	--e3:SetType(EFFECT_TYPE_EQUIP)
+	--e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+	--e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	--e3:SetRange(LOCATION_MZONE)
+	--e3:SetValue(1)
+	--c:RegisterEffect(e3)
 	--damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))

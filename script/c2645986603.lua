@@ -63,7 +63,7 @@ function s.ctval(e,c)
 end
 --recover LP
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+  return tp~=Duel.GetTurnPlayer()
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

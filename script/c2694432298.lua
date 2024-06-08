@@ -24,19 +24,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 	c:RegisterEffect(e1)
-	--Atk up
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetCode(EFFECT_UPDATE_ATTACK)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_WIND))
-	e3:SetValue(200)
-	c:RegisterEffect(e3)
-	--Def
-	local e4=e3:Clone()
-	e4:SetCode(EFFECT_UPDATE_DEFENSE)
-	c:RegisterEffect(e4)
 end
 s.listed_series={0x10}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

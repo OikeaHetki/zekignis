@@ -32,6 +32,15 @@ function s.initial_effect(c)
 	e3:SetTarget(s.tsptg)
 	e3:SetOperation(s.tspop)
 	c:RegisterEffect(e3)
+	--indes
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetTargetRange(LOCATION_MZONE,0)
+	e4:SetTarget(s.target)
+	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e4:SetValue(1)
+	c:RegisterEffect(e4)
 end
 s.listed_series={0x42,0x4b,0x5042}
 --On "Aesir" summon
@@ -74,4 +83,7 @@ function s.tspop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
+end
+function s.target(e,c)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(0x42)
 end

@@ -20,8 +20,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
+	if chk==0 then return Duel.CheckLPCost(tp,1000) end
+	Duel.PayLPCost(tp,1000)
 end
 	--Check for spell/trap
 function s.filter(c)
@@ -39,7 +39,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) 
-	and	Duel.Destroy(tc,REASON_EFFECT)>0 and not Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_GRAVE,0,4,nil)
+	and Duel.Destroy(tc,REASON_EFFECT)>0 and not Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_GRAVE,0,4,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Draw(tp,1,REASON_EFFECT)
 	end

@@ -75,7 +75,7 @@ function s.dredgeop(e,tp,eg,ep,ev,re,r,rp)
 end
 --destroy
 function s.filter(c)
-	return c:IsFaceup() and c:IsAttackBelow(1000) and c:IsDefenseBelow(1000)
+	return c:IsFaceup() and c:IsAttackBelow(1500) and c:IsDefenseBelow(1500)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

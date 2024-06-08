@@ -1,6 +1,6 @@
 --強者の苦痛
 --Burden of the Mighty
---zekpro version (also affects XYZ/LINK)
+--zekpro version (based on cards on field/hand)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,5 +18,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.val(e,c)
-	return (c:GetLevel()*-100)+(c:GetLink()*-100)+(c:GetRank()*-100)
+	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_ONFIELD+LOCATION_HAND)*100
 end

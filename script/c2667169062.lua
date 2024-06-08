@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ct==3 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,2,REASON_EFFECT)
-		Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
+		--Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)

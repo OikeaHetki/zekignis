@@ -1,5 +1,5 @@
 --融合禁止エリア
---Non-Xyz Area
+--Judgment of the Desert
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,16 +8,12 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--disable spsummon
+	--Prevent change in positions
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetTargetRange(1,1)
-	e2:SetTarget(s.splimit)
+	e2:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
+	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	c:RegisterEffect(e2)
-end
-function s.splimit(e,c,tp,sumtp,sumpos)
-	return (sumtp&SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ
 end
