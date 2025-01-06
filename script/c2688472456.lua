@@ -1,12 +1,13 @@
 --ダーク・ヒーロー ゾンバイア
 --Zombyra the Dark
---zekpro version
+--zekpro version (can attack directly if alone)
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot direct attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+	e1:SetCondition(s.dircon)
 	c:RegisterEffect(e1)
 	--atkdown
 	local e2=Effect.CreateEffect(c)
@@ -23,4 +24,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(-200)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
+end
+function s.dircon(e)
+	return Duel.IsExistingMatchingCard(aux.TRUE,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
