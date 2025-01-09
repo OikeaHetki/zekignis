@@ -49,7 +49,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) --and c:IsFaceup()
+	return c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and s.filter(chkc) end
