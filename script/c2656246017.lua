@@ -21,9 +21,9 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
-function s.filter(c)
-	return c:IsMonster() and c:IsAbleToHand()
-		and (c:IsSetCard(SET_ARCHFIEND) or (c:IsType(TYPE_NORMAL) and c:IsRace(RACE_FIEND)))
+function s.thfilter(c)
+	return c:IsAbleToHand()
+		and (c:IsSetCard(SET_ARCHFIEND) or (c:IsType(TYPE_NORMAL) and c:IsRace(RACE_FIEND) and c:IsType(TYPE_MONSTER)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_GRAVE,0,nil,e)

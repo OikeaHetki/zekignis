@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	e3:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	c:RegisterEffect(e3)
 	--pierce
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_PIERCE)
-	c:RegisterEffect(e4)
+	--local e4=Effect.CreateEffect(c)
+	--e4:SetType(EFFECT_TYPE_SINGLE)
+	--e4:SetCode(EFFECT_PIERCE)
+	--c:RegisterEffect(e4)
 end
 s.roll_dice=true
 --maintain
