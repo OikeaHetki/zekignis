@@ -54,7 +54,7 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_FZONE)
 	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e5:SetTarget(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x5)))
-	e5:SetCondition(s.effectcon2)
+	e5:SetCondition(s.effectcon)
 	c:RegisterEffect(e5)
 	--cannot disable summon
 	--local e6=Effect.CreateEffect(c)
@@ -90,10 +90,6 @@ end
 function s.effectcon(e)
 	local c=e:GetHandler()
 	return c:GetFlagEffect(alias)==0 or c:IsHasEffect(EFFECT_CANNOT_DISABLE) 
-end
-function s.effectcon2(e)
-	local c=e:GetHandler()
-	return c:GetFlagEffect(alias)==0 or c:IsHasEffect(EFFECT_CANNOT_DISABLE) and (Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x5),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 --e4
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
