@@ -54,17 +54,17 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_FZONE)
 	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e5:SetTarget(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x5)))
-	e5:SetCondition(s.effectcon)
+	e5:SetCondition(s.effectcon2)
 	c:RegisterEffect(e5)
 	--cannot disable summon
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_FIELD)
-	e6:SetCode(EFFECT_CANNOT_DISABLE_SUMMON)
-	e6:SetRange(LOCATION_FZONE)
-	e6:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE)
-	e6:SetCondition(s.effectcon)
-	e6:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x5))
-	c:RegisterEffect(e6)
+	--local e6=Effect.CreateEffect(c)
+	--e6:SetType(EFFECT_TYPE_FIELD)
+	--e6:SetCode(EFFECT_CANNOT_DISABLE_SUMMON)
+	--e6:SetRange(LOCATION_FZONE)
+	--e6:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE)
+	--e6:SetCondition(s.effectcon)
+	--e6:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x5))
+	--c:RegisterEffect(e6)
 end
 s.listed_series={0x5}
 s.toss_coin=true
@@ -90,6 +90,10 @@ end
 function s.effectcon(e)
 	local c=e:GetHandler()
 	return c:GetFlagEffect(alias)==0 or c:IsHasEffect(EFFECT_CANNOT_DISABLE) 
+end
+function s.effectcon2(e)
+	local c=e:GetHandler()
+	return c:GetFlagEffect(alias)==0 or c:IsHasEffect(EFFECT_CANNOT_DISABLE) and (Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x5),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 --e4
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
