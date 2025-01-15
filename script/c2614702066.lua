@@ -1,6 +1,6 @@
 --メガキャノン・ソルジャー
 --Cannon Soldier MK-2
---zekpro version (more DEF; is DARK; once per turn)
+--zekpro version (more DEF; is DARK; once per turn; 2k burn; only other monsters)
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -17,15 +17,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,2,false,nil,nil) end
-	local sg=Duel.SelectReleaseGroupCost(tp,nil,2,2,false,nil,nil)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,2,false,nil,e:GetHandler()) end
+	local sg=Duel.SelectReleaseGroupCost(tp,nil,2,2,false,nil,e:GetHandler())
 	Duel.Release(sg,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
-	Duel.SetTargetParam(1500)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1500)
+	Duel.SetTargetParam(2000)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,2000)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
