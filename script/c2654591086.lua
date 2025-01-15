@@ -1,6 +1,6 @@
 --魔法除去細菌兵器
 --Virus Cannon
---zekpro
+--zekpro version (sends twice as many; is a qp spell)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

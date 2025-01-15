@@ -1,6 +1,6 @@
 --トゥーン・キャノン・ソルジャー
 --Toon Cannon Soldier
---zekpro version
+--zekpro version (up to thrice per turn)
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetRange(LOCATION_MZONE)
+	e6:SetCountLimit(3)
 	e6:SetCost(s.damcost)
 	e6:SetTarget(s.damtg)
 	e6:SetOperation(s.damop)

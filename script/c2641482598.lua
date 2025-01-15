@@ -1,17 +1,17 @@
 --悪夢の蜃気楼
 --Mirage of Nightmare
---zekpro version (discards hand on activation, draws until 2, tcobo)
+--zekpro version (draws until 2)
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,41482598)
+	--c:SetUniqueOnField(1,0,41482598)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_HANDES)
+	--e1:SetDescription(aux.Stringid(id,0))
+	--e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_HANDES)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.clear)
-	e1:SetOperation(s.activate)
+	--e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--draw
 	local e2=Effect.CreateEffect(c)
@@ -44,11 +44,11 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	e:SetLabel(0)
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
-		local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-		if #g==0 then return end
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
-end
+--function s.activate(e,tp,eg,ep,ev,re,r,rp)
+--		local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+--		if #g==0 then return end
+--		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+--end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)<2
 end
