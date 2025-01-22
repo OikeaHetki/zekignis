@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,CARD_CYBER_DRAGON,68774379)
+	Fusion.AddProcMix(c,true,true,CARD_CYBER_DRAGON,68774379)
 	--hand reveal
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

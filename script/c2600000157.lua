@@ -28,8 +28,16 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e3)
+	--change code
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCode(EFFECT_CHANGE_CODE)
+	e4:SetValue(68774379)
+	c:RegisterEffect(e4)
 end
-s.listed_names={CARD_CYBER_DRAGON}
+s.listed_names={CARD_CYBER_DRAGON,68774379}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.CheckReleaseGroup(c:GetControler(),aux.FaceupFilter(Card.IsCode,CARD_CYBER_DRAGON),1,false,1,true,c,c:GetControler(),nil,false,nil)
