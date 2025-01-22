@@ -15,11 +15,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--ns without tribute
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SUMMON_PROC)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
-	e2:SetCondition(s.spcon)
+	e2:SetCondition(s.ntcon)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_CYBER_DRAGON}
@@ -49,20 +50,20 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	--Change name to "Cyber Dragon"
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetValue(CARD_CYBER_DRAGON)
-	e1:SetReset(RESETS_STANDARD_PHASE_END)
-	c:RegisterEffect(e1)
 	--sp summon
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
+	--Change name to "Cyber Dragon"
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetCode(EFFECT_CHANGE_CODE)
+	e1:SetValue(CARD_CYBER_DRAGON)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
+	c:RegisterEffect(e1)
 end
 --ntcon
 function s.filter(c)

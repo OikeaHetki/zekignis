@@ -14,14 +14,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={4162088,CARD_CYBER_DRAGON}
+s.listed_names={2604162088,CARD_CYBER_DRAGON}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsCode,2,true,aux.ReleaseCheckMMZ,nil,CARD_CYBER_DRAGON) end
 	local g=Duel.SelectReleaseGroupCost(tp,Card.IsCode,2,2,true,aux.ReleaseCheckMMZ,nil,CARD_CYBER_DRAGON)
 	Duel.Release(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(4162088) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
+	return c:IsCode(2604162088) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2

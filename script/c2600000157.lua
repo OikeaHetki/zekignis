@@ -36,7 +36,7 @@ function s.spcon(e,c)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=Duel.SelectReleaseGroup(tp,aux.FaceupFilter(Card.IsType,TYPE_XYZ),1,1,false,true,true,c,nil,nil,false,nil)
+	local g=Duel.SelectReleaseGroup(tp,aux.FaceupFilter(Card.IsCode,CARD_CYBER_DRAGON),1,1,false,true,true,c,nil,nil,false,nil)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)

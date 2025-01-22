@@ -18,6 +18,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_CYBER_DRAGON}
+function s.otfilter(c,tp)
+	return c:IsCode(CARD_CYBER_DRAGON) and (c:IsControler(tp) or c:IsFaceup())
+end
 function s.desfilter(c)
 	return c:IsFaceup()
 end
