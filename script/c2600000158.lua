@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,false,false,CARD_CYBER_DRAGON,4162088)
+	Fusion.AddProcMixN(c,true,true,CARD_CYBER_DRAGON,4162088)
 	--attack all
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)

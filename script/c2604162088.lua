@@ -1,6 +1,6 @@
 --サイバー・レーザー・ドラゴン
 --Cyber Laser Dragon
---zekpro version (Nomi; slightly worse stats, Level 6, targets)
+--zekpro version (Nomi; slightly worse stats, targets)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -24,19 +24,21 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={66607691}
-function s.filter(c,atk)
+function s.filter(c,atk,def)
 	return c:IsFaceup() and (c:IsAttackAbove(atk) or c:IsDefenseAbove(atk))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
+	local c=e:GetHandler()
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc,c:GetAttack()) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,c:GetAttack())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	local c=e:GetHandler()
+	if c:IsFaceup() and c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsDefenseBelow(c:GetAttack()) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

@@ -49,6 +49,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	--sp summon
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

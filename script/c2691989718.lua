@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_CYBER_DRAGON,2668774379}
+s.listed_names={CARD_CYBER_DRAGON,68774379}
 function s.cfilter(c,ft,tp)
 	return c:IsCode(CARD_CYBER_DRAGON) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
 end
@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(2668774379) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
+	return c:IsCode(68774379) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
