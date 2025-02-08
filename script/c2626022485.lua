@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0,1)
-	e2:SetValue(2)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--Cannot set "Graceful Charity"
 	local e3=Effect.CreateEffect(c)
