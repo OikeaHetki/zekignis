@@ -74,11 +74,8 @@ function s.descon(e)
 end
 --bomb
 function s.decon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	local bc=tc:GetBattleTarget()
-	return tc:IsRelateToBattle() and tc:IsStatus(STATUS_OPPO_BATTLE) and tc:IsControler(tp) and tc:IsSetCard(0x23)
-		and bc:IsReason(REASON_BATTLE)
-			and Duel.IsEnvironment(27564031)
+	local rc,bc=Duel.GetBattleMonster(tp)
+	return rc and bc and rc:IsSetCard(SET_MALEFIC) and rc:IsControler(tp) and bc:IsPreviousControler(1-tp) and bc:IsReason(REASON_BATTLE)and Duel.IsEnvironment(27564031)
 end
 function s.detg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
