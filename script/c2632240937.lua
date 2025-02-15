@@ -1,5 +1,5 @@
 --絶対服従魔人
---Ultimate Obedient Fiend
+--Ultimate Obedient Djinn
 --zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetTargetRange(0,1)
-	e6:SetValue(1)
+	e6:SetValue(s.aclimit)
 	e6:SetCondition(s.actcon)
 	c:RegisterEffect(e6)
 	--summon
@@ -40,8 +40,15 @@ function s.initial_effect(c)
 	e7:SetCode(EFFECT_CANNOT_DISABLE_SUMMON)
 	e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	c:RegisterEffect(e7)
+	--cannot be target
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE)
+	e8:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e8:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e8:SetRange(LOCATION_MZONE)
+	e8:SetValue(s.efilter)
+	c:RegisterEffect(e8)
 end
-s.listed_series={0x45}
 function s.tlimit(e,c)
 	return not c:IsRace(RACE_FIEND)
 end
@@ -51,6 +58,12 @@ end
 function s.chlimit1(re,rp,tp)
 	return not re:GetHandler():IsTrap() or not re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
+function s.aclimit(e,re,tp)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
+end
 function s.actcon(e)
-	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
+	return Duel.GetAttacker()==e:GetHandler()
+end
+function s.efilter(e,re,rp)
+	return re:GetHandler():IsLevelBelow(9)
 end

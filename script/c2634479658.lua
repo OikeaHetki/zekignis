@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
+	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -32,6 +33,15 @@ function s.initial_effect(c)
 	e3:SetCondition(s.spcon2)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
+end
+function s.bxfilter(c)
+	return c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c)
+end
+function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.bxfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,2,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,s.bxfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,2,2,nil)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.spconx(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

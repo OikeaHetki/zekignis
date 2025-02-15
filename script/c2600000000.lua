@@ -42,12 +42,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	--Add DARK attribute
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e5:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetValue(ATTRIBUTE_DARK)
+	c:RegisterEffect(e5)
+	--Add Warrior 
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e5:SetCode(EFFECT_ADD_RACE)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetValue(RACE_WARRIOR)
 	c:RegisterEffect(e5)
 end
 --spsumcon
@@ -55,13 +62,13 @@ function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.atchk1,1,nil,sg)
 end
 function s.atchk1(c,sg) --LIGHT
-	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevelAbove(5) and sg:FilterCount(s.cfilter,c)==1
+	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_WARRIOR) and sg:FilterCount(s.cfilter,c)==1
 end
 function s.spfilter(c,att,race)
 	return c:IsAttribute(att) and c:IsRace(race) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cfilter(c,sg) --DARK
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelAbove(5)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_FIEND)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

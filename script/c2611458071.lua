@@ -15,10 +15,10 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--destroy
+	--banish
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION+EFFECT_FLAG_CARD_TARGET)
-	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
+	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_DRAW)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
@@ -69,10 +69,10 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	g:DeleteGroup()
 end
---bomb field
+--banish foe
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,3000) and e:GetHandler():GetAttackAnnouncedCount()==0 end
-	Duel.PayLPCost(tp,3000)
+	if chk==0 then return Duel.CheckLPCost(tp,1000) and e:GetHandler():GetAttackAnnouncedCount()==0 end
+	Duel.PayLPCost(tp,1000)
 	--Cannot attack this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(3206)
@@ -82,21 +82,21 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1,true)
 end
+function s.tgfilter(c)
+	return c:IsFaceup() and c:IsAbleToRemove()
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local c=e:GetHandler()
-	if chkc then return chkc:IsOnField() and chkc:IsDestructable() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsDestructable,tp,LOCATION_SZONE,LOCATION_SZONE,1,c) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,Card.IsDestructable,tp,LOCATION_SZONE,LOCATION_SZONE,1,99,c)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.tgfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,0,0,tp,1)
-
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetTargetCards(e)
-	if #g>0 then
-		Duel.Destroy(g,REASON_EFFECT)
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 		Duel.Draw(tp,1,REASON_EFFECT)
-
 	end
 end
