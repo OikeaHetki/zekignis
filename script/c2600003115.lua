@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsRace(RACE_DRAGON) and not c:IsAttribute(ATTRIBUTE_DARK) 
+	return c:IsRace(RACE_DRAGON) and not (c:IsAttribute(ATTRIBUTE_DARK) or c:IsAttribute(ATTRIBUTE_LIGHT)) 
 			and c:IsLevelAbove(7) and c:IsAttackBelow(2000) and c:IsDefenseAbove(2500)  and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

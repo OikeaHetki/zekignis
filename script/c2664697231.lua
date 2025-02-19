@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and r&REASON_EFFECT~=0 and rp==ep
-		and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>3
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>=4
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

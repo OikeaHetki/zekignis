@@ -15,18 +15,18 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--cannot be battle destroyed
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e2:SetCondition(s.incon)
-	e2:SetValue(1)
-	c:RegisterEffect(e2)
+	--local e2=Effect.CreateEffect(c)
+	--e2:SetType(EFFECT_TYPE_SINGLE)
+	--e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	--e2:SetRange(LOCATION_MZONE)
+	--e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	--e2:SetCondition(s.incon)
+	--e2:SetValue(1)
+	--c:RegisterEffect(e2)
 end
-function s.incon(e)
-	return e:GetHandler():IsAttackPos()
-end
+--function s.incon(e)
+--	return e:GetHandler():IsAttackPos()
+--end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
 end

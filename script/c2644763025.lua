@@ -1,6 +1,6 @@
 --いたずら好きな双子悪魔
 --Delinquent Duo
---zekpro version
+--zekpro version (MP1 con; only does discard 2 on 5 or more in hand)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>6
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:RandomSelect(p,1)
 		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
 		g:RemoveCard(sg:GetFirst())
-		if #g>0 then
+		if #g>4 then
 			Duel.Hint(HINT_SELECTMSG,1-p,HINTMSG_DISCARD)
 			sg=g:Select(1-p,1,1,nil)
 			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)

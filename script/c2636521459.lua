@@ -57,5 +57,5 @@ function s.indescon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(27564031)
 end
 function s.indestg(e,c)
-	return c:IsSetCard(0x23) and c~=e:GetHandler()
+	return c:IsSetCard(0x23) --and c~=e:GetHandler()
 end

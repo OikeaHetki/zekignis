@@ -85,7 +85,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RegisterEffect(e1,true)
 end
 function s.thfilter1(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAttackPos() and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsAttackPos() and c:IsAbleToHand() --and c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsType(TYPE_MONSTER) and chkc:IsAbleToHand() and chkc:IsController(1-tp) end
