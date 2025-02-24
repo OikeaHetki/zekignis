@@ -18,17 +18,20 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--Reduce effect damage to 0
+	--Negate
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_DRAW)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetRange(LOCATION_HAND)
-	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e4:SetCondition(aux.damcon1)
-	e4:SetCost(s.effcost)
+	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e4:SetCondition(s.condition)
+	e4:SetCost(s.cost)
+	e4:SetTarget(s.target)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.toss_coin=true
 function s.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -90,24 +93,27 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end
-function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	if ep==tp or (not re:IsHasType(EFFECT_TYPE_ACTIVATE) and not re:IsActiveType(TYPE_MONSTER))
+		or (not Duel.IsChainNegatable(ev)) then return false end
+	local ex,tg,tc,p=Duel.GetOperationInfo(ev,CATEGORY_HANDES)
+	return re:IsHasCategory(CATEGORY_HANDES) and (not ex or p~=1-tp)
+end
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
-function s.operation2(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		--Cannot be destroyed by battle or card effects
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(3008)
-		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-		tc:RegisterEffect(e2)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	end
+end
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)~=0 then
+		Duel.BreakEffect()
+		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

@@ -1,6 +1,6 @@
 --アルカナフォースＸＩＩ－ＴＨＥ ＨＡＮＧＥＤ ＭＡＮ
 --Arcana Force XII - The Hangman
---Fixed by Larry126
+--zek
 local s,id=GetID()
 function s.initial_effect(c)
 	--coin
@@ -18,6 +18,17 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
+	--Reduce effect damage to 0
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,2))
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_CHAINING)
+	e4:SetRange(LOCATION_HAND)
+	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e4:SetCondition(aux.damcon1)
+	e4:SetCost(s.effcost)
+	e4:SetOperation(s.operation)
+	c:RegisterEffect(e4)
 end
 s.toss_coin=true
 function s.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -81,4 +92,27 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 then
 		Duel.Damage(Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)==1 and tp or 1-tp,tc:GetPreviousAttackOnField()/2,REASON_EFFECT)
 	end
+end
+function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsDiscardable() end
+	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+end
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CHANGE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
+	e1:SetLabel(cid)
+	e1:SetValue(s.damcon)
+	e1:SetReset(RESET_CHAIN)
+	Duel.RegisterEffect(e1,tp)
+end
+function s.damcon(e,re,val,r,rp,rc)
+	local cc=Duel.GetCurrentChain()
+	if cc==0 or (r&REASON_EFFECT)==0 then return end
+	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
+	if cid==e:GetLabel() then return 0 end
+	return val
 end

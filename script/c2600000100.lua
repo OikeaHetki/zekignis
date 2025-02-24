@@ -18,6 +18,15 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
+	--position
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,0))
+	e4:SetCategory(CATEGORY_POSITION)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e4:SetCode(EVENT_BE_BATTLE_TARGET)
+	e4:SetTarget(s.target)
+	e4:SetOperation(s.operation)
+	c:RegisterEffect(e4)
 end
 s.toss_coin=true
 function s.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -93,5 +102,15 @@ function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsRace(RACE_WARRIOR) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+	end
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsDefensePos() end
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
+end
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) and c:IsPosition(POS_FACEUP_ATTACK) then
+		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 	end
 end
