@@ -26,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	--Can only activate 1 Spell/Trap Card or effect for the rest of this turn, and cannot set
-	l--ocal e1=Effect.CreateEffect(e:GetHandler())
+	--local e1=Effect.CreateEffect(e:GetHandler())
 	--e1:SetType(EFFECT_TYPE_FIELD)
 	--e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	--e1:SetCode(EFFECT_CANNOT_SSET)
