@@ -1,6 +1,6 @@
 --ハリケーン
 --Giant Trunade
---zekpro version
+--zekpro version (locks out loops by s/t activation locking)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,13 +26,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	--Can only activate 1 Spell/Trap Card or effect for the rest of this turn, and cannot set
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCode(EFFECT_CANNOT_SSET)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	e1:SetTargetRange(1,0)
-	Duel.RegisterEffect(e1,tp)
+	l--ocal e1=Effect.CreateEffect(e:GetHandler())
+	--e1:SetType(EFFECT_TYPE_FIELD)
+	--e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	--e1:SetCode(EFFECT_CANNOT_SSET)
+	--e1:SetReset(RESET_PHASE+PHASE_END)
+	--e1:SetTargetRange(1,0)
+	--Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetCode(EVENT_CHAINING)
