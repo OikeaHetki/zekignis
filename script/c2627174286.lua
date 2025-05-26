@@ -27,7 +27,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local ft=math.min(Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE),Duel.GetLocationCount(tp,LOCATION_MZONE))
+	local ft=math.min(Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE),Duel.GetLocationCount(tp,0,LOCATION_MZONE))
 	if ft<=0 then return false end
 	Duel.BreakEffect()
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
@@ -40,7 +40,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 			ct=Duel.AnnounceNumber(tp,table.unpack(selct))
 		end
 		for i=1,ct do
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_REMOVED,0,ft,ft,nil,e,tp)
+			local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_REMOVED,0,ft,ft,nil,e,tp)
 	if #g>0 then
 		local fid=e:GetHandler():GetFieldID()
 		local tc=g:GetFirst()

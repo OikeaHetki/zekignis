@@ -31,9 +31,9 @@ function s.initial_effect(c)
 	--c:RegisterEffect(e3)
 end
 s.listed_series={0x12}
-function s.costfilter(c,ft)
-	return c:IsSetCard(0x12) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
-		and (ft>0 or aux.MZFilter(c,c:GetControler()))
+function s.costfilter(c,tp)
+	return c:IsSetCard(SET_FROG) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+		and Duel.GetMZoneCount(tp,c)>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
