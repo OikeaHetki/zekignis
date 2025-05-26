@@ -1,6 +1,6 @@
 --異次元からの帰還
 --Return from the Different Dimension
---zekpro version
+--zekpro version (summons up to opponent's monsters)
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -27,7 +27,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local ft=math.min(Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE),Duel.GetLocationCount(tp,0,LOCATION_MZONE))
+	local ft=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 	if ft<=0 then return false end
 	Duel.BreakEffect()
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
