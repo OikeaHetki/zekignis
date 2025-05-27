@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	--c:RegisterEffect(e8)
 end
 function s.tlimit(e,c)
-	return not c:IsRace(RACE_FIEND)
+	return not c:IsRace(RACE_FAIRY)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttackTarget()==nil
