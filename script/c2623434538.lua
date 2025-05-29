@@ -1,6 +1,6 @@
 --増殖するG
 --Maxx "C"
---zekpro version
+--zekpro version (must reveal another EARTH)
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -16,18 +16,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.costfilter(c,ft,tp)
-	return c:IsRace(RACE_INSECT) and not (c:IsCode(id) or c:IsOriginalCode(id)) 
-	and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsFaceup()
-		and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+function s.costfilter(c)
+	return c:IsRace(RACE_INSECT) and c:IsAttribute(ATTRIBUTE_EARTH) and not (c:IsPublic() or c:IsCode(id) or c:IsOriginalCode(id))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and
-	Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,e:GetHandler())
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) and e:GetHandler():IsAbleToGraveAsCost() end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.ConfirmCards(1-tp,g)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-	local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil,ft,tp)
-	Duel.Release(sg,REASON_COST)
+	Duel.ShuffleHand(tp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
