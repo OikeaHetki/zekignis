@@ -26,7 +26,7 @@ end
 function s.ntcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
-		Duel.IsExistingMatchingCard(Card.IsSpellTrap,c:GetControler(),LOCATION_GRAVE+LOCATION_REMOVED,0,10,nil)
+		Duel.IsExistingMatchingCard(s.ffilter,c:GetControler(),LOCATION_GRAVE+LOCATION_REMOVED,0,6,nil)
 end
 function s.efilter(e,re,rp)
 	return re:GetHandler():IsType(TYPE_TRAP+TYPE_SPELL)
