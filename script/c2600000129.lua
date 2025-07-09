@@ -52,7 +52,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(23424603) and e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
 end
 function s.filter(c)
-	return c:IsFaceup() and (c:IsLevelBelow(3) or c:IsRankBelow(3) or c:IsLinkBelow(3))
+	return c:IsFaceup() and c:IsLevelBelow(3)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
