@@ -42,7 +42,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,lv,e,tp)
 	if g and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then
+		local turn_ct=Duel.GetTurnCount()
 		--Return it to the hand during the End Phase
-		aux.DelayedOperation(g,PHASE_END,id,e,tp,function(ag) Duel.SendtoHand(ag,nil,REASON_EFFECT) end,nil,0,0,aux.Stringid(id,0))
+		aux.DelayedOperation(g,PHASE_END,id,e,tp,function(ag) Duel.SendtoDeck(ag,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) end,function(ag) return Duel.GetTurnCount()==turn_ct+1 end,nil,2,aux.Stringid(id,0))
 	end
 end
