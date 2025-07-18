@@ -1,6 +1,6 @@
 --いたずら好きな双子悪魔
 --Delinquent Duo
---zekpro version (MP1 con; only does discard 2 on 5 or more in hand)
+--zekpro version (only does discard 2 on 5 or more in hand)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -9,15 +9,15 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(s.condition)
+	--e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity()
-end
+--function s.condition(e,tp,eg,ep,ev,re,r,rp)
+--  return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity()
+--end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
