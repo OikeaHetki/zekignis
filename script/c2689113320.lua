@@ -1,5 +1,6 @@
 --EMビッグバイトタートル
 --zekpro version
+--entirely reworked
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -18,6 +19,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_DESTROYED)
+	e3:SetCost(Cost.PayLP(800))
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)

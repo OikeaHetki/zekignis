@@ -1,6 +1,6 @@
 --ペンデュラムーチョ
 --Pendulumucho
-
+--zekpro version
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)

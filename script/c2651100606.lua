@@ -28,5 +28,5 @@ function s.spcon(e,c)
 		and Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE,nil)-Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)>=2
 end
 function s.valcon(e,re,r,rp)
-	return (r&REASON_EFFECT)~=0
+	return (r&REASON_BATTLE+REASON_EFFECT)~=0
 end
