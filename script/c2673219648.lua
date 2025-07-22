@@ -32,12 +32,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	--Cannot be in Defense Pos
-	--local e4=Effect.CreateEffect(c)
-	--e4:SetType(EFFECT_TYPE_SINGLE)
-	--e4:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-	--e4:SetCondition(s.poscon)
-	--c:RegisterEffect(e4)
 end
 s.listed_series={0x45}
 s.roll_dice=true
@@ -71,7 +65,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x45)  and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not (c:IsCode(id) or c:IsOriginalCode(id))
+	return c:IsSetCard(0x45)  and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelAbove(3)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -87,6 +81,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
---function s.poscon(e)
---  return e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
---end

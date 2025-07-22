@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	--Your "Archfiend" monsters cannot be destroyed by effects that do not target them
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e4:SetCode(EFFECT_IMMUNE_EFFECT)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
 	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ARCHFIEND))

@@ -13,46 +13,22 @@ function s.initial_effect(c)
 	e1:SetCondition(function(_,tp) return Duel.IsTurnPlayer(tp) end)
 	e1:SetOperation(s.mtop)
 	c:RegisterEffect(e1)
-	--roll a d6
+	--roll a d6 (shared)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAIN_SOLVING)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	--Limit battle target
+	--cannot be target
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-	e3:SetValue(s.tgtg)
+	e3:SetCondition(s.atklm)
+	e3:SetValue(aux.imval2)
 	c:RegisterEffect(e3)
-	--Prevent effect target
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(s.tgtg)
-	e4:SetValue(s.tgval)
-	c:RegisterEffect(e4)
-	--to defense
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,0))
-	e5:SetCategory(CATEGORY_POSITION)
-	e5:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
-	e5:SetCode(EVENT_SUMMON_SUCCESS)
-	e5:SetTarget(s.potg)
-	e5:SetOperation(s.poop)
-	c:RegisterEffect(e5)
-	local e6=e5:Clone()
-	e6:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	c:RegisterEffect(e6)
-	--local e7=e5:Clone()
-	--e7:SetCode(EVENT_SPSUMMON_SUCCESS)
-	--c:RegisterEffect(e7)
 end
 s.listed_series={0x45}
 s.roll_dice=true
@@ -64,13 +40,17 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(e:GetHandler(),REASON_COST)
 	end
 end
---roll to negate
+--roll to negate (shared)
+function s.filter(c,tp,re)
+	return c:IsSetCard(SET_ARCHFIEND) and c:IsRelateToEffect(re) and c:IsLocation(LOCATION_MZONE)
+		and c:IsControler(tp) and c:IsFaceup()
+end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if ep==tp then return end
-	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	if not (re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and ep==1-tp) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not tg or not tg:IsContains(e:GetHandler()) or not Duel.IsChainDisablable(ev) then return false end
+	if not tg or not tg:IsExists(s.filter,1,nil,tp,re) or not Duel.IsChainDisablable(ev) then return false end
 	local rc=re:GetHandler()
+	Duel.Hint(HINT_CARD,1-tp,id)
 	local dc=Duel.TossDice(tp,1)
 	if dc==1 or dc==3 or dc==6 then
 		if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) then
@@ -79,19 +59,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --personal effects
-function s.potg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return e:GetHandler():IsAttackPos() end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
-end
-function s.poop(e,tp,eg,ep,ev,re,r,rp)
+function s.atklm(e)
 	local c=e:GetHandler()
-	if c:IsFaceup() and c:IsAttackPos() and c:IsRelateToEffect(e) then
-		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
-	end
-end
-function s.tgtg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x45) and c:GetCode()~=35798491
-end
-function s.tgval(e,re,rp)
-	return rp==1-e:GetHandlerPlayer()
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_FIEND),c:GetControler(),LOCATION_MZONE,0,1,c)
 end
