@@ -25,7 +25,7 @@ c:SetUniqueOnField(1,0,id)
 end
 --atkup
 function s.value(e,c)
-	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)*300
+	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)*500
 end
 --spsum token
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

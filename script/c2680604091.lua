@@ -23,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tn=Duel.GetTurnPlayer()
-	return (tn==tp and Duel.IsMainPhase()) or (tn~=tp and Duel.IsBattlePhase())
-end
+--function s.condition(e,tp,eg,ep,ev,re,r,rp)
+--	local tn=Duel.GetTurnPlayer()
+--	return (tn==tp and Duel.IsMainPhase()) or (tn~=tp and Duel.-IsBattlePhase())
+--end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end
 	if e:GetHandler():GetFlagEffect(id)==0 then

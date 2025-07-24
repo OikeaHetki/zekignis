@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--discard deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCategory(CATEGORY_DECKDES+CATEGORY_DAMAGE)
+	e1:SetCategory(CATEGORY_DECKDES)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTarget(s.distg)
@@ -28,6 +28,6 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetOperatedGroup()
 	local ct=g:FilterCount(s.filter,nil)
 	if ct>0 then
-		Duel.Damage(tp,ct*200,REASON_EFFECT)
+		Duel.SetLP(tp,Duel.GetLP(tp)-ct*600)
 	end
 end
