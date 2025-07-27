@@ -1,6 +1,6 @@
 --ダスト・シュート
 --Trap Dustshoot
---zekpro version
+--zekpro version (only triggers on search)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,15 +8,17 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCode(EVENT_DRAW)
+	e1:SetCode(EVENT_TO_HAND)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+function s.cfilter(c,tp)
+	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK) and not c:IsReason(REASON_DRAW)
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and r&REASON_EFFECT~=0 and rp==ep
-		and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>=4
+	return rp==1-tp and eg:IsExists(s.cfilter,1,nil,1-tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>=4
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

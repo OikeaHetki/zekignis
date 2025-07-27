@@ -1,6 +1,6 @@
 --氷帝家臣エッシャー
 --Escher, the Frost Vassal
---zekpro version
+--zekpro version (gives draw/discard, tribute lock)
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	--draw
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_DRAW)
+	e2:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_RELEASE)
@@ -23,6 +23,14 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
+	--unreleaseable nonsum
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCode(EFFECT_UNRELEASABLE_NONSUM)
+	e3:SetValue(1)
+	c:RegisterEffect(e3)
 end
 function s.filter(c)
 	return c:GetSequence()<5

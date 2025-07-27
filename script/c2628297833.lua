@@ -36,8 +36,8 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and 
 		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT) then
-		e:GetHandler():UpdateAttack(300)
-		e:GetHandler():UpdateDefense(300)
+		e:GetHandler():UpdateAttack(600)
+		--e:GetHandler():UpdateDefense(300)
 	end
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
