@@ -3,7 +3,7 @@
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
-	--Search 1 "Ojama" Spell/Trap if sent to the GY
+	--Search 1 "Ojama" monster if sent to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
