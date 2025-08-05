@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.threshold)
 	e3:SetCode(EFFECT_SET_BASE_ATTACK)
-	e3:SetValue(1800)
+	e3:SetValue(2000)
 	c:RegisterEffect(e3)
 	--destroy
 	local e4=Effect.CreateEffect(c)

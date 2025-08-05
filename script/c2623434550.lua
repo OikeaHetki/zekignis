@@ -1,5 +1,5 @@
---メギストリック・マジサイエンティスト
---Megistric Magiscientist
+--ドクター・レッドローブ
+--Dr. Red Robe
 --zekpro
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,id)
+	--e1:SetCountLimit(1,id)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.operation)
