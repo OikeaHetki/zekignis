@@ -18,5 +18,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.val(e,c)
-	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_ONFIELD+LOCATION_HAND)*100
+	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_ONFIELD+LOCATION_HAND)*-100
 end
