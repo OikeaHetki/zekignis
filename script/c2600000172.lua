@@ -30,7 +30,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.filter(c)
-	return c:IsAbleToGrave() and ((c:IsMonster() and c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK)) or c:IsSpell())
+	return c:IsAbleToGrave() and ((c:IsMonster() and c:IsRace(RACE_SPELLCASTER)) or c:IsSpell())
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<4 then return end
@@ -42,7 +42,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local ct=Duel.SendtoGrave(tg,REASON_EFFECT)
 		g:RemoveCard(tg)
 		Duel.BreakEffect()
-		Duel.Recover(tp,ct*600)
+		local rec=tg:GetCount()
+		Duel.Recover(tp,rec*600,REASON_EFFECT)
 		if ct==4 then
 			Duel.Draw(tp,1,REASON_EFFECT)
 		else
