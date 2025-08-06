@@ -1,4 +1,6 @@
 --魔導書の神判
+--Spellbook of Judgment
+--zekpro reworked version
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -80,7 +82,21 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	if ct>=3 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) and Duel.IsPlayerCanDiscardDeck(tp,2) then   
 		Duel.BreakEffect()
 		Duel.Hint(HINT_CARD,0,id)
-		Duel.DiscardDeck(tp,2,REASON_EFFECT)
+		local g=Duel.GetDecktopGroup(tp,2)
+		Duel.ConfirmCards(tp,g)
+		if #g>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local sg=g:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)
+			g:Sub(sg)
+			if #sg>0 then
+				Duel.DisableShuffleCheck()
+				Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			end
+			if #g>0 then
+				Duel.DisableShuffleCheck()
+				Duel.SendtoGrave(g,REASON_EFFECT)
+			end
+		end
 	end
 	if ct>=4 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
 		Duel.BreakEffect()
