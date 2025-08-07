@@ -3,7 +3,7 @@
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
-	Fusion.RegisterSummonEff{handler=c,matfilter=s.matfilter,extrafil=s.fextra,mincount=2,maxcount=2,extratg=s.extratg,stage2=s.stage2}
+	Fusion.RegisterSummonEff{handler=c,matfilter=s.matfilter,extrafil=s.fextra,mincount=2,maxcount=2,stage2=s.stage2}
 end
 s.listed_names={CARD_REDEYES_B_DRAGON,CARD_SUMMONED_SKULL,64271667}
 function s.matfilter(c)
@@ -17,16 +17,18 @@ function s.fextra(e,tp,mg)
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==0 and not tc:IsType(TYPE_EFFECT) and Duel.IsExistingMatchingCard(nil,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) 
-			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_SZONE,LOCATION_SZONE,e:GetHandler())
-		Duel.BreakEffect()
-			if #g>0 then
-				Duel.Destroy(g,REASON_EFFECT)
+		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_SZONE,LOCATION_SZONE,e:GetHandler())
+	Duel.BreakEffect()
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_CHANGE_CODE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetValue(CARD_REDEYES_B_DRAGON)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	tc:RegisterEffect(e1)
+		if #g>0 then
+			Duel.Destroy(g,REASON_EFFECT)
 		end
-	end
-end
-function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
-		Duel.SetChainLimit(aux.FALSE)
 	end
 end
