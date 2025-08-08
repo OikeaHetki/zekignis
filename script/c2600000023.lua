@@ -54,7 +54,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_MZONE,1,Duel.GetAttackTarget()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,Duel.GetAttackTarget())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
@@ -72,13 +72,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(500)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-			e2:SetCode(EFFECT_UPDATE_DEFENSE)
-			e2:SetValue(500)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-			c:RegisterEffect(e2)
 		end
 	end
 end
@@ -100,12 +93,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(500)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-			e2:SetCode(EFFECT_UPDATE_DEFENSE)
-			e2:SetValue(500)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-			c:RegisterEffect(e2)
 	end
 end
