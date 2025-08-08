@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={SET_NEO_SPACIAN,SET_CHRYSALIS}
 s.listed_names={CARD_NEOS}
 function s.atktg(e,c)
 	return c:IsCode(CARD_NEOS) or c:IsSetCard(0x1e) or c:IsSetCard(0x1f) or (c:IsType(TYPE_FUSION) and c:ListsCodeAsMaterial(CARD_NEOS))
@@ -48,7 +49,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_FZONE) and rp~=tp
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x1e) or c:IsSetCard(0x1f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(0x1e) or c:IsSetCard(0x1f) or c:IsCode(CARD_NEOS)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -60,6 +61,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
