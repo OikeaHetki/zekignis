@@ -23,6 +23,14 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
+	--code
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_CHANGE_CODE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetRange(LOCATION_GRAVE)
+	e3:SetValue(32679370)
+	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_NEOS,32679370}
 function s.filter(c,e,tp)
