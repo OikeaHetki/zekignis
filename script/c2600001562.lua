@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_TODECK)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id)
+	e2:SetCountLimit(1)
 	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
@@ -41,12 +41,10 @@ if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--effect
 	if Duel.Draw(tp,2,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 		Duel.SendtoDeck(dg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
-		Duel.SortDeckbottom(tp,tp,#dg)
 	end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

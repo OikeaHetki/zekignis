@@ -47,10 +47,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetValue(tc:GetDefense()/2)
+		e1:SetValue(def/2)
 		tc:RegisterEffect(e1)
 		Duel.BreakEffect()
-		Duel.Recover(tp,tc:GetDefense()/2,REASON_EFFECT)
+		Duel.Recover(tp,def/2,REASON_EFFECT)
 	end
 end
 --glad shuffle tag-in

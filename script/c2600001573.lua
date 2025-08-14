@@ -1,5 +1,5 @@
 --量子ホール
---Quantum Hole
+--Cynet Quantum Hole
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +27,7 @@ if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function s.spfilter(c,e,tp)
-	return c:ISCode(2600001123,2600001124) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsCode(2600001123) or c:IsCode(2600001124)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,2,REASON_EFFECT)>0 then

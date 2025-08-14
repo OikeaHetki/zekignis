@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_names={2600001123,2600001124}
 function s.spfilter(c,tp)
-	return c:IsCode(2600001123,2600001124) and (c:IsControler(tp) or c:IsFaceup())
+	return (c:IsCode(2600001123) or c:IsCode(2600001124)) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.spcon(e,c)
 	if c==nil then return true end

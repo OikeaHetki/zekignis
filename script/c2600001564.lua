@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_NO_TURN_RESET)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_NO_TURN_RESET+EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.spcon)
 	e1:SetCost(s.spcost)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 s.listed_names={2600001123,2600001124}
 function s.otfilter(c,tp)
-	return c:IsCode(2600001123,2600001124) and (c:IsControler(tp) or c:IsFaceup())
+	return (c:IsCode(2600001123) or c:IsCode(2600001124)) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.condition(e,c)
 	return c:IsRace(RACE_CYBERSE)

@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.condition)
+	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -37,7 +37,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c)
-	return (c:IsCode(2600001566) or c:GetType()==0x82 or (c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_NORMAL)) and c:IsAbleToHand()
+	return (c:IsCode(2600001566) or c:GetType()==0x82 or (c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_NORMAL))) and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -58,9 +58,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	Duel.BreakEffect()
-	Duel.ShuffleDeck(p)
-	end
+	Duel.ShuffleDeck(tp)
 end
 function s.atktg(e,c)
-	return c:IsCode(2600001123,2600001124)
+	return (c:IsCode(2600001123) or c:IsCode(2600001124))
 end
