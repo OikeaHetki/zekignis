@@ -1,6 +1,6 @@
 --イグザリオン・ユニバース
 --Exarion Universe
---zekpro version (does the burn effect from TSC)
+--zekpro version (does the burn effect from TSC and perma-powers down)
 local s,id=GetID()
 function s.initial_effect(c)
 	--burn the opponent
@@ -54,5 +54,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetValue(-500)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e3)
+		--Inflict piercing damage
+		local e4=Effect.CreateEffect(c)
+		e4:SetDescription(3208)
+		e4:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e4:SetType(EFFECT_TYPE_SINGLE)
+		e4:SetCode(EFFECT_PIERCE)
+		e4:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		c:RegisterEffect(e4)
 	end
 end

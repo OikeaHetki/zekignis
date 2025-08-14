@@ -3,6 +3,9 @@
 --zek
 local s,id=GetID()
 function s.initial_effect(c)
+	--Synchro Summon
+	c:EnableReviveLimit()
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WIND),1,1,Synchro.NonTunerEx(Card.IsRace,RACE_CYBERSE),1,99)
 	--Destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

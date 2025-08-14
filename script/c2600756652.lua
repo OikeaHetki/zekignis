@@ -45,6 +45,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 
 	end
+	Duel.SpecialSummonComplete()
 	if c:IsRelateToEffect(e) then
 		--Cannot attack
 		local e1=Effect.CreateEffect(c)

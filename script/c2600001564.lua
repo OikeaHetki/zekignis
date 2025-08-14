@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_NO_TURN_RESET+EFFECT_FLAG_CARD_TARGET)
@@ -22,9 +22,6 @@ end
 s.listed_names={2600001123,2600001124}
 function s.otfilter(c,tp)
 	return (c:IsCode(2600001123) or c:IsCode(2600001124)) and (c:IsControler(tp) or c:IsFaceup())
-end
-function s.condition(e,c)
-	return c:IsRace(RACE_CYBERSE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -53,13 +50,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		--Cannot attack
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3206)
-		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-
 	end
+	Duel.SpecialSummonComplete()
 	if c:IsRelateToEffect(e) then
 		--Cannot attack
 		local e1=Effect.CreateEffect(c)
