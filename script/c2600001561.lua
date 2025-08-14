@@ -12,12 +12,21 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCountLimit(1)
+	e1:SetCountLimit(3)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCondition(s.rmcon)
 	e1:SetCost(s.rmcost)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	--Also treated as a LIGHT monster
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetCode(EFFECT_ADD_ATTRIBUTE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetValue(ATTRIBUTE_LIGHT)
+	c:RegisterEffect(e2)
 end
 function s.xyzfilter1(c,xyz,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT,xyz,SUMMON_TYPE_XYZ,tp)
@@ -27,6 +36,10 @@ function s.xyzfilter2(c,xyz,tp)
 end
 function s.xyzcheck(g,tp,xyz)
 	return g:IsExists(s.xyzfilter1,1,nil,xyz,tp) and g:IsExists(s.xyzfilter2,1,nil,xyz,tp)
+end
+function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,3,nil,RACE_CYBERSE)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST)
@@ -52,6 +65,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
+	if not Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,3,nil,RACE_CYBERSE) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
