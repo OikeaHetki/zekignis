@@ -1,6 +1,6 @@
 --融合禁止エリア
---Non-Pendulum Area
---zekpro version
+--Summon Limit
+--zekpro version (disables pendulums)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,16 +8,12 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--disable spsummon
+	--special summon limit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e2:SetCode(59822133)
+	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,1)
-	e2:SetTarget(s.splimit)
 	c:RegisterEffect(e2)
-end
-function s.splimit(e,c,tp,sumtp,sumpos)
-	return (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end

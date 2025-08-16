@@ -1,6 +1,6 @@
 --帝王の凍気
---Erupt
---zekpro version
+--The Monarchs Erupt
+--zekpro version (is a totally different card)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,6 +25,16 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
+	--burn
+	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_DAMAGE)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetCost(s.damcost)
+	e3:SetTarget(s.damtg)
+	e3:SetOperation(s.damop)
+	c:RegisterEffect(e3)
 end
 s.listed_series={0xbe}
 function s.mfilter(c)
@@ -59,4 +69,25 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler())
 	g:AddCard(e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
+end
+function s.cfilter(c)
+	return c:IsAttackAbove(2400) and c:GetDefense()==1000 and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
+end
+function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local rg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp)
+	Duel.Remove(rg,POS_FACEUP,REASON_COST)
+end
+function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetParam(300)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,0,0,1-tp,300)
+end
+function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	if e:GetHandler():IsRelateToEffect(e) then
+		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+		Duel.Damage(p,d,REASON_EFFECT)
+	end
 end

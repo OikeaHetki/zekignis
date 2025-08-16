@@ -66,24 +66,24 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and c:GetFlagEffect(1)>0 then
 		c:AddCounter(COUNTER_SPELL,1)
-		if c:GetCounter(COUNTER_SPELL)==5 then
+		if c:GetCounter(COUNTER_SPELL)==3 then
 			Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,re,0,0,p,0)
 		end
 	end
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) end
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,ep,5000)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,ep,3000)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,5,REASON_EFFECT) and Duel.Destroy(e:GetHandler(),REASON_EFFECT)~=0 then
-		Duel.Damage(ep,5000,REASON_EFFECT)
+	if e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,3,REASON_EFFECT) and Duel.Destroy(e:GetHandler(),REASON_EFFECT)~=0 then
+		Duel.Damage(ep,3000,REASON_EFFECT)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler()~=e:GetHandler() and e:GetHandler():GetCounter(COUNTER_SPELL)>=5
+	return re:GetHandler()~=e:GetHandler() and e:GetHandler():GetCounter(COUNTER_SPELL)>=3
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -106,8 +106,8 @@ end
 function s.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(rp)
-	Duel.SetTargetParam(3000)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,rp,3000)
+	Duel.SetTargetParam(2000)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,rp,2000)
 end
 function s.damop2(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

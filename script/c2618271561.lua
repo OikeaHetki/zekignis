@@ -37,10 +37,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local atk=tc:GetFirst():GetAttack()/2
-	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT) then
-		Duel.Damage(tp,atk,REASON_EFFECT,true)
-		Duel.Damage(1-tp,atk,REASON_EFFECT,true)
-		Duel.RDComplete()
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+		local atk=tc:GetTextAttack()
+		if atk<0 then atk=0 end
+		local val=Duel.Damage(tp,atk/2,REASON_EFFECT)
+		if Duel.GetLP(tp)>0 then
+			Duel.BreakEffect()
+			Duel.Damage(1-tp,atk/2,REASON_EFFECT)
 	end
 end
