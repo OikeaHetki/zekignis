@@ -1,6 +1,6 @@
 --体温を上げる
 --Raise Body Heat
---zekpro version
+--zekpro version (for reptiles)
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE))
