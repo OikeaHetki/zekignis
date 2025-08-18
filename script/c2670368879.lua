@@ -23,7 +23,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)>0 then
 		Duel.BreakEffect()
-		Local lp=Duel.GetLP(1-tp)
+		local lp=Duel.GetLP(1-tp)
 		Duel.SetLP(1-tp,lp+1500)
 	end
 end
