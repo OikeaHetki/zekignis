@@ -1,6 +1,6 @@
 --レベル・スティーラー
---level eater
---zek
+--Level Eater
+--zekpro version (hard opt)
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -9,15 +9,17 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_GRAVE+LOCATION_HAND)
+	e1:SetRange(LOCATION_GRAVE)
+	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--cannot link material
+	--unreleaseable nonsum
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
@@ -40,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(-1)
 	tc:RegisterEffect(e1)
 	if c:IsRelateToEffect(e) then

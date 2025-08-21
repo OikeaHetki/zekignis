@@ -1,6 +1,6 @@
 --遠心分離フィールド
 --Centrifugal Field
---zekpro version
+--zekpro version (triggers on battle)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,16 +26,6 @@ function s.initial_effect(c)
 		ge1:SetOperation(s.check1)
 		Duel.RegisterEffect(ge1,0)
 	end)
-	--Add from 
-	local e5=Effect.CreateEffect(c)
-	e5:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e5:SetCode(EVENT_DESTROYED)
-	e5:SetProperty(EFFECT_FLAG_DELAY)
-	e5:SetCondition(s.thcon)
-	e5:SetTarget(s.thtg)
-	e5:SetOperation(s.thop)
-	c:RegisterEffect(e5)
 end
 s.listed_names={CARD_POLYMERIZATION}
 function s.check1(e,tp,eg,ep,ev,re,r,rp)
@@ -61,25 +51,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-	end
-end
-function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return rp==1-tp and c:IsReason(REASON_DESTROY)
-		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
-end
-function s.thfilter(c)
-	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()
-end
-function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
-end
-function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
-	if #g>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
 	end
 end

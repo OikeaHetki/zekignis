@@ -1,6 +1,6 @@
 --イレカエル
 --Substitoad
---zekpro version
+--zekpro version (once per turn)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -9,19 +9,11 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--change name
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetCode(EFFECT_CHANGE_CODE)
-	e2:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
-	e2:SetValue(10456559)
-	c:RegisterEffect(e2)
 	--battle indestructable
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,id)
+	e3:SetCountLimit(1)
 	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e3:SetCondition(s.descon)
 	e3:SetCost(s.descost)
@@ -58,7 +58,7 @@ function s.defval(e,c)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()) or
-	       (not Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase())
+		   (not Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase())
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

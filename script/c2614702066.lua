@@ -1,6 +1,6 @@
 --メガキャノン・ソルジャー
 --Cannon Soldier MK-2
---zekpro version (more DEF; is DARK; once per turn; 2k burn; only other monsters)
+--zekpro version (once per turn; only other monsters)
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -24,8 +24,8 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
-	Duel.SetTargetParam(2000)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,2000)
+	Duel.SetTargetParam(1500)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1500)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

@@ -1,13 +1,14 @@
 --サイバーポッド
 --Cyber Jar
---zekpro version (hard opt, mills the cards instead of tohand)
+--Scripted by edo9300
+--zekpro version (hard opt)
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE+CATEGORY_SEARCH)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -43,8 +44,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	local p=Duel.GetTurnPlayer()
 	local summonable1,nonsummonable1=Duel.GetDecktopGroup(p,5):Split(s.spchk,nil,e,p)
-	local summonable2,nonsummonable2=Duel.GetDecktopGroup(1-p,5):Split(s.spchk,nil,e,p)
-	
+	local summonable2,nonsummonable2=Duel.GetDecktopGroup(1-p,5):Split(s.spchk,nil,e,1-p)
+
 	local ft1=Duel.GetLocationCount(p,LOCATION_MZONE)
 	if ft1>1 and Duel.IsPlayerAffectedByEffect(p,CARD_BLUEEYES_SPIRIT) and #summonable1>1 then
 		nonsummonable1:Merge(summonable1)
@@ -55,19 +56,21 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		nonsummonable2:Merge(summonable2)
 		summonable2:Clear()
 	end
-	
+
 	local tohand,tograve=nonsummonable1:Merge(nonsummonable2):Split(Card.IsAbleToHand,nil)
-	
+
 	Duel.DisableShuffleCheck()
-	
+
 	Duel.ConfirmDecktop(p,5)
 	summon(summonable1,e,p,tograve,ft1)
-	
+
 	Duel.ConfirmDecktop(1-p,5)
 	summon(summonable2,e,1-p,tograve,ft2)
 	Duel.SpecialSummonComplete()
 	if #tohand>0 then
-		Duel.SendtoGrave(tohand,REASON_EFFECT)
+		Duel.SendtoHand(tohand,nil,REASON_EFFECT)
+		Duel.ShuffleHand(tp)
+		Duel.ShuffleHand(1-tp)
 	end
 	if #tograve>0 then
 		Duel.SendtoGrave(tograve,REASON_EFFECT)

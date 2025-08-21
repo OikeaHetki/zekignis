@@ -1,6 +1,6 @@
 --裁きを下す者－ボルテニス
 --Voltanis the Adjudicator
---zekpro version
+--zekpro version (targets)
 local s,id=GetID()
 function s.initial_effect(c)
 	--counter

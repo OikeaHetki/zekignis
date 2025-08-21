@@ -1,6 +1,6 @@
 --氷結界の龍 ブリューナク
 --Brionac, Dragon of the Ice Barrier
---zekpro version (can target any card on the field; hard opt)
+--zekpro version (can target any card on the field; opt)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)

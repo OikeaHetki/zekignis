@@ -1,6 +1,6 @@
 --キャノン・ソルジャー
 --Cannon Soldier
---zekpro version (thrice per turn)
+--zekpro version (once per turn; other monsters)
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(3)
+	e1:SetCountLimit(1)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil) end
-	local sg=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
+	local sg=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,e:GetHandler())
 	Duel.Release(sg,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

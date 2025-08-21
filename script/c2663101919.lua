@@ -1,6 +1,6 @@
 --マジックテンペスター
 --Tempest Magician
---zekpro version
+--zekpro version (hard OPT)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(COUNTER_SPELL)

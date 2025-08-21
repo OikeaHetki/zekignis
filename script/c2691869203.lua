@@ -1,6 +1,6 @@
 --アマゾネスの射手
 --Amazoness Archer
---zekpro version (once per turn; can only tribute other monsters; prevents negate of amazoness summon)
+--zekpro version (once per turn; can only tribute other monsters)
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -15,16 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--cannot disable summon
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CANNOT_DISABLE_SUMMON)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x4))
-	c:RegisterEffect(e2)
 end
-s.listed_series={0x4}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,2,false,nil,e:GetHandler()) end
 	local sg=Duel.SelectReleaseGroupCost(tp,nil,2,2,false,nil,e:GetHandler())
